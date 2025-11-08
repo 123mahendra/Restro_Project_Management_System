@@ -1,72 +1,35 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home | Restaurant</title>
-  <meta name="description" content="Restaurant site with ordering & pickup">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website </title>
+
 
 </head>
 <body>
-  <header id="app-navbar"></header>
 
-<section class="parallax-hero fade-in">
-  <div class="text-center">
-    <h1 data-i18n="home.hero.title">Fresh. Local. Fast Pickup.</h1>
-    <p class="lead" data-i18n="home.hero.subtitle">Order online & pick up in minutes.</p>
-    <a class="btn btn-brand mt-2" href="/order.html" data-i18n="cta.orderNow">Order now</a>
-  </div>
-</section>
-<main class="container mt-5">
-  <div class="row g-4">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="h5" data-i18n="home.sections.lunchTitle">Today's Lunch</h2>
-          <ul id="today-lunch" class="list-group small"></ul>
-          <a href="/lunch.html" class="btn btn-outline mt-2" data-i18n="home.sections.viewAllLunch">View all</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="h5" data-i18n="home.sections.annTitle">Announcements</h2>
-          <ul id="ann-list" class="list-group small"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- header section starts      -->
+ <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
 
-  <div class="row g-4 mt-2">
-    <div class="col-md-7">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="h5" data-i18n="home.sections.menuTitle">Popular Menu</h2>
-          <div id="home-menu" class="row row-cols-1 row-cols-md-2 g-3"></div>
-          <a class="btn btn-outline mt-2" href="/menu.html" data-i18n="home.sections.viewMenu">View full menu</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="h5" data-i18n="home.sections.findUs">Find us</h2>
-          <p class="small text-muted mb-1" data-i18n="home.sections.routeIntro">Get route and ETA from your location:</p>
-          <div class="input-group mb-2">
-            <input type="text" id="route-origin" class="form-control" placeholder="60.1699, 24.9384 (lat,lon)">
-            <button id="btn-route" class="btn btn-brand" data-i18n="home.sections.routeBtn">Get route</button>
-          </div>
-          <div id="route-result" class="small"></div>
-          <div class="ratio ratio-4x3 mt-2">
-            <iframe id="osm-embed" title="Map" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=24.93%2C60.16%2C24.95%2C60.18&amp;layer=mapnik&amp;marker=60.17%2C24.94"></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+    <nav class="navbar">
+        <a class="active" href="#">home</a>
+        <a href="#">dishes</a>
+        <a href="#">about</a>
+        <a href="#">menu</a>
+        <a href="#">review</a>
+        <a href="#">order</a>
+    </nav>
 
-  <footer id="app-footer" class="mt-5"></footer>
+    <div class="icons">
+        <i class="fas fa-bars" id="menu-bars"></i>
+        <i class="fas fa-search" id="search-icon"></i>
+        <a href="#" class="fas fa-heart"></a>
+        <a href="#" class="fas fa-shopping-cart"></a>
+    </div>
 
-</body></html>
+</body>
+
+</html>
