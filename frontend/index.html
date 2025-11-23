@@ -32,6 +32,7 @@
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
         <a href="#" class="fas fa-shopping-cart"></a>
+        <a href="/frontend/login.html" class="fas fa-user"></a>
     </div>
 </header>
 
@@ -292,6 +293,23 @@
 </section>
 
 <!-- menu section ends -->
+
+<script>
+  // function to load another HTML file
+  function loadHTML(targetID, filePath) {
+    fetch(filePath)
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById(targetID).innerHTML = data;
+      })
+      .catch(err => console.error('Error loading file:', filePath, err));
+  }
+
+  // Load your other HTML files here
+  loadHTML("dishes", "dish.html");
+//   loadHTML("file2", "contact.html");
+//   loadHTML("file3", "services.html");
+</script>
 
 </body>
 
