@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
 </head>
 <body>
@@ -20,11 +20,11 @@
 
     <nav class="navbar">
         <a class="active" href="#">home</a>
-        <a href="/frontend/dish.html">dishes</a>
+        <a href="./dish.html">dishes</a>
         <a href="#">about</a>
-        <a href="/frontend/menu.html">menu</a>
-        <a href="/frontend/review.html">review</a>
-        <a href="/frontend/order.html">order</a>
+        <a href="./menu.html">menu</a>
+        <a href="./review.html">review</a>
+        <a href="./order.html">order</a>
     </nav>
 
     <div class="icons">
@@ -32,7 +32,7 @@
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
         <a href="#" class="fas fa-shopping-cart"></a>
-        <a href="/frontend/login.html" class="fas fa-user"></a>
+        <a href="./login.html" class="fas fa-user"></a>
     </div>
 </header>
 
@@ -61,7 +61,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="images/home-img-1.png" alt="">
+                    <img src="../assets/image/home-img-1.png" alt="">
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="images/home-img-2.png" alt="">
+                    <img src="../assets/image/home-img-2.png" alt="">
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="images/home-img-3.png" alt="">
+                    <img src="../assets/image/home-img-3.png" alt="">
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-1.jpg" alt="">
+                <img src="../assets/image/menu-1.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -130,7 +130,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-2.jpg" alt="">
+                <img src="../assets/image/menu-2.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -150,7 +150,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-3.jpg" alt="">
+                <img src="../assets/image/menu-3.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -170,7 +170,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-4.jpg" alt="">
+                <img src="../assets/image/menu-4.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -190,7 +190,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-5.jpg" alt="">
+                <img src="../assets/image/menu-5.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -210,7 +210,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-6.jpg" alt="">
+                <img src="../assets/image/menu-6.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -230,7 +230,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-7.jpg" alt="">
+                <img src="../assets/image/menu-7.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -250,7 +250,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-8.jpg" alt="">
+                <img src="../assets/image/menu-8.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -270,7 +270,7 @@
 
         <div class="box">
             <div class="image">
-                <img src="images/menu-9.jpg" alt="">
+                <img src="../assets/image/menu-9.jpg" alt="">
                 <a href="#" class="fas fa-heart"></a>
             </div>
             <div class="content">
@@ -293,23 +293,6 @@
 </section>
 
 <!-- menu section ends -->
-
-<script>
-  // function to load another HTML file
-  function loadHTML(targetID, filePath) {
-    fetch(filePath)
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById(targetID).innerHTML = data;
-      })
-      .catch(err => console.error('Error loading file:', filePath, err));
-  }
-
-  // Load your other HTML files here
-  loadHTML("dishes", "dish.html");
-//   loadHTML("file2", "contact.html");
-//   loadHTML("file3", "services.html");
-</script>
 
 </body>
 
