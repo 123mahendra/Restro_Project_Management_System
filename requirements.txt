@@ -1,3 +1,8 @@
 Flask==2.3.3
 Flask-Cors==3.0.10
 PyMongo==4.4.0
+PyJWT
+Werkzeug
+python-dotenv==1.0.0
+Flask-JWT-Extended==4.4.4
+stripe==6.0.0
