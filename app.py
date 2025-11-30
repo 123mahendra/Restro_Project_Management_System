@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory, render_template, session
 from flask_cors import CORS
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -157,6 +157,27 @@ def admin_update_status(order_id):
     return jsonify(serialize_doc(doc)), 200
 
 # ----------------------
+
+@app.route("/api/cart/update/<int:index>", methods=["POST"])
+def update_qty(index):
+    change = request.json["change"]
+    cart = session.get("cart", [])
+
+    cart[index]["qty"] += change
+    if cart[index]["qty"] <= 0:
+        cart[index]["qty"] = 1
+
+    session["cart"] = cart
+    return jsonify({"success": True})
+
+
+@app.route("/api/cart/remove/<int:index>", methods=["DELETE"])
+def remove_item(index):
+    cart = session.get("cart", [])
+    cart.pop(index)
+    session["cart"] = cart
+    return jsonify({"success": True})
+
 # Stripe Checkout session
 # ----------------------
 @app.route("/api/create-checkout-session", methods=["POST"])

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+
+<div class="cart-container">
+
+    <h2 class="page-title">Your Shopping Cart</h2>
+
+    <div class="cart-wrapper">
+
+        <!-- Items List -->
+        <div class="cart-items" id="cart-items">
+            <!-- Items injected by cart.js -->
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Tax (10%):</span>
+                <span id="tax">$0.00</span>
+            </div>
+
+            <div class="summary-total">
+                <strong>Total:</strong>
+                <strong id="total">$0.00</strong>
+            </div>
+
+            <a href="/checkout" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('frontend', filename='js/cart.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", loadCart);
+</script>
+
+{% endblock %}
