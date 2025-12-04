@@ -21,3 +21,7 @@ def admin_required(view_func):
             return redirect(url_for("auth.admin_login", next=request.path))
         return view_func(*args, **kwargs)
     return wrapper
+
+
+def login_required():
+    return None
