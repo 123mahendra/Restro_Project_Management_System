@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <a href="/admin/dashboard" class="btn secondary">← Back</a>
+  <h2>All orders</h2>
+
+  <div id="orders-admin-list">
+    {% for o in orders %}
+      <div class="order-card">
+        <h3>Order {{ o._id_str }}</h3>
+        <div><b>Created:</b> {{ o.created_at }}</div>
+        <div><b>User:</b> {{ o.user_id }}</div>
+        <div><b>Total:</b> €{{ "%.2f"|format(o.total) }}</div>
+        <div><b>Items:</b>
+          <ul>
+            {% for it in o.items %}
+              <li>{{ it.name }} × {{ it.qty }} — €{{ "%.2f"|format(it.price) }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="order-actions">
+          <form method="post" action="/admin/orders/update/{{ o._id_str }}">
+            <select name="status">
+              <option value="pending" {% if o.status=='pending' %}selected{% endif %}>Pending</option>
+              <option value="preparing" {% if o.status=='preparing' %}selected{% endif %}>Preparing</option>
+              <option value="completed" {% if o.status=='completed' %}selected{% endif %}>Completed</option>
+              <option value="cancelled" {% if o.status=='cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+            <button class="btn" type="submit">Update</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p>No orders.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

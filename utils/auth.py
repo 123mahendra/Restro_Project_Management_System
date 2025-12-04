@@ -1,4 +1,3 @@
-# utils/auth.py
 from functools import wraps
 from flask import session, redirect, url_for, request, current_app
 from bson import ObjectId

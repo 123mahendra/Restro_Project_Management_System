@@ -12,7 +12,7 @@ from menu_routes import menu_bp
 from order_routes import order_bp
 from api_routes import api_bp
 
-app = Flask(__name__, template_folder="pages", static_folder="static")
+app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = "your-secret-key"
 CORS(app)
 

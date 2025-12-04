@@ -1,10 +1,9 @@
-# admin_routes.py
 from flask import Blueprint, render_template, request, redirect, url_for
 from bson import ObjectId
 from utils.auth import admin_required, is_admin_session
 from utils.db import db
 
-admin_bp = Blueprint("admin", __name__, template_folder="pages")
+admin_bp = Blueprint("admin", __name__, template_folder="templates")
 
 @admin_bp.route("/admin")
 @admin_required

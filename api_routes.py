@@ -1,4 +1,3 @@
-# api_routes.py
 import datetime
 from flask import Blueprint, request, jsonify, current_app
 from bson import ObjectId
@@ -7,9 +6,6 @@ from utils.auth import admin_required, is_admin_session
 
 api_bp = Blueprint("api", __name__)
 
-# ----------------------
-# Helper to convert _id
-# ----------------------
 def serialize_doc(doc):
     if not doc:
         return None

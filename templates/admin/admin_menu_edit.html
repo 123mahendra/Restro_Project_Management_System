@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <a href="/admin/dashboard" class="btn secondary">← Back</a>
+
+  <div class="card">
+    <h2>{{ item and "Edit menu item" or "Add menu item" }}</h2>
+
+    <form method="post" id="menu-form" class="form" action="{{ item and url_for('menu.edit_menu', id=item._id) or url_for('menu.add_menu') }}">
+      <label> Name (EN)
+        <input name="name_en" value="{{ item.name_en if item else '' }}" required />
+      </label>
+      <label> Name (FI)
+        <input name="name_fi" value="{{ item.name_fi if item else '' }}" />
+      </label>
+
+      <label> Description (EN)
+        <textarea name="desc_en">{{ item.desc_en if item else '' }}</textarea>
+      </label>
+      <label> Description (FI)
+        <textarea name="desc_fi">{{ item.desc_fi if item else '' }}</textarea>
+      </label>
+
+      <label> Price (EUR)
+        <input name="price" type="number" step="0.01" value="{{ item.price if item else '0.00' }}" required />
+      </label>
+
+      <label> Category
+        <input name="category" value="{{ item.category if item else 'main' }}" />
+      </label>
+
+      <label> Active days (comma separated, e.g. mon,tue)
+        <input name="active_days" value="{{ item.active_days|join(',') if item and item.active_days else '' }}" />
+      </label>
+
+      <label> Dietary (JSON)
+        <input name="dietary" value="{{ item.dietary|tojson if item and item.dietary else '{}' }}" />
+        <small class="muted">Example: {"vegetarian": true, "vegan": false, "gluten_free": false, "allergens":["milk"]}</small>
+      </label>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">{{ item and "Save" or "Create" }}</button>
+        {% if item %}
+          <a href="{{ url_for('menu.delete_item', id=item._id) }}" class="btn secondary" onclick="return confirm('Delete item?')">Delete</a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

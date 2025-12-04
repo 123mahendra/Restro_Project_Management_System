@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-dashboard container">
+  <header class="admin-header">
+    <h1>Admin dashboard</h1>
+    <div class="admin-actions">
+      <a class="btn" href="/admin/menu/add">+ New menu</a>
+      <a class="btn" href="/admin/announcements">Announcements</a>
+      <a class="btn" href="/admin/orders">Orders</a>
+      <a class="btn secondary" href="/admin/logout">Logout</a>
+    </div>
+  </header>
+
+  <section id="admin-announcements" class="panel">
+    <h2>Announcements</h2>
+    <div id="ann-list"></div>
+    <form id="ann-form" class="inline-form">
+      <input name="title" placeholder="Title" required />
+      <input name="content" placeholder="Message" required />
+      <button id="ann-add" class="btn primary" type="button">Add</button>
+    </form>
+  </section>
+
+  <section id="admin-menu" class="panel">
+    <h2>Menu items</h2>
+    <div id="menu-list"></div>
+    <a href="/admin/menu/add" class="btn">Add new menu item</a>
+  </section>
+
+  <section id="admin-orders" class="panel">
+    <h2>Recent orders</h2>
+    <div id="order-list"></div>
+  </section>
+</div>
+
+<script src="/frontend/src/js/admin.js"></script>
+{% endblock %}
