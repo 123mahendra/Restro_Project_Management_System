@@ -1,53 +1,46 @@
+let cart = [];
+
 async function loadCart() {
-    let res = await fetch("/api/cart");
-    let items = await res.json();
+    const res = await fetch('/api/cart');
+    cart = await res.json();
+    renderCart();
+}
 
-    const container = document.getElementById("cart-items");
-    container.innerHTML = "";
-
-    let subtotal = 0;
-
-    items.forEach((item, index) => {
-        let total = item.price * item.qty;
-        subtotal += total;
-
-        container.innerHTML += `
-            <div class="cart-item">
-                <div class="item-info">
-                    <h4>${item.name}</h4>
-                    <p class="item-price">$${item.price}</p>
-                </div>
-
-                <div class="qty-box">
-                    <button onclick="updateQty(${index}, -1)">−</button>
-                    <span>${item.qty}</span>
-                    <button onclick="updateQty(${index}, 1)">+</button>
-                </div>
-
-                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-            </div>
-        `;
+function renderCart() {
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        const div = document.createElement('div');
+        div.innerHTML = `${item.name} x${item.qty} - $${item.price * item.qty}`;
+        container.appendChild(div);
+        total += item.price * item.qty;
     });
-
-    let tax = subtotal * 0.10;
-    let total = subtotal + tax;
-
-    document.getElementById("subtotal").innerText = `$${subtotal.toFixed(2)}`;
-    document.getElementById("tax").innerText = `$${tax.toFixed(2)}`;
-    document.getElementById("total").innerText = `$${total.toFixed(2)}`;
+    document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
 }
 
-async function updateQty(index, change) {
-    await fetch(`/api/cart/update/${index}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ change })
+async function addToCart(itemId) {
+    await fetch('/api/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item_id: itemId, qty: 1 })
     });
-
-    loadCart();
+    await loadCart();
 }
 
-async function removeItem(index) {
-    await fetch(`/api/cart/remove/${index}`, { method: "DELETE" });
-    loadCart();
+async function checkoutCart() {
+    const phone = document.getElementById('checkout-phone').value;
+    const pickup = document.getElementById('checkout-pickup').value;
+    const res = await fetch('/api/cart/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, pickup_time: pickup })
+    });
+    if (res.ok) {
+        alert('Order placed!');
+        cart = [];
+        renderCart();
+    }
 }
+
+document.addEventListener('DOMContentLoaded', loadCart);
