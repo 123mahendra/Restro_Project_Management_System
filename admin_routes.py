@@ -89,14 +89,14 @@ def edit_menu(id):
     item["_id"] = str(item["_id"])
     return render_template("admin/admin_menu_edit.html", item=item)
 
-@admin_bp.route("/admin/announcements")
+@admin_bp.route("/announcements")
 @admin_required
 def announcements_page():
     docs = list(db.announcements.find().sort("start_date",-1))
     for d in docs: d["_id"] = str(d["_id"])
     return render_template("admin/admin_announcements.html", announcements=docs)
 
-@admin_bp.route("/admin/orders")
+@admin_bp.route("/orders")
 @admin_required
 def orders_page():
     docs = list(db.orders.find().sort("created_at", -1))

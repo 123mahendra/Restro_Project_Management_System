@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 from werkzeug.security import generate_password_hash, check_password_hash
 from utils.db import db
 
-auth_bp = Blueprint("auth", __name__)
+auth_bp = Blueprint("auth", __name__, template_folder="templates")
 
 def seed_admin_if_needed():
     admin_username = os.getenv("ADMIN_USERNAME", "admin")
@@ -27,7 +27,7 @@ def seed_admin_if_needed():
     return res.inserted_id
 
 @auth_bp.route("/admin/login", methods=["GET", "POST"])
-def admin_login():
+def admin_login(render_templates=None):
     if request.method == "POST":
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")

@@ -4,7 +4,7 @@ from bson import ObjectId
 from utils.db import db
 from utils.auth import admin_required, is_admin_session
 
-api_bp = Blueprint("api", __name__)
+api_bp = Blueprint("api", __name__, url_prefix="/api")
 
 def serialize_doc(doc):
     if not doc:
@@ -20,7 +20,7 @@ def serialize_list(lst):
 # ----------------------
 # Menu endpoints
 # ----------------------
-@api_bp.route("/api/menu", methods=["GET"])
+@api_bp.route("/menu", methods=["GET"])
 def get_menu():
     # optional filters: category, vegetarian, vegan, day
     q = {}
@@ -38,7 +38,7 @@ def get_menu():
     serialize_list(docs)
     return jsonify(docs)
 
-@api_bp.route("/api/menu", methods=["POST"])
+@api_bp.route("/menu", methods=["POST"])
 @admin_required
 def create_menu():
     payload = request.json or {}
@@ -63,7 +63,7 @@ def create_menu():
     res = db.menu.insert_one(doc)
     return jsonify({"_id": str(res.inserted_id)}), 201
 
-@api_bp.route("/api/menu/<id>", methods=["PUT"])
+@api_bp.route("/menu/<id>", methods=["PUT"])
 @admin_required
 def update_menu(id):
     payload = request.json or {}
@@ -85,7 +85,7 @@ def update_menu(id):
     db.menu.update_one({"_id": ObjectId(id)}, {"$set": update})
     return jsonify({"ok": True})
 
-@api_bp.route("/api/menu/<id>", methods=["DELETE"])
+@api_bp.route("/menu/<id>", methods=["DELETE"])
 @admin_required
 def delete_menu(id):
     db.menu.delete_one({"_id": ObjectId(id)})
@@ -94,7 +94,7 @@ def delete_menu(id):
 # ----------------------
 # Announcements endpoints
 # ----------------------
-@api_bp.route("/api/announcements", methods=["GET"])
+@api_bp.route("/announcements", methods=["GET"])
 def get_announcements():
     today = datetime.date.today()
     docs = list(db.announcements.find({"active": True}).sort("start_date", -1))
@@ -113,7 +113,7 @@ def get_announcements():
             res.append(d)
     return jsonify(res)
 
-@api_bp.route("/api/announcements", methods=["POST"])
+@api_bp.route("/announcements", methods=["POST"])
 @admin_required
 def create_announcement():
     payload = request.json or {}
@@ -132,7 +132,7 @@ def create_announcement():
     res = db.announcements.insert_one(doc)
     return jsonify({"_id": str(res.inserted_id)}), 201
 
-@api_bp.route("/api/announcements/<id>", methods=["DELETE"])
+@api_bp.route("/announcements/<id>", methods=["DELETE"])
 @admin_required
 def delete_announcement(id):
     db.announcements.delete_one({"_id": ObjectId(id)})
@@ -141,7 +141,7 @@ def delete_announcement(id):
 # ----------------------
 # Orders endpoints
 # ----------------------
-@api_bp.route("/api/orders", methods=["GET"])
+@api_bp.route("/orders", methods=["GET"])
 def get_orders():
     # if admin -> return all orders, otherwise return empty or filtered (for customer flows)
     if is_admin_session():
@@ -152,7 +152,7 @@ def get_orders():
     serialize_list(docs)
     return jsonify(docs)
 
-@api_bp.route("/api/orders/<id>/status", methods=["POST"])
+@api_bp.route("/orders/<id>/status", methods=["POST"])
 @admin_required
 def update_order_status(id):
     payload = request.json or {}

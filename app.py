@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
-from pymongo import MongoClient
-import os
 
 load_dotenv()
+
+
+
+app = Flask(__name__, template_folder="templates", static_folder="static")
+app.secret_key = "your-secret-key"
+CORS(app)
 
 from auth_routes import auth_bp, seed_admin_if_needed
 from admin_routes import admin_bp
@@ -12,13 +16,9 @@ from menu_routes import menu_bp
 from order_routes import order_bp
 from api_routes import api_bp
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
-app.secret_key = "your-secret-key"
-CORS(app)
-
-# MongoDB
-client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017/"))
-db = client[os.getenv("DB_NAME", "restaurant_app")]
+# # MongoDB
+# client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017/"))
+# db = client[os.getenv("DB_NAME", "restaurant_app")]
 
 # Register Blueprints
 app.register_blueprint(auth_bp)
@@ -34,3 +34,7 @@ def initialize():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+def db():
+    return None
