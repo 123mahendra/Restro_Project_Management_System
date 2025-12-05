@@ -1,37 +1,107 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="admin-dashboard container">
-  <header class="admin-header">
-    <h1>Admin dashboard</h1>
-    <div class="admin-actions">
-      <a class="btn" href="/admin/menu/add">+ New menu</a>
-      <a class="btn" href="/admin/announcements">Announcements</a>
-      <a class="btn" href="/admin/orders">Orders</a>
-      <a class="btn secondary" href="/admin/logout">Logout</a>
-    </div>
-  </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
 
-  <section id="admin-announcements" class="panel">
-    <h2>Announcements</h2>
-    <div id="ann-list"></div>
-    <form id="ann-form" class="inline-form">
-      <input name="title" placeholder="Title" required />
-      <input name="content" placeholder="Message" required />
-      <button id="ann-add" class="btn primary" type="button">Add</button>
-    </form>
-  </section>
-
-  <section id="admin-menu" class="panel">
-    <h2>Menu items</h2>
-    <div id="menu-list"></div>
-    <a href="/admin/menu/add" class="btn">Add new menu item</a>
-  </section>
-
-  <section id="admin-orders" class="panel">
-    <h2>Recent orders</h2>
-    <div id="order-list"></div>
-  </section>
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+        <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin.dashboard') }}#menu-section">Menu Management</a></li>
+        <li><a href="{{ url_for('admin.dashboard') }}#orders-section">Orders</a></li>
+        <li><a href="{{ url_for('admin.announcements_page') }}">Announcements</a></li>
+        <li><a href="{{ url_for('auth.admin_logout') }}">Logout</a></li>
+    </ul>
 </div>
 
-<script src="/js/admin.js"></script>
-{% endblock %}
+<div class="main-content">
+    <h1>Welcome, Admin</h1>
+
+    <!-- Menu Management -->
+    <section id="menu-section">
+        <h2>Menu Items</h2>
+        <a href="{{ url_for('admin.add_menu') }}" class="btn">Add New Item</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name (EN)</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Active Days</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in menu %}
+                <tr>
+                    <td>{{ item.name_en }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.active_days | join(', ') }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_menu', id=item._id) }}">Edit</a> |
+                        <a href="{{ url_for('menu.delete_item', id=item._id) }}" onclick="return confirm('Delete this item?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="orders-section">
+        <h2>Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order._id_str }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>
+                        {% for i in order.items %}
+                            {{ i.name }} x {{ i.qty }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>${{ order.total }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        <button onclick="updateStatus('{{ order._id_str }}','preparing')">Preparing</button>
+                        <button onclick="updateStatus('{{ order._id_str }}','ready')">Ready</button>
+                        <button onclick="updateStatus('{{ order._id_str }}','completed')">Completed</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+function updateStatus(orderId, status) {
+    axios.post(`/api/orders/${orderId}/status`, {status: status})
+        .then(res => {
+            alert("Status updated");
+            location.reload();
+        })
+        .catch(err => console.error(err));
+}
+</script>
+
+</body>
+</html>

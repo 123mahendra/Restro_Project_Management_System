@@ -1,7 +1,6 @@
 from flask import Blueprint, request, redirect, render_template, jsonify
 from bson import ObjectId
-
-from app import db
+from utils.db import db
 from utils.auth import admin_required
 
 menu_bp = Blueprint("menu", __name__)

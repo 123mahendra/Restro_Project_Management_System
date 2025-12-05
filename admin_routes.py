@@ -13,15 +13,15 @@ def dashboard_root():
 @admin_bp.route("/admin/dashboard")
 @admin_required
 def dashboard():
-    # fetch summary data for dashboard view
     menu_items = list(db.menu.find().sort([("category",1),("name_en",1)]))
-    ann = list(db.announcements.find().sort("start_date",-1))
     orders = list(db.orders.find().sort("created_at",-1))
-    # convert ids for rendering
+
+    # convert _id to string
     for m in menu_items: m["_id"] = str(m["_id"])
-    for a in ann: a["_id"] = str(a["_id"])
     for o in orders: o["_id_str"] = str(o["_id"])
-    return render_template("admin/admin_dashboard.html", menu=menu_items, announcements=ann, orders=orders)
+
+    return render_template("admin_dashboard.html", menu=menu_items, orders=orders)
+
 
 @admin_bp.route("/admin/menu/add", methods=["GET","POST"])
 @admin_required

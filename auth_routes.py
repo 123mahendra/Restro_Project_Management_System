@@ -43,3 +43,17 @@ def admin_login(render_templates=None):
 def admin_logout():
     session.pop("admin_id", None)
     return redirect(url_for("auth.admin_login"))
+
+@auth_bp.route("/login", methods=["GET","POST"])
+def customer_login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        user = db.customers.find_one({"email": email})
+        if user and check_password_hash(user["password"], password):
+            session["customer_id"] = str(user["_id"])
+            session["customer_name"] = user["name"]
+            return redirect("/")
+        else:
+            return "Invalid credentials", 401
+    return render_template("login.html")

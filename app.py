@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
-
+from cart_routes import cart_bp
 load_dotenv()
 
 
@@ -12,7 +12,7 @@ CORS(app)
 
 from auth_routes import auth_bp, seed_admin_if_needed
 from admin_routes import admin_bp
-from menu_routes import menu_bp
+from menu_blueprints import menu_bp
 from order_routes import order_bp
 from api_routes import api_bp
 
@@ -27,6 +27,8 @@ app.register_blueprint(menu_bp)
 app.register_blueprint(order_bp)
 app.register_blueprint(api_bp)
 
+app.register_blueprint(cart_bp)
+
 # Seed admin on first request
 @app.before_request
 def initialize():
@@ -34,7 +36,3 @@ def initialize():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-def db():
-    return None
