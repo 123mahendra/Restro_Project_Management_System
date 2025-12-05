@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Resto</title>
-<link rel="stylesheet" href="/static/css/admin.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
-<header>
-    <h1>Admin Dashboard</h1>
-    <nav>
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/menu">Menu</a>
-        <a href="/admin/orders">Orders</a>
-        <a href="/admin/logout">Logout</a>
-    </nav>
-</header>
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+        <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin.dashboard') }}#menu-section">Menu Management</a></li>
+        <li><a href="{{ url_for('admin.dashboard') }}#orders-section">Orders</a></li>
+        <li><a href="{{ url_for('admin.announcements_page') }}">Announcements</a></li>
+        <li><a href="{{ url_for('auth.admin_logout') }}">Logout</a></li>
+    </ul>
+</div>
 
-<main>
-    <section>
+<div class="main-content">
+    <h1>Welcome, Admin</h1>
+
+    <!-- Menu Management -->
+    <section id="menu-section">
         <h2>Menu Items</h2>
-        <a href="/admin/menu/add" class="btn">Add New Menu Item</a>
+        <a href="{{ url_for('admin.add_menu') }}" class="btn">Add New Item</a>
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Name (EN)</th>
                     <th>Price</th>
                     <th>Category</th>
+                    <th>Active Days</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in menu %}
                 <tr>
-                    <td>{{ item['name_en'] }}</td>
-                    <td>${{ item['price'] }}</td>
-                    <td>{{ item['category'] }}</td>
+                    <td>{{ item.name_en }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.active_days | join(', ') }}</td>
                     <td>
-                        <a href="/admin/menu/edit/{{ item['_id'] }}">Edit</a>
-                        <a href="/admin/menu/delete/{{ item['_id'] }}" onclick="return confirm('Delete this item?')">Delete</a>
+                        <a href="{{ url_for('admin.edit_menu', id=item._id) }}">Edit</a> |
+                        <a href="{{ url_for('menu.delete_item', id=item._id) }}" onclick="return confirm('Delete this item?')">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -48,15 +54,16 @@
         </table>
     </section>
 
-    <section>
+    <!-- Orders Section -->
+    <section id="orders-section">
         <h2>Orders</h2>
         <table>
             <thead>
                 <tr>
+                    <th>Order ID</th>
                     <th>Customer</th>
                     <th>Items</th>
                     <th>Total</th>
-                    <th>Pickup Time</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -64,29 +71,37 @@
             <tbody>
                 {% for order in orders %}
                 <tr>
-                    <td>{{ order['customer_name'] }}</td>
+                    <td>{{ order._id_str }}</td>
+                    <td>{{ order.customer_name }}</td>
                     <td>
-                        {% for it in order['items'] %}
-                            {{ it['name'] }} x{{ it['qty'] }}<br>
+                        {% for i in order.items %}
+                            {{ i.name }} x {{ i.qty }}<br>
                         {% endfor %}
                     </td>
-                    <td>${{ order['total'] }}</td>
-                    <td>{{ order['pickup_time'] }}</td>
-                    <td>{{ order['status'] }}</td>
+                    <td>${{ order.total }}</td>
+                    <td>{{ order.status }}</td>
                     <td>
-                        {% if order['status'] != 'Completed' %}
-                        <form method="POST" action="/api/orders/{{ order['_id_str'] }}/status">
-                            <input type="hidden" name="status" value="Completed">
-                            <button type="submit">Mark Completed</button>
-                        </form>
-                        {% endif %}
+                        <button onclick="updateStatus('{{ order._id_str }}','preparing')">Preparing</button>
+                        <button onclick="updateStatus('{{ order._id_str }}','ready')">Ready</button>
+                        <button onclick="updateStatus('{{ order._id_str }}','completed')">Completed</button>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </section>
-</main>
+</div>
+
+<script>
+function updateStatus(orderId, status) {
+    axios.post(`/api/orders/${orderId}/status`, {status: status})
+        .then(res => {
+            alert("Status updated");
+            location.reload();
+        })
+        .catch(err => console.error(err));
+}
+</script>
 
 </body>
 </html>
