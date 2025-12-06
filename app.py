@@ -24,6 +24,10 @@ users = [
 
 sessions = {}
 
+@app.route('/')
+def home():
+    return render_template("index.html")
+
 @app.route('/admin')
 def admin():
     user_session_id = request.cookies.get("user_session_id")
