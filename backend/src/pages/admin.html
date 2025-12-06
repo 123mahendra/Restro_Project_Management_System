@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <span class="close-sidebar" id="close-sidebar">✕</span>
+        <h2>Admin Panel</h2>
+        <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
+        <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
+        <a href="#" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
+        <a href="#" data-section="users"><span class="material-icons">people</span>Users</a>
+        <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+        <header class="topbar">
+            <span class="menu-toggle" id="menu-toggle">☰</span>
+            <h1 id="section-title">Dashboard</h1>
+        </header>
+
+
+        <section class="content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section-page active">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-title">Total Orders</div>
+                        <div class="card-value">1,248</div>
+                        <div class="positive">+12% from last month</div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-title">Revenue</div>
+                        <div class="card-value">€24,580</div>
+                        <div class="positive">+8% from last month</div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-title">Customers</div>
+                        <div class="card-value">892</div>
+                        <div class="positive">+5% from last month</div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-title">Reviews</div>
+                        <div class="card-value">4.7/5</div>
+                        <div class="negative">-0.1 from last month</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Orders Section -->
+            <div id="orders" class="section-page">
+                <h2>Orders Page</h2>
+            </div>
+
+
+            <!-- Menu Section -->
+            <div id="menu" class="section-page">
+                <h2>Menu Items</h2>
+            </div>
+
+
+            <!-- Users Section -->
+            <div id="users" class="section-page">
+                <h2>User Management</h2>
+            </div>
+
+
+            <!-- Reviews Section -->
+            <div id="reviews" class="section-page">
+                <h2>Customer Reviews</h2>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>
