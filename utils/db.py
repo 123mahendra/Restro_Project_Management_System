@@ -1,11 +1,12 @@
-import os
 from pymongo import MongoClient
-from dotenv import load_dotenv
 
-load_dotenv()
+client = MongoClient("mongodb://localhost:27017/")  
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DB_NAME = os.getenv("DB_NAME", "foodshop")
+db = client["ecommerce"]
 
-_client = MongoClient(MONGO_URI)
-db = _client[DB_NAME]
+collection = db["products"]
+
+data = collection.find()
+
+for document in data:
+    print(document)
