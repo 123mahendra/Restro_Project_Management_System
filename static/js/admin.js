@@ -175,3 +175,17 @@ links.forEach(link => {
         document.getElementById(section).classList.add("active");
     });
 });
+
+const userMenu = document.querySelector('.user-menu');
+userMenu.addEventListener('click', () => {
+    const dropdown = userMenu.querySelector('.user-dropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+});
+
+// Optional: click outside to close
+document.addEventListener('click', (e) => {
+    const dropdown = document.querySelector('.user-dropdown');
+    if (!userMenu.contains(e.target)) {
+        dropdown.style.display = 'none';
+    }
+});
