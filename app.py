@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, request, redirect, make_response
+from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
@@ -24,9 +24,19 @@ users = [
 
 sessions = {}
 
+# Default home route
+
 @app.route('/')
 def home():
     return render_template("index.html")
+
+# Login Route
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+# Admin Routes
 
 @app.route('/admin')
 def admin():
@@ -53,8 +63,9 @@ def admin_login():
                 resp = make_response(redirect("/admin/dashboard"))
                 resp.set_cookie("user_session_id", user_session_id)
                 return resp
-
-        return redirect("/admin", error="Invalid credentials")
+            
+        flash("Invalid email or password!", "error")
+        return redirect("/admin")
     
     return render_template("admin/admin_login.html")
 
