@@ -169,6 +169,63 @@ body {
 }
 
 
+.logout {
+    position: absolute;
+    right: 20px;
+    font-size: 25px;
+    background-color: var(--primary);
+    border-radius: 50%;
+}
+
+/* Container for user menu */
+.user-menu {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    background-color: var(--primary);
+    right: 20px;
+    border-radius: 50%;
+}
+
+/* Dropdown hidden by default */
+.user-dropdown {
+    margin-top:5px;
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #2c3e50; /* match your topbar */
+    color: white;
+    min-width: 150px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+/* Dropdown items */
+.user-dropdown .user-name {
+    padding: 10px 15px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.user-dropdown a:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Show dropdown on hover or click */
+.user-menu:hover .user-dropdown {
+    display: block;
+}
+
+
 @media (max-width: 768px) {
     .close-sidebar {
         display: block;
