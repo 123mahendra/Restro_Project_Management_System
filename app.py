@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash
+from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
@@ -6,6 +6,7 @@ from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from flask import session
+from bson import ObjectId
 
 load_dotenv()
 
@@ -160,6 +161,35 @@ def admin_logout():
     resp = make_response(redirect("/admin"))
     resp.set_cookie("user_session_id", '', expires=0, path='/')
     return resp
+
+# Users
+
+@app.route('/admin/users')
+def admin_users():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions[user_session_id]
+    return render_template("admin/admin_dashboard.html",section="users",user=user)
+
+@app.route('/api/users', methods=["GET"])
+def user_list():
+    db = get_database()
+    users_collection = db.users
+    users = list(users_collection.find({}))
+    for user in users:
+        user["_id"] = str(user["_id"])
+    return jsonify(users)
+
+@app.route('/api/users/<user_id>', methods=["DELETE"])
+def api_delete_user(user_id):
+    db = get_database()
+    users_collection = db.users
+
+    result = users_collection.delete_one({"_id": ObjectId(user_id)})
+
+    if result.deleted_count == 1:
+        return jsonify({"success": True, "message": "User deleted"})
+    else:
+        return jsonify({"success": False, "message": "User not found"}), 404
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -225,6 +225,43 @@ body {
     display: block;
 }
 
+#users table {
+     width: 100%;
+    border-collapse: collapse;
+}
+
+#users table thead {
+    background: #009879;
+    color: #ffffff;
+}
+
+#users table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+#users table tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#users table tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.delete-btn {
+    background: #e60000;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background: #b30000;
+}
+
 
 @media (max-width: 768px) {
     .close-sidebar {
