@@ -23,8 +23,7 @@
 
 <body>
   <div class="container">
-    <div class="form-box login" style="width: 100%;">
-      {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
       <div id="flash-messages">
         {% for category, message in messages %}
@@ -35,6 +34,8 @@
       </div>
       {% endif %}
       {% endwith %}
+    <div class="form-box login" style="width: 100%;">
+      
       <form action="/admin/login" method="POST">
         <h1>Login</h1>
         <div class="input-box">
@@ -56,8 +57,8 @@
       setTimeout(() => {
         const flashBox = document.getElementById('flash-messages');
         if (flashBox) {
-          flashBox.style.animation = "fadeOut 1s forwards";  // Smooth fade
-          setTimeout(() => flashBox.remove(), 1000); // Remove from DOM
+          flashBox.style.animation = "fadeOut 1s forwards";  
+          setTimeout(() => flashBox.remove(), 1000); 
         }
       }, 3000);
     </script>
