@@ -1,177 +1,150 @@
+// --------------------------- API Helpers ---------------------------
+async function apiGET(path) {
+    const response = await fetch(path);
+    return response.ok ? response.json() : Promise.reject(await response.text());
+}
 
-// async function apiGET(path){ const r = await fetch(path); return r.ok ? r.json() : Promise.reject(await r.text()); }
-// async function apiPOST(path, body){ const r = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)}); return r.ok ? r.json() : Promise.reject(await r.text()); }
-// async function apiPUT(path, body){ const r = await fetch(path, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)}); return r.ok ? r.json() : Promise.reject(await r.text()); }
-// async function apiDELETE(path){ const r = await fetch(path, {method:'DELETE'}); return r.ok ? r.json() : Promise.reject(await r.text()); }
+async function apiPOST(path, body) {
+    const response = await fetch(path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    return response.ok ? response.json() : Promise.reject(await response.text());
+}
 
-// // ========== Announcements ==========
-// async function loadAnnouncementsAdmin(){
-//   const listEl = document.getElementById('ann-list') || document.getElementById('ann-editor-list');
-//   if(!listEl) return;
-//   listEl.innerHTML = 'Loading...';
-//   try{
-//     const anns = await apiGET('/api/announcements');
-//     listEl.innerHTML = '';
-//     anns.forEach(a => {
-//       const div = document.createElement('div');
-//       div.className = 'announcement-row';
-//       div.innerHTML = `<strong>${a.title}</strong> — ${a.message || a.content || ''}
-//         <button class="btn small" data-id="${a._id}" data-act="delete">Delete</button>`;
-//       listEl.appendChild(div);
-//     });
-//     document.querySelectorAll('[data-act="delete"]').forEach(b=>{
-//       b.onclick = async ()=> {
-//         if(!confirm('Delete announcement?')) return;
-//         const id = b.dataset.id;
-//         await apiDELETE('/api/announcements/'+id);
-//         loadAnnouncementsAdmin();
-//       };
-//     });
-//   }catch(e){ listEl.innerHTML = 'Failed to load.'; console.error(e);}
-// }
+async function apiDELETE(path) {
+    const response = await fetch(path, { method: 'DELETE' });
+    return response.ok ? response.json() : Promise.reject(await response.text());
+}
 
-// document.addEventListener('DOMContentLoaded', ()=>{
-//   // announcements add
-//   const annAddBtn = document.getElementById('ann-add');
-//   if(annAddBtn){
-//     annAddBtn.onclick = async ()=>{
-//       const form = document.getElementById('ann-form');
-//       const fd = new FormData(form);
-//       const body = { title: fd.get('title'), content: fd.get('content') };
-//       try{ await apiPOST('/api/announcements', body); form.reset(); loadAnnouncementsAdmin(); } catch(e){ alert('Failed: ' + e); }
-//     };
-//   }
-//   loadAnnouncementsAdmin();
-
-//   // menu list load
-//   loadMenuAdmin();
-
-//   // orders
-//   loadOrdersAdmin();
-// });
-
-// // ========== Menu admin ==========
-// async function loadMenuAdmin(){
-//   const el = document.getElementById('menu-list');
-//   if(!el) return;
-//   el.innerHTML = 'Loading...';
-//   try{
-//     const items = await apiGET('/api/menu');
-//     el.innerHTML = '';
-//     items.forEach(it => {
-//       const itemDiv = document.createElement('div');
-//       itemDiv.className = 'menu-row';
-//       itemDiv.innerHTML = `<div class="menu-left">
-//           <strong>${(it.name_en||it.name)}</strong> <span class="muted">€${Number(it.price).toFixed(2)}</span>
-//           <div class="muted small">${(it.category||'')} • Days: ${(it.active_days||[]).join(',')}</div>
-//         </div>
-//         <div class="menu-actions">
-//           <a class="btn small" href="/admin/menu/edit/${it._id}">Edit</a>
-//           <button class="btn small danger" data-id="${it._id}" data-act="del">Delete</button>
-//         </div>`;
-//       el.appendChild(itemDiv);
-//     });
-
-//     el.querySelectorAll('[data-act="del"]').forEach(btn=>{
-//       btn.onclick = async ()=>{
-//         if(!confirm('Delete menu item?')) return;
-//         try{
-//           await apiDELETE('/api/menu/'+btn.dataset.id);
-//           loadMenuAdmin();
-//         }catch(e){ alert('Failed: '+e); }
-//       };
-//     });
-//   }catch(e){ el.innerHTML = 'Failed to load menu.'; console.error(e); }
-// }
-
-// // ========== Orders admin ==========
-// async function loadOrdersAdmin(){
-//   const el = document.getElementById('order-list') || document.getElementById('orders-admin-list');
-//   if(!el) return;
-//   el.innerHTML = 'Loading...';
-//   try{
-//     const orders = await apiGET('/api/orders');
-//     el.innerHTML = '';
-//     orders.forEach(o=>{
-//       const card = document.createElement('div');
-//       card.className = 'order-row';
-//       const itemsHTML = (o.items||[]).map(it => `<li>${it.name} x${it.qty} — €${Number(it.price).toFixed(2)}</li>`).join('');
-//       card.innerHTML = `<div><strong>Order ${o._id}</strong> • ${o.created_at || ''} • €${Number(o.total||0).toFixed(2)}</div>
-//         <div><ul>${itemsHTML}</ul></div>
-//         <div class="order-actions">
-//           <select data-id="${o._id}" class="order-status">
-//             <option ${o.status==='pending'?'selected':''} value="pending">Pending</option>
-//             <option ${o.status==='preparing'?'selected':''} value="preparing">Preparing</option>
-//             <option ${o.status==='completed'?'selected':''} value="completed">Completed</option>
-//             <option ${o.status==='cancelled'?'selected':''} value="cancelled">Cancelled</option>
-//           </select>
-//           <button class="btn small" data-act="update" data-id="${o._id}">Update</button>
-//         </div>`;
-//       el.appendChild(card);
-//     });
-
-//     el.querySelectorAll('[data-act="update"]').forEach(b=>{
-//       b.onclick = async ()=>{
-//         const id = b.dataset.id;
-//         const sel = b.parentElement.querySelector('.order-status');
-//         const status = sel.value;
-//         try{
-//           await apiPOST('/api/orders/'+id+'/status', { status });
-//           loadOrdersAdmin();
-//         }catch(e){ alert('Failed to update status: ' + e); }
-//       };
-//     });
-//   }catch(e){ el.innerHTML = 'Failed to load orders.'; console.error(e); }
-// }
-
-
-
-// Sidebar toggle for mobile
-const closeBtn = document.getElementById("close-sidebar");
-closeBtn.addEventListener("click", () => {
-    sidebar.classList.remove("mobile-active");
-});
-
-
-// Sidebar toggle for mobile
+// --------------------------- DOM Elements ---------------------------
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("menu-toggle");
+const closeBtn = document.getElementById("close-sidebar");
+const links = document.querySelectorAll(".sidebar a");
+const pages = document.querySelectorAll(".section-page");
+const userMenu = document.querySelector('.user-menu');
+const sectionTitle = document.getElementById("section-title");
+
+// --------------------------- Sidebar Toggle ---------------------------
 toggleBtn.addEventListener("click", () => {
     if (window.innerWidth <= 768) {
         sidebar.classList.toggle("mobile-active");
     } else {
-        // DESKTOP VIEW — collapse/expand sidebar
         sidebar.classList.toggle("collapsed");
     }
 });
 
-
-// Page switching
-const links = document.querySelectorAll(".sidebar a");
-const pages = document.querySelectorAll(".section-page");
-
-
-// Open sidebar when clicking dashboard icon on mobile
-const dashboardIcon = document.querySelector("[data-section='dashboard'] .material-icons");
-dashboardIcon.addEventListener("click", (e) => {
-    if (window.innerWidth <= 768) {
-        e.stopPropagation();
-        sidebar.classList.add("mobile-active");
-    }
+closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("mobile-active");
 });
 
+// --------------------------- User Dropdown ---------------------------
+userMenu.addEventListener('click', () => {
+    const dropdown = userMenu.querySelector('.user-dropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+});
 
+document.addEventListener('click', (e) => {
+    const dropdown = document.querySelector('.user-dropdown');
+    if (!userMenu.contains(e.target)) dropdown.style.display = 'none';
+});
+
+// --------------------------- Section Activation ---------------------------
+function activateSection(section) {
+    // Show correct page
+    pages.forEach(p => p.classList.remove("active"));
+    const activePage = document.getElementById(section);
+    if (activePage) activePage.classList.add("active");
+
+    // Update topbar title
+    if (sectionTitle)
+        sectionTitle.innerText = section.charAt(0).toUpperCase() + section.slice(1);
+
+    // Update sidebar active link
+    links.forEach(link => link.classList.remove("active"));
+    const activeLink = document.querySelector(`.sidebar a[data-section="${section}"]`);
+    if (activeLink) activeLink.classList.add("active");
+
+    // Load Users section dynamically
+    if (section === "users") loadUsers();
+
+    // Update URL without reload
+    history.pushState({}, "", `/admin/${section}`);
+}
+
+// --------------------------- Page Load ---------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    const initialSection = document.body.dataset.section || "dashboard";
+    activateSection(initialSection);
+});
+
+// --------------------------- Sidebar Click ---------------------------
 links.forEach(link => {
-    link.addEventListener("click", () => {
-        links.forEach(l => l.classList.remove("active"));
-        link.classList.add("active");
-
-
+    link.addEventListener("click", (e) => {
+        e.preventDefault(); // prevent default anchor behavior
         const section = link.dataset.section;
-        document.getElementById("section-title").innerText = section.charAt(0).toUpperCase() + section.slice(1);
-
-
-        pages.forEach(page => page.classList.remove("active"));
-        document.getElementById(section).classList.add("active");
+        activateSection(section);
     });
 });
+
+// --------------------------- Browser Back/Forward ---------------------------
+window.addEventListener('popstate', () => {
+    const sectionFromURL = window.location.pathname.split("/").pop() || "dashboard";
+    activateSection(sectionFromURL);
+});
+
+// --------------------------- Users Section ---------------------------
+async function loadUsers() {
+    try {
+        const res = await apiGET("/api/users");
+        const tbody = document.getElementById("users-table");
+        tbody.innerHTML = "";
+
+        res.forEach((user, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${user.first_name || ""} ${user.last_name || ""}</td>
+                    <td>${user.email || ""}</td>
+                    <td>${user.role || "User"}</td>
+                    <td>
+                        <button class="delete-btn" data-id="${user._id}">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Attach delete button listeners
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                deleteUser(id);
+            });
+        });
+
+    } catch (err) {
+        console.error("Error loading users:", err);
+        const tbody = document.getElementById("users-table");
+        if (tbody) tbody.innerHTML = "<tr><td colspan='5'>Failed to load users.</td></tr>";
+    }
+}
+
+// --------------------------- Delete User ---------------------------
+async function deleteUser(id) {
+    if (!confirm("Are you sure you want to delete this user?")) return;
+
+    try {
+        const res = await apiDELETE(`/api/users/${id}`);
+        if (res.success) {
+            alert("User deleted successfully.");
+            loadUsers(); 
+        } else {
+            alert(res.message || "Failed to delete user.");
+        }
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        alert("Error deleting user.");
+    }
+}

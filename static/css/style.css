@@ -633,3 +633,33 @@ header .icons #menu-bars{
 .footer .credit span{
     color:var(--green);
 }
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; 
+    min-width: 150px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 10;
+    margin-top:25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.user-dropdown .dropdown-content .menu-name {
+    font-size: 16px;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+

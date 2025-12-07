@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../../static/css/admin.css">
 </head>
 
-<body>
+<body data-section="{{ section }}">
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
@@ -18,7 +19,7 @@
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
         <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="#" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
-        <a href="#" data-section="users"><span class="material-icons">people</span>Users</a>
+        <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
     </aside>
 
@@ -27,6 +28,13 @@
         <header class="topbar">
             <span class="menu-toggle" id="menu-toggle">☰</span>
             <h1 id="section-title">Dashboard</h1>
+            <div class="user-menu">
+                <i class="fas fa-user" style="padding: 10px; color: white;"></i>
+                <div class="user-dropdown">
+                    <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+                    <a href="/admin/logout">Logout</a>
+                </div>
+            </div>
         </header>
 
 
@@ -78,7 +86,21 @@
 
             <!-- Users Section -->
             <div id="users" class="section-page">
-                <h2>User Management</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="users-table">
+
+                    </tbody>
+                </table>
             </div>
 
 
