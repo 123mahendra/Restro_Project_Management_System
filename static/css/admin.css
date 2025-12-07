@@ -244,9 +244,9 @@ table tr {
     border-bottom: 1px solid #dddddd;
 }
 
-table tr:nth-child(even) {
+/* table tr:nth-child(even) {
     background-color: #f3f3f3;
-}
+} */
 
 .delete-btn {
     background: #e60000;

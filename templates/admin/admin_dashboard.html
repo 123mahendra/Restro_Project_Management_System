@@ -18,8 +18,8 @@
         <h2>Admin Panel</h2>
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
         <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
-        <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="#" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
+        <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
     </aside>
@@ -94,7 +94,7 @@
                     </thead>
 
                     <tbody id="dishes-table">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -157,17 +157,190 @@
                 </div>
             </div>
 
+            <!-- Menu Section -->
+            <div id="menu" class="section-page">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Sunday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Sunday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="sunday-table">
+                        <!-- dynamic items -->
+                        <tr>
+                            <td colspan="4" style="text-align: center;">No data available!</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Monday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Monday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="monday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Tuesday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Tuesday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tuesday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Wednesday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Wednesday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wednesday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Thursday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Thursday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="thursday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Friday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Friday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="friday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Saturday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Saturday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="saturday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Menu Add Dish Modal -->
+            <div id="menuModal" class="modal">
+                <div class="modal-content">
+                    <h3>Add Dish to <span id="modalDay"></span></h3>
+                    <form id="menuForm">
+                        <label>Dish</label>
+                        <select id="modalDishSelect" name="dish" required>
+                            <!-- Options will be dynamically loaded from /api/dishes -->
+                        </select>
+
+                        <div class="modal-buttons">
+                            <button type="button" class="close-btn" id="closeMenuModal">Close</button>
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <!-- Orders Section -->
             <div id="orders" class="section-page">
                 <h2>Orders Page</h2>
             </div>
-
-
-            <!-- Menu Section -->
-            <div id="menu" class="section-page">
-                <h2>Menu Items</h2>
-            </div>
-
 
             <!-- Users Section -->
             <div id="users" class="section-page">

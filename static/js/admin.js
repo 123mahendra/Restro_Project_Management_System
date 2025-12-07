@@ -287,3 +287,181 @@ document.getElementById("closeEditDish").addEventListener("click", () => {
     document.getElementById("editDishModal").style.display = "none";
 });
 
+// ---------------------------- Menu Section ----------------------------
+
+// Open Add Dish to Day Modal
+document.querySelectorAll(".add-btn[data-day]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+        const day = btn.getAttribute("data-day");
+        openMenuModal(day);
+    });
+});
+
+function openMenuModal(day) {
+    // Create or use a single modal for all days
+    let modal = document.getElementById("menuModal");
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "menuModal";
+        modal.className = "modal";
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close" id="closeMenuModal">&times;</span>
+                <h3>Add Dish to <span id="modalDayName">${day}</span></h3>
+                <label>Day</label>
+                <input type="text" id="modalDay" readonly value="${day}">
+                <label>Select Dish</label>
+                <select id="modalDishSelect">
+                    <option value="">Loading dishes...</option>
+                </select>
+                <div class="modal-buttons">
+                    <button id="saveMenuDish" class="save-btn">Save</button>
+                    <button id="closeMenuModalBtn" class="close-btn">Close</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Close handlers
+        document.getElementById("closeMenuModal").onclick = () => modal.style.display = "none";
+        document.getElementById("closeMenuModalBtn").onclick = () => modal.style.display = "none";
+    } else {
+        document.getElementById("modalDayName").innerText = day;
+        document.getElementById("modalDay").value = day;
+    }
+
+    // Load dishes into select dropdown
+    loadDishOptionsForMenu();
+
+    // Save button
+    document.getElementById("saveMenuDish").onclick = async () => {
+        const selectedDishId = document.getElementById("modalDishSelect").value;
+        if (!selectedDishId) return alert("Please select a dish");
+
+        try {
+            const res = await apiPOST("/api/menu", {
+                day: day,
+                dishId: selectedDishId
+            });
+            if (res.success) {
+                alert(`Dish added to ${day}`);
+                modal.style.display = "none";
+                loadDayMenu(day);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Failed to add dish to menu");
+        }
+    };
+
+    modal.style.display = "flex";
+}
+
+// Load dish options for dropdown
+async function loadDishOptionsForMenu() {
+    const select = document.getElementById("modalDishSelect");
+    select.innerHTML = `<option value="">Select a dish</option>`;
+    try {
+        const dishes = await apiGET("/api/dishes");
+        dishes.forEach(d => {
+            select.innerHTML += `<option value="${d._id}">${d.name} (£${d.price})</option>`;
+        });
+    } catch (err) {
+        console.error(err);
+        select.innerHTML = `<option value="">Failed to load dishes</option>`;
+    }
+}
+
+// Load dishes for a specific day
+async function loadDayMenu(day) {
+    try {
+        const res = await apiGET(`/api/menu/${day}`);
+        // print(res)
+        const tbody = document.getElementById(`${day.toLowerCase()}-table`);
+        tbody.innerHTML = "";
+
+        if (res.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No dishes added!</td></tr>`;
+            return;
+        }
+
+        res.forEach((item, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${item.dish_name}</td>
+                    <td>£${item.price}</td>
+                    <td>
+                        <button class="delete-btn" data-id="${item._id}" data-day="${day}">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Attach delete handlers
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.onclick = async () => {
+                if (!confirm("Delete this dish from the day?")) return;
+                try {
+                    await apiDELETE(`/api/menu/${btn.dataset.id}`);
+                    loadDayMenu(btn.dataset.day);
+                } catch (err) {
+                    console.error(err);
+                    alert("Failed to delete dish from menu");
+                }
+            };
+        });
+
+    } catch (err) {
+        console.error(err);
+        const tbody = document.getElementById(`${day.toLowerCase()}-table`);
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Failed to load dishes</td></tr>`;
+    }
+}
+
+// Load all days on page load
+["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].forEach(day => loadDayMenu(day));
+
+// All add buttons in menu section
+document.querySelectorAll(".add-btn[data-day]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+        const day = btn.dataset.day;
+        document.getElementById("modalDay").innerText = day;
+        document.getElementById("menuModal").style.display = "flex";
+
+        // Load dishes into select
+        const dishSelect = document.getElementById("modalDishSelect");
+        dishSelect.innerHTML = ""; // clear previous options
+        const dishes = await apiGET("/api/dishes");
+        dishes.forEach(d => {
+            const option = document.createElement("option");
+            option.value = d._id;
+            option.textContent = d.name;
+            dishSelect.appendChild(option);
+        });
+
+        // Save the day in form dataset
+        document.getElementById("menuForm").dataset.day = day;
+    });
+});
+
+// Close modal
+document.getElementById("closeMenuModal").addEventListener("click", () => {
+    document.getElementById("menuModal").style.display = "none";
+});
+
+// Submit modal form
+document.getElementById("menuForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const day = e.target.dataset.day;
+    const dishId = document.getElementById("modalDishSelect").value;
+
+    const res = await apiPOST("/api/menu", { day, dishId });
+    if (res.success) {
+        alert("Dish added to " + day);
+        document.getElementById("menuModal").style.display = "none";
+        loadDayMenu(day);
+    } else {
+        alert("Failed to add dish");
+    }
+});

@@ -332,6 +332,49 @@ def update_dish(id):
 
     return jsonify({"success": True, "message": "Dish updated"})
 
+# Add dish to a day
+@app.route('/admin/menu')
+def admin_menu():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions.get(user_session_id)
+    return render_template("admin/admin_dashboard.html", section="menu", user=user)
+
+@app.route("/api/menu", methods=["POST"])
+def add_menu_dish():
+    db = get_database()
+    data = request.get_json()
+    day = data["day"]
+    dish_id = data["dishId"]
+
+    dish = db.dishes.find_one({"_id": ObjectId(dish_id)})
+    if not dish:
+        return jsonify({"success": False, "message": "Dish not found"}), 404
+
+    db.menu.insert_one({
+        "day": day,
+        "dish_id": ObjectId(dish_id),
+        "dish_name": dish["name"],
+        "price": dish["price"]
+    })
+    return jsonify({"success": True})
+
+# Get menu dishes for a day
+@app.route("/api/menu/<day>", methods=["GET"])
+def get_menu_day(day):
+    db = get_database()
+    entries = list(db.menu.find({"day": day}))
+    for e in entries:
+        e["_id"] = str(e["_id"])
+        e["dish_id"] = str(e["dish_id"])
+    return jsonify(entries)
+
+# Delete dish from day
+@app.route("/api/menu/<id>", methods=["DELETE"])
+def delete_menu_dish(id):
+    db = get_database()
+    db.menu.delete_one({"_id": ObjectId(id)})
+    return jsonify({"success": True})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
