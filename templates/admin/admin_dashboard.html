@@ -17,6 +17,7 @@
         <span class="close-sidebar" id="close-sidebar">✕</span>
         <h2>Admin Panel</h2>
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
+        <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
         <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="#" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
@@ -71,6 +72,62 @@
                 </div>
             </div>
 
+            <!-- Dishes Section -->
+            <div id="dishes" class="section-page">
+
+                <!-- Top Bar with Add Button -->
+                <div class="dishes-header">
+                    <h2>Dishes</h2>
+                    <button id="add-dish-btn" class="add-btn">+ Add Dish</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dishes-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <!-- Modal Form for Adding Dish -->
+            <div id="dish-modal" class="modal">
+                <div class="modal-content">
+                    <h3>Add New Dish</h3>
+
+                    <form id="dish-form">
+
+                        <label>Dish Name</label>
+                        <input type="text" name="name" required>
+
+                        <label>Price</label>
+                        <input type="number" name="price" required>
+
+                        <label>Description</label>
+                        <textarea name="description" rows="4" required></textarea>
+
+                        <label>Image</label>
+                        <input type="file" name="image" accept="image/*">
+
+                        <div class="modal-buttons">
+                            <button type="button" id="close-modal" class="close-btn">Close</button>
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
 
             <!-- Orders Section -->
             <div id="orders" class="section-page">

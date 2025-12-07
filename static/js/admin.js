@@ -69,6 +69,7 @@ function activateSection(section) {
 
     // Load Users section dynamically
     if (section === "users") loadUsers();
+    if (section === "dishes") loadDishes();
 
     // Update URL without reload
     history.pushState({}, "", `/admin/${section}`);
@@ -140,7 +141,7 @@ async function deleteUser(id) {
         const res = await apiDELETE(`/api/users/${id}`);
         if (res.success) {
             alert("User deleted successfully.");
-            loadUsers(); 
+            loadUsers();
         } else {
             alert(res.message || "Failed to delete user.");
         }
@@ -149,3 +150,140 @@ async function deleteUser(id) {
         alert("Error deleting user.");
     }
 }
+
+
+// ---------------------------- Dish Modal ----------------------------
+document.getElementById("add-dish-btn").addEventListener("click", () => {
+    document.getElementById("dish-modal").style.display = "flex";
+});
+
+// Close modal
+document.getElementById("close-modal").addEventListener("click", () => {
+    document.getElementById("dish-modal").style.display = "none";
+});
+
+// Submit dish
+document.getElementById("dish-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    let res = await fetch("/api/dishes", {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await res.json();
+
+    if (data.success) {
+        alert("Dish Added Successfully");
+        document.getElementById("dish-modal").style.display = "none";
+        e.target.reset();
+        loadDishes();
+    } else {
+        alert("Failed to add dish");
+    }
+});
+
+// ---------------------------- Load Dishes --------------------------
+async function loadDishes() {
+    try {
+        const res = await apiGET("/api/dishes");
+        const tbody = document.getElementById("dishes-table");
+        tbody.innerHTML = "";
+
+        res.forEach((dish, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${dish.name || ""}</td>
+                    <td>${dish.price || ""}</td>
+                    <td>${dish.description || ""}</td>
+                    <td>
+                    ${dish.image
+                    ? `<img src="/static/assets/dishes/${dish.image}" class="dish-image">`
+                    : "No Image"}
+                    </td>
+                    <td>
+                        <button class="edit-btn" data-id="${dish._id}">Edit</button>
+                        <button class="delete-btn" data-id="${dish._id}">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            deleteDish(btn.getAttribute("data-id"));
+        });
+    });
+
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            openEditDishModal(btn.getAttribute("data-id"));
+        });
+    });
+
+    } catch (err) {
+        console.error("Error loading dishes:", err);
+        const tbody = document.getElementById("dishes-table");
+        if (tbody) tbody.innerHTML = "<tr><td colspan='6'>Failed to load dishes.</td></tr>";
+    }
+}
+
+// ------------------- DELETE DISH -------------------
+async function deleteDish(id) {
+    if (!confirm("Are you sure you want to delete this dish?")) return;
+
+    const res = await apiDELETE(`/api/dishes/${id}`);
+    if (res.success) {
+        alert("Dish deleted!");
+        loadDishes();
+    }
+}
+
+async function openEditDishModal(id) {
+    let res = await fetch(`/api/dishes/${id}`);
+    let dish = await res.json();
+
+    document.getElementById("editDishId").value = dish._id;
+    document.getElementById("editDishName").value = dish.name;
+    document.getElementById("editDishPrice").value = dish.price;
+    document.getElementById("editDishDescription").value = dish.description;
+
+    document.getElementById("editDishModal").style.display = "flex";
+}
+
+document.getElementById("editDishForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let id = document.getElementById("editDishId").value;
+
+    let formData = new FormData();
+    formData.append("name", document.getElementById("editDishName").value);
+    formData.append("price", document.getElementById("editDishPrice").value);
+    formData.append("description", document.getElementById("editDishDescription").value);
+
+    let image = document.getElementById("editDishImage").files[0];
+    if (image) formData.append("image", image);
+
+    let res = await fetch(`/api/dishes/${id}`, {
+        method: "PUT",
+        body: formData
+    });
+
+    let data = await res.json();
+
+    if (data.success) {
+        alert("Dish updated!");
+        document.getElementById("editDishModal").style.display = "none";
+        loadDishes();
+    } else {
+        alert("Update failed");
+    }
+});
+
+document.getElementById("closeEditDish").addEventListener("click", () => {
+    document.getElementById("editDishModal").style.display = "none";
+});
+
