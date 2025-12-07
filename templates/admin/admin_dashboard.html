@@ -71,6 +71,33 @@
                 </div>
             </div>
 
+            <!-- Edit Dish Modal -->
+            <div class="modal" id="editDishModal">
+                <div class="modal-content">
+                    <h2>Edit Dish</h2>
+
+                    <form id="editDishForm">
+                        <input type="hidden" id="editDishId">
+
+                        <label>Dish Name</label>
+                        <input type="text" id="editDishName" required>
+
+                        <label>Price</label>
+                        <input type="number" id="editDishPrice" step="0.01" required>
+
+                        <label>Description</label>
+                        <textarea id="editDishDescription" required></textarea>
+
+                        <label>Image (leave empty to keep old)</label>
+                        <input type="file" id="editDishImage">
+
+                        <div class="modal-buttons">
+                            <button type="button" class="close-btn" id="closeEditDish">Close</button>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Orders Section -->
             <div id="orders" class="section-page">

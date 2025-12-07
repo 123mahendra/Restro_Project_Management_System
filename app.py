@@ -7,6 +7,8 @@ from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from flask import session
 from bson import ObjectId
+from werkzeug.utils import secure_filename
+import os
 
 load_dotenv()
 
@@ -190,6 +192,56 @@ def api_delete_user(user_id):
         return jsonify({"success": True, "message": "User deleted"})
     else:
         return jsonify({"success": False, "message": "User not found"}), 404
+    
+@app.route('/api/dishes/<id>', methods=['GET'])
+def get_single_dish(id):
+    db = get_database()
+    dishes = db.dishes
+
+    dish = dishes.find_one({"_id": ObjectId(id)})
+    if not dish:
+        return jsonify({"error": "Dish not found"}), 404
+
+    dish["_id"] = str(dish["_id"])
+    return jsonify(dish)
+
+@app.route('/api/dishes/<id>', methods=['PUT'])
+def update_dish(id):
+    db = get_database()
+    dishes = db.dishes
+
+    dish = dishes.find_one({"_id": ObjectId(id)})
+    if not dish:
+        return jsonify({"success": False, "error": "Dish not found"}), 404
+
+    name = request.form.get("name")
+    price = request.form.get("price")
+    description = request.form.get("description")
+    image = request.files.get("image")
+
+    update_data = {
+        "name": name,
+        "price": float(price),
+        "description": description
+    }
+
+    # If user uploads a new image
+    if image:
+        filename = secure_filename(image.filename)
+        image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        image.save(image_path)
+
+        # delete old image
+        if dish.get("image"):
+            old_path = os.path.join(app.config["UPLOAD_FOLDER"], dish["image"])
+            if os.path.exists(old_path):
+                os.remove(old_path)
+
+        update_data["image"] = filename
+
+    dishes.update_one({"_id": ObjectId(id)}, {"$set": update_data})
+
+    return jsonify({"success": True, "message": "Dish updated"})
 
 if __name__ == "__main__":
     app.run(debug=True)
