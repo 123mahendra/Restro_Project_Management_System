@@ -650,6 +650,24 @@
 <script src="/js/order.js"></script>
 <script src="/js/animations.js"></script>
 
+<button onclick="addToCart('PRODUCT_MONGO_ID')">Add to Cart</button>
+
+<script>
+async function addToCart(pid) {
+    let res = await fetch("/api/cart/add", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            product_id: pid,
+            quantity: 1
+        })
+    });
+
+    let data = await res.json();
+    alert("Added to cart!");
+}
+</script>
+
 
 <script>
   // function to load another HTML file
