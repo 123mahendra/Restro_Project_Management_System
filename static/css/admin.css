@@ -317,6 +317,7 @@ table tr {
 .modal-content textarea {
     width: 100%;
     margin-bottom: 12px;
+    margin-top:5px;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -351,6 +352,15 @@ table tr {
     height: 60px;    
     object-fit: cover;  
     border-radius: 5px;
+}
+
+.menu-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 

@@ -70,6 +70,7 @@ function activateSection(section) {
     // Load Users section dynamically
     if (section === "users") loadUsers();
     if (section === "dishes") loadDishes();
+    if (section === "menu") ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].forEach(day => loadDayMenu(day));
 
     // Update URL without reload
     history.pushState({}, "", `/admin/${section}`);
@@ -330,9 +331,6 @@ function openMenuModal(day) {
         document.getElementById("modalDay").value = day;
     }
 
-    // Load dishes into select dropdown
-    loadDishOptionsForMenu();
-
     // Save button
     document.getElementById("saveMenuDish").onclick = async () => {
         const selectedDishId = document.getElementById("modalDishSelect").value;
@@ -355,21 +353,6 @@ function openMenuModal(day) {
     };
 
     modal.style.display = "flex";
-}
-
-// Load dish options for dropdown
-async function loadDishOptionsForMenu() {
-    const select = document.getElementById("modalDishSelect");
-    select.innerHTML = `<option value="">Select a dish</option>`;
-    try {
-        const dishes = await apiGET("/api/dishes");
-        dishes.forEach(d => {
-            select.innerHTML += `<option value="${d._id}">${d.name} (£${d.price})</option>`;
-        });
-    } catch (err) {
-        console.error(err);
-        select.innerHTML = `<option value="">Failed to load dishes</option>`;
-    }
 }
 
 // Load dishes for a specific day
@@ -431,7 +414,13 @@ document.querySelectorAll(".add-btn[data-day]").forEach(btn => {
 
         // Load dishes into select
         const dishSelect = document.getElementById("modalDishSelect");
-        dishSelect.innerHTML = ""; // clear previous options
+        dishSelect.innerHTML = ""; 
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = ""; 
+        defaultOption.textContent = "-- Select a dish --"; 
+        dishSelect.appendChild(defaultOption);
+
         const dishes = await apiGET("/api/dishes");
         dishes.forEach(d => {
             const option = document.createElement("option");

@@ -352,9 +352,7 @@ def add_menu_dish():
 
     db.menu.insert_one({
         "day": day,
-        "dish_id": ObjectId(dish_id),
-        "dish_name": dish["name"],
-        "price": dish["price"]
+        "dish_id": ObjectId(dish_id)
     })
     return jsonify({"success": True})
 
@@ -364,8 +362,11 @@ def get_menu_day(day):
     db = get_database()
     entries = list(db.menu.find({"day": day}))
     for e in entries:
+        dish = db.dishes.find_one({"_id": ObjectId(e["dish_id"])})
         e["_id"] = str(e["_id"])
         e["dish_id"] = str(e["dish_id"])
+        e["dish_name"] = dish["name"]
+        e["price"] = dish["price"]
     return jsonify(entries)
 
 # Delete dish from day
