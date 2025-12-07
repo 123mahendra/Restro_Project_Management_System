@@ -108,6 +108,7 @@ async function loadUsers() {
                     <td>${index + 1}</td>
                     <td>${user.first_name || ""} ${user.last_name || ""}</td>
                     <td>${user.email || ""}</td>
+                    <td>${user.contact_number || ""}</td>
                     <td>${user.role || "User"}</td>
                     <td>
                         <button class="delete-btn" data-id="${user._id}">Delete</button>
