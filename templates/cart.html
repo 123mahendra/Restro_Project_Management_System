@@ -1,28 +1,19 @@
-<h2>Your Cart</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="/static/css/cart.css">
+</head>
+<body>
 
-{% if cart_items %}
-<table class="table">
-    <tr>
-        <th>Item</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th></th>
-    </tr>
+<h1>Your Cart</h1>
 
-    {% for c in cart_items %}
-    <tr>
-        <td>{{ c.name }}</td>
-        <td>{{ c.quantity }}</td>
-        <td>Rs. {{ c.price }}</td>
-        <td>Rs. {{ c.total }}</td>
-        <td>
-            <a class="btn btn-danger btn-sm" href="/cart/remove/{{ c._id }}">Remove</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div id="cart-container"></div>
+<h2 id="total-price"></h2>
 
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
+<button onclick="checkout()">Checkout</button>
+
+<script src="/static/js/cart.js"></script>
+
+</body>
+</html>
