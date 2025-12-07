@@ -191,5 +191,55 @@ def api_delete_user(user_id):
     else:
         return jsonify({"success": False, "message": "User not found"}), 404
 
+
+# Add item to Cart
+
+@app.route("/api/cart/add", methods=["POST"])
+def add_to_cart():
+    if "user_id" not in session:
+        return jsonify({"error": "Login required"}), 401
+
+    db = get_database()
+    data = request.json
+    product_id = data["product_id"]
+    qty = data.get("quantity", 1)
+
+    product = db.products.find_one({"_id": ObjectId(product_id)})
+    if not product:
+        return jsonify({"error": "Product not found"}), 404
+
+    cart = db.carts.find_one({"user_id": session["user_id"]})
+
+    if not cart:
+        db.carts.insert_one({
+            "user_id": session["user_id"],
+            "items": [{
+                "product_id": ObjectId(product_id),
+                "name": product["name"],
+                "price": product["price"],
+                "quantity": qty
+            }]
+        })
+    else:
+        found = False
+        for item in cart["items"]:
+            if item["product_id"] == ObjectId(product_id):
+                item["quantity"] += qty
+                found = True
+                break
+
+        if not found:
+            cart["items"].append({
+                "product_id": ObjectId(product_id),
+                "name": product["name"],
+                "price": product["price"],
+                "quantity": qty
+            })
+
+        db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+
+    return jsonify({"success": True})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
