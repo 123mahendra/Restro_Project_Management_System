@@ -240,6 +240,28 @@ def add_to_cart():
 
     return jsonify({"success": True})
 
+# Update Quantity
+
+@app.route("/api/cart/update", methods=["POST"])
+def update_cart():
+    if "user_id" not in session:
+        return jsonify({"error": "Login required"}), 401
+
+    db = get_database()
+    data = request.json
+
+    cart = db.carts.find_one({"user_id": session["user_id"]})
+    if not cart:
+        return jsonify({"error": "Cart not found"}), 404
+
+    for item in cart["items"]:
+        if str(item["product_id"]) == data["product_id"]:
+            item["quantity"] = data["quantity"]
+
+    db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+
+    return jsonify({"success": True})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
