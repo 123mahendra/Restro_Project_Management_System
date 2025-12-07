@@ -1,46 +1,62 @@
-let cart = [];
-
 async function loadCart() {
-    const res = await fetch('/api/cart');
-    cart = await res.json();
-    renderCart();
-}
+    let res = await fetch("/api/cart");
 
-function renderCart() {
-    const container = document.getElementById('cart-items');
-    container.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-        const div = document.createElement('div');
-        div.innerHTML = `${item.name} x${item.qty} - $${item.price * item.qty}`;
-        container.appendChild(div);
-        total += item.price * item.qty;
-    });
-    document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
-}
-
-async function addToCart(itemId) {
-    await fetch('/api/cart/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ item_id: itemId, qty: 1 })
-    });
-    await loadCart();
-}
-
-async function checkoutCart() {
-    const phone = document.getElementById('checkout-phone').value;
-    const pickup = document.getElementById('checkout-pickup').value;
-    const res = await fetch('/api/cart/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, pickup_time: pickup })
-    });
-    if (res.ok) {
-        alert('Order placed!');
-        cart = [];
-        renderCart();
+    if (res.status === 401) {
+        document.getElementById("cart-container").innerHTML = "Login required!";
+        return;
     }
+
+    let cart = await res.json();
+
+    let container = document.getElementById("cart-container");
+    let total = 0;
+
+    container.innerHTML = "";
+
+    cart.items.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        container.innerHTML += `
+            <div class="cart-item">
+                <h3>${item.name}</h3>
+                <p>$${item.price}</p>
+                <input type="number" min="1" value="${item.quantity}"
+                       onchange="updateQuantity('${item.product_id}', this.value)">
+                <button onclick="removeItem('${item.product_id}')">Remove</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("total-price").innerText = "Total: $" + total;
 }
 
-document.addEventListener('DOMContentLoaded', loadCart);
+async function updateQuantity(pid, qty) {
+    await fetch("/api/cart/update", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({product_id: pid, quantity: parseInt(qty)})
+    });
+
+    loadCart();
+}
+
+async function removeItem(pid) {
+    await fetch("/api/cart/remove", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({product_id: pid})
+    });
+
+    loadCart();
+}
+
+async function checkout() {
+    let res = await fetch("/create-checkout-session", {
+        method: "POST"
+    });
+
+    let data = await res.json();
+    location.href = data.url;
+}
+
+loadCart();
