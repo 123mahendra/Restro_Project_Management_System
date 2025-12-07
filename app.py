@@ -262,6 +262,28 @@ def update_cart():
 
     return jsonify({"success": True})
 
+# Remove Item
+
+@app.route("/api/cart/remove", methods=["POST"])
+def remove_item():
+    if "user_id" not in session:
+        return jsonify({"error": "Login required"}), 401
+
+    db = get_database()
+    data = request.json
+
+    cart = db.carts.find_one({"user_id": session["user_id"]})
+    if not cart:
+        return jsonify({"error": "Cart not found"}), 404
+
+    cart["items"] = [
+        item for item in cart["items"]
+        if str(item["product_id"]) != data["product_id"]
+    ]
+
+    db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+
+    return jsonify({"success": True})
 
 if __name__ == "__main__":
     app.run(debug=True)
