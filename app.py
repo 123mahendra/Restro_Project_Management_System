@@ -86,6 +86,7 @@ def register():
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         user_email = request.form.get("email")
+        contact_number = request.form.get("contact_number")
 
         db = get_database()
 
@@ -102,7 +103,8 @@ def register():
             "last_name": last_name,
             "email": user_email,
             "password": hashed_password,
-            "role":"user"
+            "role":"customer",
+            "contact_number":contact_number
         }
         create_user(new_user)
         flash("User register successfully!", "success")
