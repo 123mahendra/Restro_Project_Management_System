@@ -475,44 +475,47 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
-
-
-@app.route("/checkout", methods=["GET", "POST"])
+@app.route('/checkout', methods=['POST'])
 def checkout():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+    user_id = session.get("user_id")
+
+    if not user_id:
+        flash("You must be logged in to checkout.")
+        return redirect(url_for("login"))
+
+    # Get database
+    db = get_database()
+    orders_col = db.orders
 
     # Get cart from session
     cart = session.get("cart", [])
 
     if not cart:
-        flash("Your cart is empty!", "warning")
-        return redirect(url_for('view_cart'))
+        flash("Your cart is empty.")
+        return redirect(url_for("view_cart"))
 
-    total = sum(item["price"] * item["quantity"] for item in cart)
+    # Calculate total
+    total = sum(float(item["price"]) * int(item["quantity"]) for item in cart)
 
-    db = get_database()
-    orders_col = db.orders
+    # Create order
+    order_data = {
+        "user_id": user_id,
+        "items": cart,
+        "total": total,
+        "status": "pending",
+        "created_at": datetime.now()
+    }
 
-    if request.method == "POST":
-        new_order = {
-            "user_id": session["user_id"],
-            "items": cart,
-            "total": total,
-            "status": "pending",
-            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
+    # Insert order into orders collection
+    orders_col.insert_one(order_data)
 
-        orders_col.insert_one(new_order)
+    # Clear cart from session
+    session["cart"] = []
+    session.modified = True
 
-        # Clear session cart
-        session["cart"] = []
-        session.modified = True
+    flash("Order placed successfully!")
+    return redirect(url_for("home"))
 
-        flash("Order placed successfully!", "success")
-        return redirect(url_for("order_success"))
-
-    return render_template("checkout.html", cart=cart, total=total)
 
 
 @app.route("/order-success")

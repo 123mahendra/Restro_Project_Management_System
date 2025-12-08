@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <style>
         .checkout-section {
             max-width: 900px;
@@ -98,11 +99,12 @@
         }
     </style>
 </head>
+
 <body>
     <section class="checkout-section">
         <h2>Checkout</h2>
 
-        {% if cart_items %}
+        {% if cart and cart.items %}
         <div class="checkout-container">
             <table class="checkout-table">
                 <thead>
@@ -114,18 +116,22 @@
                         <th>Remove</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    {% for item in cart_items %}
+                    {% for item in cart.items %}
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>€{{ "%.2f"|format(item.price) }}</td>
+
                         <td>
                             <form method="POST" action="{{ url_for('update_cart', dish_id=item._id) }}">
                                 <input type="number" name="quantity" value="{{ item.qty }}" min="1" class="qty-input">
                                 <button type="submit" class="btn-small">Update</button>
                             </form>
                         </td>
+
                         <td>€{{ "%.2f"|format(item.price * item.qty) }}</td>
+
                         <td>
                             <form method="POST" action="{{ url_for('remove_cart_item', dish_id=item._id) }}">
                                 <button type="submit" class="btn-remove">✕</button>
@@ -137,12 +143,14 @@
             </table>
 
             <div class="checkout-summary">
-                <p><b>Total:</b> €{{ "%.2f"|format(cart_total) }}</p>
+                <p><b>Total:</b> €{{ "%.2f"|format(total) }}</p>
+
                 <form method="POST" action="{{ url_for('checkout') }}">
-                    <button class="btn-checkout" type="submit">Checkout</button>
+                    <button class="btn-checkout" type="submit">Place Order</button>
                 </form>
             </div>
         </div>
+
         {% else %}
         <p>Your cart is empty. <a href="{{ url_for('get_dishes') }}">Go back to dishes</a></p>
         {% endif %}

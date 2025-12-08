@@ -52,7 +52,9 @@
 
     <div class="total-section">
       <h4>Total: $<span>{{ total }}</span></h4>
-      <a href="{{ url_for('checkout') }}" class="btn btn-checkout mt-3">Checkout</a>
+      <form action="{{ url_for('checkout') }}" method="POST">
+        <button type="submit" class="btn btn-checkout mt-3">Checkout</button>
+      </form>
     </div>
 
   {% else %}
