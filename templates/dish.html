@@ -52,24 +52,7 @@
     <h3 class="sub-heading"> our dishes </h3>
     <h1 class="heading"> popular dishes </h1>
 
-    <div class="box-container">
-
-      {% for dish in dishes %}
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-           <img src="/static/assets/dishes/{{ dish.image }}" alt="{{ dish.name }}">
-            <h3>{{ dish.name }}</h3>
-            <div class="stars">
-                {% for i in range(5) %}
-                    <i class="fas fa-star"></i>
-                {% endfor %}
-            </div>
-            <span>£{{ dish.price }}</span>
-            <button class="btn btn-primary add-to-cart" data-id="{{ dish._id }}">Add to Cart</button>
-        </div>
-
-        {% endfor %}  
+    <div class="box-container" id="dishes-container">
 
     </div>
 
@@ -127,7 +110,7 @@
 
 <!--footer section end-->
 
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dish.js') }}"></script>
 
 </body>
 
