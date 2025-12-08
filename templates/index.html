@@ -20,7 +20,7 @@
 
     <nav class="navbar">
         <a class="active" href="#">home</a>
-        <a href="{{ url_for('add_dish')}}">dishes</a>
+        <a href="/dishes">dishes</a>
         <a href="#">about</a>
         <a href="menu.html">menu</a>
         <a href="review.html">review</a>
@@ -31,8 +31,8 @@
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
-        <a href="{url_for('cart')}" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
-        <a href="login.html" class="fas fa-user"></a>
+        <a href="/cart" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
+        <a href="/login" class="fas fa-user"></a>
     </div>
 </header>
 
@@ -545,8 +545,8 @@
             <a href="#">+358402457337</a>
             <a href="#">+358449314564</a>
             <a href="#">olisagarsandesh@gmail.com</a>
-            <a href="#">mahendragautamsharma@gmail.com</a>
-            <a href="#">Kirstintie 30 C, Espoo , 02760</a>
+            <a href="#">mahendra.sharma@metropolia.fi</a>
+            <a href="#">Kirstintie 30 C, Espoo , 02760/a>
         </div>
 
         <div class="box">
@@ -559,7 +559,7 @@
 
     </div>
 
-    <div class="credit"> copyright @ 2025 by <span> Backlol team</span> </div>
+    <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
 
 </section>
 
@@ -571,6 +571,7 @@
 <script src="{{ url_for('static', filename='js/order.js') }}"></script>
 <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 
+<<<<<<< HEAD
 <button onclick="addToCart('PRODUCT_MONGO_ID')">Add to Cart</button>
 
 <script>
@@ -607,6 +608,8 @@ async function addToCart(pid) {
 //   loadHTML("file3", "services.html");
 </script>
 
+=======
+>>>>>>> 4db7e8b23450d56cf0dd09308f294fb22219beb4
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Add to cart functionality

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,9 @@
 </body>
 </html>
 =======
+=======
+<<<<<<< Updated upstream
+>>>>>>> 4db7e8b23450d56cf0dd09308f294fb22219beb4
 {% block content %}
 <div class="container mt-5">
     <h2>Your Cart</h2>
@@ -87,4 +91,60 @@ document.querySelectorAll(".remove-btn").forEach(btn => {
 });
 </script>
 {% endblock %}
+<<<<<<< HEAD
 >>>>>>> ec32240e520666492e3dbe58e1b19b64f0dc6222
+=======
+=======
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<h1>Your Cart</h1>
+
+{% if cart %}
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Qty</th>
+    <th>Price</th>
+    <th>Action</th>
+  </tr>
+
+  {% for id, item in cart.items() %}
+  <tr>
+    <td>{{ item.name }}</td>
+
+    <td>
+      <form action="/update-cart" method="POST">
+        <input type="hidden" name="food_id" value="{{ id }}">
+        <input type="number" name="qty" value="{{ item.qty }}" min="1">
+        <button type="submit">Update</button>
+      </form>
+    </td>
+
+    <td>${{ item.price * item.qty }}</td>
+
+    <td><a href="/remove-item/{{ id }}">Remove</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Total: ${{ total }}</h3>
+
+<a href="/place-order" class="btn">Place Order</a>
+
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+
+<a href="/menu">Back to Menu</a>
+
+</body>
+</html>
+>>>>>>> Stashed changes
+>>>>>>> 4db7e8b23450d56cf0dd09308f294fb22219beb4
