@@ -24,14 +24,14 @@
         <a href="#">about</a>
         <a href="menu.html">menu</a>
         <a href="review.html">review</a>
-        <a href="order.html">order</a>
+        <a href="{{ url_for('order')}}">order</a>
     </nav>
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
-        <a href="cart.html" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
+        <a href="{url_for('cart')}" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
         <a href="login.html" class="fas fa-user"></a>
     </div>
 </header>
@@ -61,7 +61,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-1.png" alt="">
+                    <img src="{{url_for('static',filename='assets/image/home-img-1.png')}}" alt="">
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-2.png" alt="">
+                    <img src="{{ url_for('static', filename='assets/image/home-img-2.png') }}" alt="">
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-3.png" alt="">
+                   <img src="{{ url_for('static', filename='assets/image/home-img-3.png') }}" alt="">
                 </div>
             </div>
 
@@ -98,6 +98,7 @@
 </section>
 
 <!-- home section ends -->
+
 <!-- dishes section starts  -->
 
 <section class="dishes" id="dishes">
@@ -107,101 +108,22 @@
 
     <div class="box-container">
 
+        {% for dish in dishes %}
         <div class="box">
             <a href="#" class="fas fa-heart"></a>
             <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-1.png" alt="">
-            <h3>tasty food</h3>
+            <img src="{{ url_for('static', filename='assets/image/'~dishes.image) }}" alt="{{ dish.name }}">
+            <h3>{{ dish.name }}</h3>
             <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+                {% for i in range(5) %}
+                    <i class="fas fa-star"></i>
+                {% endfor %}
             </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
+            <span>${{ dish.price }}</span>
+            <button class="btn btn-primary add-to-cart" data-id="{{ dish._id }}">Add to Cart</button>
         </div>
 
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-2.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-3.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-4.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-5.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-6.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
+        {% endfor %}
 
     </div>
 
@@ -561,7 +483,7 @@
             </div>
             <div class="input">
                 <span>additional food</span>
-                <input type="test" placeholder="extra with food">
+                <input type="text" placeholder="extra with food">
             </div>
         </div>
         <div class="inputBox">
@@ -642,22 +564,37 @@
 </section>
 
 <!--footer section end-->
-
-    <script src="/js/navbar.js"></script>
-    <script src="../static/js/home.js"></script>
-    <script src="/js/menu.js"></script>
-    <script src="/js/cart.js"></script>
-    <script src="/js/order.js"></script>
-    <script src="/js/animations.js"></script>
+<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/order.js') }}"></script>
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 
 <script>
-    document.getElementById("close-cart").addEventListener("click", () => {
-        document.getElementById("cart-panel").classList.remove("active");
+document.addEventListener("DOMContentLoaded", function() {
+    // Add to cart functionality
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const dishId = btn.getAttribute("data-id");
+            const res = await fetch("/api/cart/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({dishId, quantity: 1})
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert(data.message);
+                // Optionally update cart count dynamically
+                const cartCount = document.getElementById("cart-count");
+                cartCount.textContent = data.cartCount;
+            } else {
+                alert("Failed to add to cart");
+            }
+        });
     });
-
-    document.addEventListener("DOMContentLoaded", loadCart);
+});
 </script>
-
 </body>
 </html>
 
