@@ -165,23 +165,9 @@ def admin_dashboard():
     user_session_id = request.cookies.get("user_session_id")
     if user_session_id not in sessions:
         return redirect("/admin")
-    db = get_database()
-    orders = list(db.orders.find({}).sort("created_at", -1))
 
-    for o in orders:
-        o["_id_str"] = str(o["_id"])
-        o["created_at"] = o["created_at"].strftime("%Y-%m-%d %H:%M")
-        user = db.users.find_one({"_id": ObjectId(o["user_id"])})
-        if user:
-            o["user_name"] = f"{user['first_name']} {user['last_name']}"
-            o["phone"] = user.get("phone", "")
-            o["address"] = user.get("address", "")
-        else:
-            o["user_name"] = "Unknown"
-            o["phone"] = ""
-            o["address"] = ""
     user = sessions[user_session_id]
-    return render_template("admin/admin_dashboard.html", user=user, orders=orders)
+    return render_template("admin/admin_dashboard.html", user=user)
 
 
 @app.route('/admin/logout')
@@ -230,11 +216,6 @@ def admin_dishes():
     user_session_id = request.cookies.get("user_session_id")
     user = sessions.get(user_session_id)
     return render_template("admin/admin_dashboard.html", section="dishes", user=user)
-
-@app.route("/dish")
-def dish():
-    return render_template("dish.html")
-
 
 @app.route('/api/dishes', methods=['POST'])
 def add_dish():
@@ -403,7 +384,8 @@ def delete_menu_dish(id):
     return jsonify({"success": True})
 
 
-# Add cart Item
+
+# Add item to cart
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
     if "user_id" not in session:
@@ -418,18 +400,20 @@ def add_to_cart():
     if not dish:
         return jsonify({"success": False, "message": "Dish not found"}), 404
 
+    # Initialize cart in session if not exists
     if "cart" not in session:
         session["cart"] = []
 
     cart = session["cart"]
 
+    # Check if dish already in cart
     for item in cart:
         if item["dish_id"] == str(dish["_id"]):
             item["quantity"] += quantity
             session.modified = True
-            total_items = sum(i["quantity"] for i in cart)
-            return jsonify({"success": True, "message": "Cart updated", "cartCount": total_items})
+            return jsonify({"success": True, "message": "Cart updated"})
 
+    # Add new dish to cart
     cart.append({
         "dish_id": str(dish["_id"]),
         "name": dish["name"],
@@ -437,9 +421,7 @@ def add_to_cart():
         "quantity": quantity
     })
     session.modified = True
-    total_items = sum(i["quantity"] for i in cart)
-    return jsonify({"success": True, "message": "Dish added to cart", "cartCount": total_items})
-
+    return jsonify({"success": True, "message": "Dish added to cart"})
 
 # View cart
 @app.route('/cart')
@@ -492,38 +474,6 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
-
-
-@app.route("/checkout", methods=["GET", "POST"])
-def checkout():
-    if "user_id" not in session:
-        flash("Login required to checkout", "error")
-        return redirect("/login")
-
-    db = get_database()
-    cart = session.get("cart", [])
-    total = sum(item["price"] * item["quantity"] for item in cart)
-
-    if request.method == "POST":
-        # Save order in the database
-        order_data = {
-            "user_id": session["user_id"],
-            "items": cart,
-            "total": total,
-            "status": "pending",  # pending, preparing, completed
-            "created_at": datetime.utcnow()
-        }
-        db.orders.insert_one(order_data)
-
-        # Clear user's cart
-        session["cart"] = []
-        session.modified = True
-
-        flash("Order placed successfully!", "success")
-        return redirect("/")
-
-    return render_template("checkout.html", cart=cart, total=total)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
