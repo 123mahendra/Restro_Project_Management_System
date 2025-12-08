@@ -7,12 +7,21 @@ from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from flask import session
 from bson import ObjectId
+from werkzeug.utils import secure_filename
+from datetime import datetime
+import os
 
 load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = "your-secret-key"
 CORS(app)
+
+# Folder where dish images will be stored
+app.config["UPLOAD_FOLDER"] = "static/assets/dishes"
+
+# Create the folder if it doesn't exist
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 
 
@@ -86,6 +95,7 @@ def register():
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         user_email = request.form.get("email")
+        contact_number = request.form.get("contact_number")
 
         db = get_database()
 
@@ -102,7 +112,8 @@ def register():
             "last_name": last_name,
             "email": user_email,
             "password": hashed_password,
-            "role":"user"
+            "role":"customer",
+            "contact_number":contact_number
         }
         create_user(new_user)
         flash("User register successfully!", "success")
@@ -190,6 +201,181 @@ def api_delete_user(user_id):
         return jsonify({"success": True, "message": "User deleted"})
     else:
         return jsonify({"success": False, "message": "User not found"}), 404
+    
+# Dishes
+
+@app.route('/admin/dishes')
+def admin_dishes():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions.get(user_session_id)
+    return render_template("admin/admin_dashboard.html", section="dishes", user=user)
+
+@app.route('/api/dishes', methods=['POST'])
+def add_dish():
+    db = get_database()
+    dishes = db.dishes
+
+    name = request.form.get("name")
+    price = request.form.get("price")
+    description = request.form.get("description")
+    image = request.files.get("image")
+
+    if not name or not price:
+        return jsonify({"success": False, "error": "Missing required fields"}), 400
+
+    image_filename = None
+
+    if image:
+        filename = secure_filename(image.filename)
+        print(filename)
+        image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        image.save(image_path)
+        image_filename = filename
+
+    dish_data = {
+        "name": name,
+        "price": float(price),
+        "description": description,
+        "image": image_filename,
+        "created_at": datetime.utcnow()
+    }
+
+    result = dishes.insert_one(dish_data)
+
+    return jsonify({
+        "success": True,
+        "message": "Dish added successfully",
+        "id": str(result.inserted_id)
+    })
+
+@app.route('/api/dishes', methods=['GET'])
+def get_dishes():
+    db = get_database()
+    dishes_collection = db.dishes
+
+    dishes = list(dishes_collection.find({}))
+
+    for d in dishes:
+        d["_id"] = str(d["_id"])
+        if "created_at" in d:
+            d["created_at"] = str(d["created_at"])
+
+    return jsonify(dishes)
+
+@app.route('/api/dishes/<id>', methods=['DELETE'])
+def delete_dish(id):
+    db = get_database()
+    dishes_collection = db.dishes
+
+    dish = dishes_collection.find_one({"_id": ObjectId(id)})
+
+    if not dish:
+        return jsonify({"success": False, "error": "Dish not found"}), 404
+
+    # delete image if exists
+    if dish.get("image"):
+        img_path = os.path.join(app.config["UPLOAD_FOLDER"], dish["image"])
+        if os.path.exists(img_path):
+            os.remove(img_path)
+
+    dishes_collection.delete_one({"_id": ObjectId(id)})
+
+    return jsonify({"success": True, "message": "Dish deleted"})
+
+@app.route('/api/dishes/<id>', methods=['GET'])
+def get_single_dish(id):
+    db = get_database()
+    dishes = db.dishes
+
+    dish = dishes.find_one({"_id": ObjectId(id)})
+    if not dish:
+        return jsonify({"error": "Dish not found"}), 404
+
+    dish["_id"] = str(dish["_id"])
+    return jsonify(dish)
+
+@app.route('/api/dishes/<id>', methods=['PUT'])
+def update_dish(id):
+    db = get_database()
+    dishes = db.dishes
+
+    dish = dishes.find_one({"_id": ObjectId(id)})
+    if not dish:
+        return jsonify({"success": False, "error": "Dish not found"}), 404
+
+    name = request.form.get("name")
+    price = request.form.get("price")
+    description = request.form.get("description")
+    image = request.files.get("image")
+
+    update_data = {
+        "name": name,
+        "price": float(price),
+        "description": description
+    }
+
+    # If user uploads a new image
+    if image:
+        filename = secure_filename(image.filename)
+        image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        image.save(image_path)
+
+        # delete old image
+        if dish.get("image"):
+            old_path = os.path.join(app.config["UPLOAD_FOLDER"], dish["image"])
+            if os.path.exists(old_path):
+                os.remove(old_path)
+
+        update_data["image"] = filename
+
+    dishes.update_one({"_id": ObjectId(id)}, {"$set": update_data})
+
+    return jsonify({"success": True, "message": "Dish updated"})
+
+# Add dish to a day
+@app.route('/admin/menu')
+def admin_menu():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions.get(user_session_id)
+    return render_template("admin/admin_dashboard.html", section="menu", user=user)
+
+@app.route("/api/menu", methods=["POST"])
+def add_menu_dish():
+    db = get_database()
+    data = request.get_json()
+    day = data["day"]
+    dish_id = data["dishId"]
+
+    dish = db.dishes.find_one({"_id": ObjectId(dish_id)})
+    if not dish:
+        return jsonify({"success": False, "message": "Dish not found"}), 404
+
+    db.menu.insert_one({
+        "day": day,
+        "dish_id": ObjectId(dish_id)
+    })
+    return jsonify({"success": True})
+
+# Get menu dishes for a day
+@app.route("/api/menu/<day>", methods=["GET"])
+def get_menu_day(day):
+    db = get_database()
+    entries = list(db.menu.find({"day": day}))
+    for e in entries:
+        dish = db.dishes.find_one({"_id": ObjectId(e["dish_id"])})
+        e["_id"] = str(e["_id"])
+        e["dish_id"] = str(e["dish_id"])
+        e["dish_name"] = dish["name"]
+        e["price"] = dish["price"]
+    return jsonify(entries)
+
+# Delete dish from day
+@app.route("/api/menu/<id>", methods=["DELETE"])
+def delete_menu_dish(id):
+    db = get_database()
+    db.menu.delete_one({"_id": ObjectId(id)})
+    return jsonify({"success": True})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
