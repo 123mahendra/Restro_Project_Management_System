@@ -1,7 +1,11 @@
+import uuid
+import mongo
+from flask_pymongo import pyMongo
 from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-import uuid
+
+from cart_routes import get_cart
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -416,6 +420,7 @@ def delete_menu_dish(id):
 def get_dish_page():
     return render_template("dish.html")
 
+<<<<<<< Updated upstream
 # Add item to cart
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
@@ -505,6 +510,176 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
+=======
+# # Add item to Cart
+#
+# @app.route("/api/cart/add", methods=["POST"])
+# def add_to_cart():
+#     if "user_id" not in session:
+#         return jsonify({"error": "Login required"}), 401
+#
+#     db = get_database()
+#     data = request.json
+#     product_id = data["product_id"]
+#     qty = data.get("quantity", 1)
+#
+#     product = db.products.find_one({"_id": ObjectId(product_id)})
+#     if not product:
+#         return jsonify({"error": "Product not found"}), 404
+#
+#     cart = db.carts.find_one({"user_id": session["user_id"]})
+#
+#     if not cart:
+#         db.carts.insert_one({
+#             "user_id": session["user_id"],
+#             "items": [{
+#                 "product_id": ObjectId(product_id),
+#                 "name": product["name"],
+#                 "price": product["price"],
+#                 "quantity": qty
+#             }]
+#         })
+#     else:
+#         found = False
+#         for item in cart["items"]:
+#             if item["product_id"] == ObjectId(product_id):
+#                 item["quantity"] += qty
+#                 found = True
+#                 break
+#
+#         if not found:
+#             cart["items"].append({
+#                 "product_id": ObjectId(product_id),
+#                 "name": product["name"],
+#                 "price": product["price"],
+#                 "quantity": qty
+#             })
+#
+#         db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+#
+#     return jsonify({"success": True})
+#
+# # Update Quantity
+#
+# @app.route("/api/cart/update", methods=["POST"])
+# def update_cart():
+#     if "user_id" not in session:
+#         return jsonify({"error": "Login required"}), 401
+#
+#     db = get_database()
+#     data = request.json
+#
+#     cart = db.carts.find_one({"user_id": session["user_id"]})
+#     if not cart:
+#         return jsonify({"error": "Cart not found"}), 404
+#
+#     for item in cart["items"]:
+#         if str(item["product_id"]) == data["product_id"]:
+#             item["quantity"] = data["quantity"]
+#
+#     db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+#
+#     return jsonify({"success": True})
+#
+# # Remove Item
+#
+# @app.route("/api/cart/remove", methods=["POST"])
+# def remove_item():
+#     if "user_id" not in session:
+#         return jsonify({"error": "Login required"}), 401
+#
+#     db = get_database()
+#     data = request.json
+#
+#     cart = db.carts.find_one({"user_id": session["user_id"]})
+#     if not cart:
+#         return jsonify({"error": "Cart not found"}), 404
+#
+#     cart["items"] = [
+#         item for item in cart["items"]
+#         if str(item["product_id"]) != data["product_id"]
+#     ]
+#
+#     db.carts.update_one({"_id": cart["_id"]}, {"$set": cart})
+#
+#     return jsonify({"success": True})
+
+@app.route("/menu")
+def menu():
+    foods = list(mongo.db.dishes.find())
+    return render_template("menu.html", foods=foods)
+
+
+@app.route("/add-to-cart/<food_id>")
+def add_to_cart(food_id):
+    cart = get_cart()
+
+    food = mongo.db.dishes.find_one({"_id": ObjectId(food_id)})
+    if not food:
+        return "Food Not Found", 404
+
+    if food_id in cart:
+        cart[food_id]["qty"] += 1
+    else:
+        cart[food_id] = {
+            "name": food["name"],
+            "price": food["price"],
+            "qty": 1
+        }
+
+    session["cart"] = cart
+    return redirect("/menu")
+
+
+@app.route("/cart")
+def view_cart():
+    cart = get_cart()
+    total = sum(item["price"] * item["qty"] for item in cart.values())
+    return render_template("cart.html", cart=cart, total=total)
+
+
+@app.route("/update-cart", methods=["POST"])
+def update_cart():
+    food_id = request.form["food_id"]
+    qty = int(request.form["qty"])
+
+    cart = get_cart()
+
+    if qty <= 0:
+        cart.pop(food_id, None)
+    else:
+        cart[food_id]["qty"] = qty
+
+    session["cart"] = cart
+    return redirect("/cart")
+
+
+@app.route("/remove-item/<food_id>")
+def remove_item(food_id):
+    cart = get_cart()
+    cart.pop(food_id, None)
+    session["cart"] = cart
+    return redirect("/cart")
+
+
+@app.route("/place-order")
+def place_order():
+    cart = get_cart()
+    if not cart:
+        return redirect("/menu")
+
+    order = {
+        "items": cart,
+        "total": sum(item["price"] * item["qty"] for item in cart.values()),
+        "timestamp": datetime.datetime.now()
+    }
+
+    mongo.db.orders.insert_one(order)
+
+    session.pop("cart", None)
+    return "Order placed successfully!"
+
+>>>>>>> Stashed changes
 
 if __name__ == "__main__":
     app.run(debug=True)

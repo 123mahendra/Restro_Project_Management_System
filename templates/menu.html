@@ -28,12 +28,46 @@
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
-        <a href="#" class="fas fa-shopping-cart"></a>
+        <a href="/cart" class="fas fa-shopping-cart"></a>
         <a href="login.html" class="fas fa-user"></a>
     </div>
 </header>
 
 <!-- Header Section ends-->
+
+<section class="menu" id="menu">
+    <h3 class="sub-heading"> our menu </h3>
+    <h1 class="heading"> today's speciality </h1>
+
+    <div class="box-container">
+
+        {% for food in foods %}
+        <div class="box">
+            <div class="image">
+                <img src="{{ url_for('static', filename='assets/dishes/' ~ food.image) }}">
+                <a href="#" class="fas fa-heart"></a>
+            </div>
+
+            <div class="content">
+                <div class="stars">
+                    {% for i in range(food.rating|int) %}
+                        <i class="fas fa-star"></i>
+                    {% endfor %}
+                </div>
+
+                <h3>{{ food.name }}</h3>
+                <p>{{ food.description }}</p>
+
+                <a href="/add-to-cart/{{ food._id }}" class="btn">add to cart</a>
+
+                <span class="price">${{ "%.2f"|format(food.price) }}</span>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
 
 <!-- search form -->
 <form action="" id="search-form">
@@ -44,196 +78,196 @@
 
 <!-- menu section starts  -->
 
-<section class="menu" id="menu">
+<!--<section class="menu" id="menu">-->
 
-    <h3 class="sub-heading"> our menu </h3>
-    <h1 class="heading"> today's speciality </h1>
+<!--    <h3 class="sub-heading"> our menu </h3>-->
+<!--    <h1 class="heading"> today's speciality </h1>-->
 
-    <div class="box-container">
+<!--    <div class="box-container">-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-1.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-1.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-2.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-2.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-3.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-3.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-4.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-4.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-5.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-5.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-6.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-6.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-7.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-7.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-8.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-8.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="box">
-            <div class="image">
-                <img src="../static/assets/image/menu-9.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>delicious food</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
+<!--        <div class="box">-->
+<!--            <div class="image">-->
+<!--                <img src="../static/assets/image/menu-9.jpg" alt="">-->
+<!--                <a href="#" class="fas fa-heart"></a>-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                <div class="stars">-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star"></i>-->
+<!--                    <i class="fas fa-star-half-alt"></i>-->
+<!--                </div>-->
+<!--                <h3>delicious food</h3>-->
+<!--                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>-->
+<!--                <a href="#" class="btn">add to cart</a>-->
+<!--                <span class="price">$12.99</span>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    </div>
+<!--    </div>-->
 
-</section>
+<!--</section>-->
 
 <!-- menu section ends -->
 
