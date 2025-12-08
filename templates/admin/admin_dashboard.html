@@ -338,54 +338,6 @@
                 </div>
             </div>
 
-<!-- Orders Section -->
-<div id="orders" class="section-page">
-    <h2>Customer Orders</h2>
-
-    {% if orders %}
-        <div class="orders-container">
-            {% for o in orders %}
-            <div class="order-card">
-                <div class="order-header">
-                    <h3>Order #{{ o._id_str }}</h3>
-                    <span class="order-status {{ o.status }}">{{ o.status|capitalize }}</span>
-                </div>
-                <div class="order-info">
-                    <p><b>Placed At:</b> {{ o.created_at }}</p>
-                    <p><b>Customer:</b> {{ o.user_name }}</p>
-                    <p><b>Phone:</b> {{ o.phone }}</p>
-                    <p><b>Address:</b> {{ o.address }}</p>
-                </div>
-                <div class="order-items">
-                    <b>Items:</b>
-                    <ul>
-                        {% for it in o.items %}
-                        <li>{{ it.name }} × {{ it.qty }} — €{{ "%.2f"|format(it.price) }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="order-total">
-                    <b>Total:</b> €{{ "%.2f"|format(o.total) }}
-                </div>
-                <div class="order-actions">
-                    <form method="post" action="/admin/orders/update/{{ o._id_str }}">
-                        <select name="status">
-                            <option value="pending" {% if o.status=='pending' %}selected{% endif %}>Pending</option>
-                            <option value="preparing" {% if o.status=='preparing' %}selected{% endif %}>Preparing</option>
-                            <option value="completed" {% if o.status=='completed' %}selected{% endif %}>Completed</option>
-                            <option value="cancelled" {% if o.status=='cancelled' %}selected{% endif %}>Cancelled</option>
-                        </select>
-                        <button class="btn save-btn" type="submit">Update Status</button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No orders yet.</p>
-    {% endif %}
-</div>
-
 
             <!-- Users Section -->
             <div id="users" class="section-page">
@@ -405,6 +357,41 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div id="orders" class="section-page">
+                <div class="order-info">
+                    <h3>Orders</h3>
+                     <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Items</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for o in orders %}
+    <tr>
+      <td>{{ o._id }}</td>
+      <td>{{ o.user_id }}</td>
+      <td>
+        <ul>
+          {% for item in o['items'] %}
+          <li>{{ item.name }} x {{ item.quantity }} (${{ item.price }})</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td>${{ o.total }}</td>
+      <td>{{ o.status }}</td>
+      <td>{{ o.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+                </div>
             </div>
 
 

@@ -523,5 +523,28 @@ def order_success():
     return render_template("order_success.html")
 
 
+@app.route('/admin/orders')
+def admin_orders():
+    user_session_id = request.cookies.get("user_session_id")
+    if user_session_id not in sessions:
+        return redirect("/admin")
+
+    user = sessions[user_session_id]
+    db = get_database()
+    orders_collection = db.orders
+
+    # Fetch all orders
+    orders = list(orders_collection.find().sort("created_at", -1))  # latest first
+    for order in orders:
+        order["_id"] = str(order["_id"])
+        # Check type before formatting
+        if isinstance(order["created_at"], datetime):
+            order["created_at"] = order["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            order["created_at"] = str(order["created_at"])
+
+    return render_template("admin/admin_dashboard.html", section="orders", user=user, orders=orders)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
