@@ -338,10 +338,6 @@
                 </div>
             </div>
 
-            <!-- Orders Section -->
-            <div id="orders" class="section-page">
-                <h2>Orders Page</h2>
-            </div>
 
             <!-- Users Section -->
             <div id="users" class="section-page">
@@ -361,6 +357,41 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div id="orders" class="section-page">
+                <div class="order-info">
+                    <h3>Orders</h3>
+                     <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Items</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for o in orders %}
+    <tr>
+      <td>{{ o._id }}</td>
+      <td>{{ o.user_id }}</td>
+      <td>
+        <ul>
+          {% for item in o['items'] %}
+          <li>{{ item.name }} x {{ item.quantity }} (${{ item.price }})</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td>${{ o.total }}</td>
+      <td>{{ o.status }}</td>
+      <td>{{ o.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+                </div>
             </div>
 
 
