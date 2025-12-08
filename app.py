@@ -45,7 +45,14 @@ def home():
     user = None
     if "user_id" in session:
         user = {"first_name": session.get("user_first_name"),"last_name": session.get("user_last_name")}
-    return render_template("index.html", user=user)
+
+    db = get_database()
+    dishes = list(db.dishes.find({}))
+    for dish in dishes:
+        dish["_id"] = str(dish["_id"])
+        if "created_at" in dish:
+            dish["created_at"] = str(dish["created_at"])
+    return render_template("index.html", user=user, dishes=dishes)
 
 # Login Route
 
@@ -376,6 +383,97 @@ def delete_menu_dish(id):
     db.menu.delete_one({"_id": ObjectId(id)})
     return jsonify({"success": True})
 
+
+
+# Add item to cart
+@app.route('/api/cart/add', methods=['POST'])
+def add_to_cart():
+    if "user_id" not in session:
+        return jsonify({"success": False, "message": "Login required"}), 401
+
+    data = request.get_json()
+    dish_id = data.get("dishId")
+    quantity = int(data.get("quantity", 1))
+
+    db = get_database()
+    dish = db.dishes.find_one({"_id": ObjectId(dish_id)})
+    if not dish:
+        return jsonify({"success": False, "message": "Dish not found"}), 404
+
+    # Initialize cart in session if not exists
+    if "cart" not in session:
+        session["cart"] = []
+
+    cart = session["cart"]
+
+    # Check if dish already in cart
+    for item in cart:
+        if item["dish_id"] == str(dish["_id"]):
+            item["quantity"] += quantity
+            session.modified = True
+            return jsonify({"success": True, "message": "Cart updated"})
+
+    # Add new dish to cart
+    cart.append({
+        "dish_id": str(dish["_id"]),
+        "name": dish["name"],
+        "price": dish["price"],
+        "quantity": quantity
+    })
+    session.modified = True
+    return jsonify({"success": True, "message": "Dish added to cart"})
+
+# View cart
+@app.route('/cart')
+def view_cart():
+    if "user_id" not in session:
+        flash("Login required to view cart", "error")
+        return redirect("/login")
+
+    cart = session.get("cart", [])
+    total = sum(item["price"] * item["quantity"] for item in cart)
+    return render_template("cart.html", cart=cart, total=total)
+
+# Update cart quantity
+@app.route('/api/cart/update', methods=['POST'])
+def update_cart():
+    if "user_id" not in session:
+        return jsonify({"success": False, "message": "Login required"}), 401
+
+    data = request.get_json()
+    dish_id = data.get("dishId")
+    quantity = int(data.get("quantity", 1))
+
+    cart = session.get("cart", [])
+    for item in cart:
+        if item["dish_id"] == dish_id:
+            if quantity <= 0:
+                cart.remove(item)
+            else:
+                item["quantity"] = quantity
+            session.modified = True
+            return jsonify({"success": True, "message": "Cart updated"})
+
+    return jsonify({"success": False, "message": "Dish not in cart"}), 404
+
+# Remove item from cart
+@app.route('/api/cart/remove', methods=['POST'])
+def remove_cart_item():
+    if "user_id" not in session:
+        return jsonify({"success": False, "message": "Login required"}), 401
+
+    data = request.get_json()
+    dish_id = data.get("dishId")
+
+    cart = session.get("cart", [])
+    cart = [item for item in cart if item["dish_id"] != dish_id]
+    session["cart"] = cart
+    session.modified = True
+    return jsonify({"success": True, "message": "Dish removed from cart"})
+
+@app.route("/order")
+def order():
+    return render_template("order.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
