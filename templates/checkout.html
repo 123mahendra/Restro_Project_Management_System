@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .checkout-section {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1f1f2e;
+            color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .checkout-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .checkout-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .checkout-table th, .checkout-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+        }
+
+        .checkout-table th {
+            background: #2c2c3c;
+        }
+
+        .qty-input {
+            width: 50px;
+            padding: 4px;
+            border-radius: 6px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-small {
+            margin-left: 5px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: none;
+            background: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-small:hover {
+            background: #2980b9;
+        }
+
+        .btn-remove {
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background: #c0392b;
+        }
+
+        .checkout-summary {
+            text-align: right;
+            font-size: 1.2rem;
+        }
+
+        .btn-checkout {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #2ecc71;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-checkout:hover {
+            background: #27ae60;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <section class="checkout-section">
+        <h2>Checkout</h2>
+
+        {% if cart_items %}
+        <div class="checkout-container">
+            <table class="checkout-table">
+                <thead>
+                    <tr>
+                        <th>Dish</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>€{{ "%.2f"|format(item.price) }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('update_cart', dish_id=item._id) }}">
+                                <input type="number" name="quantity" value="{{ item.qty }}" min="1" class="qty-input">
+                                <button type="submit" class="btn-small">Update</button>
+                            </form>
+                        </td>
+                        <td>€{{ "%.2f"|format(item.price * item.qty) }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('remove_cart_item', dish_id=item._id) }}">
+                                <button type="submit" class="btn-remove">✕</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="checkout-summary">
+                <p><b>Total:</b> €{{ "%.2f"|format(cart_total) }}</p>
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    <button class="btn-checkout" type="submit">Checkout</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <p>Your cart is empty. <a href="{{ url_for('dish') }}">Go back to dishes</a></p>
+        {% endif %}
+    </section>
+</body>
+</html>

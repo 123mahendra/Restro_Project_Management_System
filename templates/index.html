@@ -20,18 +20,18 @@
 
     <nav class="navbar">
         <a class="active" href="#">home</a>
-        <a href="{{ url_for('add_dish')}}">dishes</a>
+        <a href="{{ url_for('dish') }}">dishes</a>
         <a href="#">about</a>
         <a href="menu.html">menu</a>
         <a href="review.html">review</a>
-        <a href="{{ url_for('order')}}">order</a>
+        <a href="{{ url_for('order') }}">order</a>
     </nav>
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
-        <a href="{url_for('cart')}" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
+       <a href="{{ url_for('view_cart') }}" class="fas fa-shopping-cart" id="open-cart">0</span></a>
         <a href="login.html" class="fas fa-user"></a>
     </div>
 </header>
@@ -112,7 +112,7 @@
         <div class="box">
             <a href="#" class="fas fa-heart"></a>
             <a href="#" class="fas fa-eye"></a>
-            <img src="{{ url_for('static', filename='assets/image/'~dishes.image) }}" alt="{{ dish.name }}">
+            <img src="{{ url_for('static', filename='assets/dishes/'~dish.image) }}" alt="{{ dish.name }}">
             <h3>{{ dish.name }}</h3>
             <div class="stars">
                 {% for i in range(5) %}
@@ -591,7 +591,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Add to cart functionality
     document.querySelectorAll(".add-to-cart").forEach(btn => {
         btn.addEventListener("click", async () => {
             const dishId = btn.getAttribute("data-id");
@@ -603,11 +602,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const data = await res.json();
             if (data.success) {
                 alert(data.message);
-                // Optionally update cart count dynamically
+                // update cart count dynamically
                 const cartCount = document.getElementById("cart-count");
                 cartCount.textContent = data.cartCount;
             } else {
-                alert("Failed to add to cart");
+                alert(data.message || "Failed to add to cart");
             }
         });
     });
