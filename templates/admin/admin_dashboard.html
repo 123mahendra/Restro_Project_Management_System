@@ -17,8 +17,9 @@
         <span class="close-sidebar" id="close-sidebar">✕</span>
         <h2>Admin Panel</h2>
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
+        <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
+        <a href="/admin/menu" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
         <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
-        <a href="#" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
     </aside>
@@ -71,18 +72,276 @@
                 </div>
             </div>
 
+            <!-- Dishes Section -->
+            <div id="dishes" class="section-page">
+
+                <!-- Top Bar with Add Button -->
+                <div class="dishes-header">
+                    <h2>Dishes</h2>
+                    <button id="add-dish-btn" class="add-btn">+ Add Dish</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dishes-table">
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <!-- Modal Form for Adding Dish -->
+            <div id="dish-modal" class="modal">
+                <div class="modal-content">
+                    <h3>Add New Dish</h3>
+<br>
+                    <form id="dish-form">
+
+                        <label>Dish Name</label>
+                        <input type="text" name="name" required>
+
+                        <label>Price</label>
+                        <input type="number" name="price" required>
+
+                        <label>Description</label>
+                        <textarea name="description" rows="4" required></textarea>
+
+                        <label>Image</label>
+                        <input type="file" name="image" accept="image/*">
+
+                        <div class="modal-buttons">
+                            <button type="button" id="close-modal" class="close-btn">Close</button>
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Edit Dish Modal -->
+            <div class="modal" id="editDishModal">
+                <div class="modal-content">
+                    <h2>Edit Dish</h2>
+<br>
+                    <form id="editDishForm">
+                        <input type="hidden" id="editDishId">
+
+                        <label>Dish Name</label>
+                        <input type="text" id="editDishName" required>
+
+                        <label>Price</label>
+                        <input type="number" id="editDishPrice" step="0.01" required>
+
+                        <label>Description</label>
+                        <textarea id="editDishDescription" required></textarea>
+
+                        <label>Image (leave empty to keep old)</label>
+                        <input type="file" id="editDishImage">
+
+                        <div class="modal-buttons">
+                            <button type="button" class="close-btn" id="closeEditDish">Close</button>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Menu Section -->
+            <div id="menu" class="section-page">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Sunday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Sunday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="sunday-table">
+                        <!-- dynamic items -->
+                        <tr>
+                            <td colspan="4" style="text-align: center;">No data available!</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Monday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Monday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="monday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Tuesday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Tuesday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tuesday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Wednesday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Wednesday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="wednesday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Thursday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Thursday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="thursday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Friday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Friday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="friday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Saturday</th>
+                            <th colspan="2" style="text-align: right;">
+                                <button class="add-btn" data-day="Saturday">
+                                    + Add Dish
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Dish Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="saturday-table">
+                        <!-- dynamic items -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Menu Add Dish Modal -->
+            <div id="menuModal" class="modal">
+                <div class="modal-content">
+                    <h3>Add Dish to <span id="modalDay"></span></h3>
+                    <br>
+                    <form id="menuForm">
+                        <label>Dish</label>
+                        <select id="modalDishSelect" class="menu-select" name="dish" required>
+
+                        </select>
+
+                        <div class="modal-buttons">
+                            <button type="button" class="close-btn" id="closeMenuModal">Close</button>
+                            <button type="submit" class="save-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Orders Section -->
             <div id="orders" class="section-page">
                 <h2>Orders Page</h2>
             </div>
-
-
-            <!-- Menu Section -->
-            <div id="menu" class="section-page">
-                <h2>Menu Items</h2>
-            </div>
-
 
             <!-- Users Section -->
             <div id="users" class="section-page">
@@ -92,6 +351,7 @@
                             <th>S.N</th>
                             <th>User Name</th>
                             <th>Email</th>
+                            <th>Contact Number</th>
                             <th>Role</th>
                             <th>Action</th>
                         </tr>
