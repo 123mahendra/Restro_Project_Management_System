@@ -1,4 +1,5 @@
-from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, jsonify
+from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
+    jsonify, url_for
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
@@ -178,16 +179,11 @@ def admin_logout():
 @app.route('/admin/users')
 def admin_users():
     user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     user = sessions[user_session_id]
     return render_template("admin/admin_dashboard.html",section="users",user=user)
 
 @app.route('/api/users', methods=["GET"])
 def user_list():
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     users_collection = db.users
     users = list(users_collection.find({}))
@@ -197,9 +193,6 @@ def user_list():
 
 @app.route('/api/users/<user_id>', methods=["DELETE"])
 def api_delete_user(user_id):
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     users_collection = db.users
 
@@ -215,16 +208,11 @@ def api_delete_user(user_id):
 @app.route('/admin/dishes')
 def admin_dishes():
     user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     user = sessions.get(user_session_id)
     return render_template("admin/admin_dashboard.html", section="dishes", user=user)
 
 @app.route('/api/dishes', methods=['POST'])
 def add_dish():
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     dishes = db.dishes
 
@@ -277,9 +265,6 @@ def get_dishes():
 
 @app.route('/api/dishes/<id>', methods=['DELETE'])
 def delete_dish(id):
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     dishes_collection = db.dishes
 
@@ -312,9 +297,6 @@ def get_single_dish(id):
 
 @app.route('/api/dishes/<id>', methods=['PUT'])
 def update_dish(id):
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     dishes = db.dishes
 
@@ -355,16 +337,11 @@ def update_dish(id):
 @app.route('/admin/menu')
 def admin_menu():
     user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     user = sessions.get(user_session_id)
     return render_template("admin/admin_dashboard.html", section="menu", user=user)
 
 @app.route("/api/menu", methods=["POST"])
 def add_menu_dish():
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     data = request.get_json()
     day = data["day"]
@@ -398,18 +375,11 @@ def get_menu_day(day):
 # Delete dish from day
 @app.route("/api/menu/<id>", methods=["DELETE"])
 def delete_menu_dish(id):
-    user_session_id = request.cookies.get("user_session_id")
-    if user_session_id not in sessions:
-        return redirect("/admin")
     db = get_database()
     db.menu.delete_one({"_id": ObjectId(id)})
     return jsonify({"success": True})
 
 
-# Route for customer dishes section
-@app.route("/dishes")
-def get_dish_page():
-    return render_template("dish.html")
 
 # Add item to cart
 @app.route('/api/cart/add', methods=['POST'])
@@ -500,6 +470,76 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        flash("You must be logged in to checkout.")
+        return redirect(url_for("login"))
+
+    # Get database
+    db = get_database()
+    orders_col = db.orders
+
+    # Get cart from session
+    cart = session.get("cart", [])
+
+    if not cart:
+        flash("Your cart is empty.")
+        return redirect(url_for("view_cart"))
+
+    # Calculate total
+    total = sum(float(item["price"]) * int(item["quantity"]) for item in cart)
+
+    # Create order
+    order_data = {
+        "user_id": user_id,
+        "items": cart,
+        "total": total,
+        "status": "pending",
+        "created_at": datetime.now()
+    }
+
+    # Insert order into orders collection
+    orders_col.insert_one(order_data)
+
+    # Clear cart from session
+    session["cart"] = []
+    session.modified = True
+
+    flash("Order placed successfully!")
+    return redirect(url_for("home"))
+
+
+
+@app.route("/order-success")
+def order_success():
+    return render_template("order_success.html")
+
+
+@app.route('/admin/orders')
+def admin_orders():
+    user_session_id = request.cookies.get("user_session_id")
+    if user_session_id not in sessions:
+        return redirect("/admin")
+
+    user = sessions[user_session_id]
+    db = get_database()
+    orders_collection = db.orders
+
+    # Fetch all orders
+    orders = list(orders_collection.find().sort("created_at", -1))  # latest first
+    for order in orders:
+        order["_id"] = str(order["_id"])
+        # Check type before formatting
+        if isinstance(order["created_at"], datetime):
+            order["created_at"] = order["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            order["created_at"] = str(order["created_at"])
+
+    return render_template("admin/admin_dashboard.html", section="orders", user=user, orders=orders)
+
 
 @app.route("/menu")
 def menu():
