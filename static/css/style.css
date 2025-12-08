@@ -663,3 +663,46 @@ header .icons #menu-bars{
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
+.day-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+    padding: 1.2rem 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.day-selector label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.day-selector select {
+    padding: 0.6rem 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #aeb5cc;
+    border-radius: 8px;
+    background: #fff7f3;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.day-selector select:hover {
+    border-color: #aeb5cc;
+    background: #ffe8df;
+}
+
+.day-selector select:focus {
+    border-color: #6d98c9;
+    box-shadow: 0 0 8px rgba(255, 61, 0, 0.3);
+}
+

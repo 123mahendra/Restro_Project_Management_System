@@ -45,14 +45,7 @@ def home():
     user = None
     if "user_id" in session:
         user = {"first_name": session.get("user_first_name"),"last_name": session.get("user_last_name")}
-
-    db = get_database()
-    dishes = list(db.dishes.find({}))
-    for dish in dishes:
-        dish["_id"] = str(dish["_id"])
-        if "created_at" in dish:
-            dish["created_at"] = str(dish["created_at"])
-    return render_template("index.html", user=user, dishes=dishes)
+    return render_template("index.html", user=user)
 
 # Login Route
 
@@ -391,13 +384,15 @@ def add_menu_dish():
 @app.route("/api/menu/<day>", methods=["GET"])
 def get_menu_day(day):
     db = get_database()
-    entries = list(db.menu.find({"day": day}))
+    entries = list(db.menu.find({"day": day.capitalize()}))
     for e in entries:
         dish = db.dishes.find_one({"_id": ObjectId(e["dish_id"])})
         e["_id"] = str(e["_id"])
         e["dish_id"] = str(e["dish_id"])
         e["dish_name"] = dish["name"]
         e["price"] = dish["price"]
+        e["image"] = dish["image"]
+        e["description"] = dish["description"]
     return jsonify(entries)
 
 # Delete dish from day
@@ -505,6 +500,10 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
+
+@app.route("/menu")
+def menu():
+    return render_template("menu.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
