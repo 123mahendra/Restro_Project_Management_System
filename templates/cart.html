@@ -1,28 +1,68 @@
-<h2>Your Cart</h2>
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Cart</h2>
+    {% if cart %}
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            <tr data-dish-id="{{ item.dish_id }}">
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                <td>
+                    <input type="number" value="{{ item.quantity }}" min="1" class="form-control quantity-input" style="width:80px;">
+                </td>
+                <td class="subtotal">${{ item.price * item.quantity }}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm remove-btn">Remove</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>Total: $<span id="total">{{ total }}</span></h4>
+    <button class="btn btn-success mt-3">Proceed to Checkout</button>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</div>
 
-{% if cart_items %}
-<table class="table">
-    <tr>
-        <th>Item</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th></th>
-    </tr>
+<script>
+document.querySelectorAll(".quantity-input").forEach(input => {
+    input.addEventListener("change", async (e) => {
+        const tr = e.target.closest("tr");
+        const dishId = tr.getAttribute("data-dish-id");
+        const quantity = parseInt(e.target.value);
 
-    {% for c in cart_items %}
-    <tr>
-        <td>{{ c.name }}</td>
-        <td>{{ c.quantity }}</td>
-        <td>Rs. {{ c.price }}</td>
-        <td>Rs. {{ c.total }}</td>
-        <td>
-            <a class="btn btn-danger btn-sm" href="/cart/remove/{{ c._id }}">Remove</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        const res = await fetch("/api/cart/update", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({dishId, quantity})
+        });
+        if(res.ok) location.reload();
+    });
+});
 
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
+document.querySelectorAll(".remove-btn").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+        const tr = e.target.closest("tr");
+        const dishId = tr.getAttribute("data-dish-id");
+
+        const res = await fetch("/api/cart/remove", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({dishId})
+        });
+        if(res.ok) location.reload();
+    });
+});
+</script>
+{% endblock %}

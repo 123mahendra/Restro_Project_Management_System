@@ -20,18 +20,18 @@
 
     <nav class="navbar">
         <a class="active" href="#">home</a>
-        <a href="dish.html">dishes</a>
+        <a href="{{ url_for('add_dish')}}">dishes</a>
         <a href="#">about</a>
         <a href="menu.html">menu</a>
         <a href="review.html">review</a>
-        <a href="order.html">order</a>
+        <a href="{{ url_for('order')}}">order</a>
     </nav>
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
         <a href="#" class="fas fa-heart"></a>
-        <a href="cart.html" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
+        <a href="{url_for('cart')}" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
         <a href="login.html" class="fas fa-user"></a>
     </div>
 </header>
@@ -61,7 +61,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-1.png" alt="">
+                    <img src="{{url_for('static',filename='assets/image/home-img-1.png')}}" alt="">
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-2.png" alt="">
+                    <img src="{{ url_for('static', filename='assets/image/home-img-2.png') }}" alt="">
                 </div>
             </div>
 
@@ -85,7 +85,7 @@
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img src="../static/assets/image/home-img-3.png" alt="">
+                   <img src="{{ url_for('static', filename='assets/image/home-img-3.png') }}" alt="">
                 </div>
             </div>
 
@@ -98,6 +98,7 @@
 </section>
 
 <!-- home section ends -->
+
 <!-- dishes section starts  -->
 
 <section class="dishes" id="dishes">
@@ -107,101 +108,22 @@
 
     <div class="box-container">
 
+        {% for dish in dishes %}
         <div class="box">
             <a href="#" class="fas fa-heart"></a>
             <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-1.png" alt="">
-            <h3>tasty food</h3>
+            <img src="{{ url_for('static', filename='assets/image/'~dishes.image) }}" alt="{{ dish.name }}">
+            <h3>{{ dish.name }}</h3>
             <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+                {% for i in range(5) %}
+                    <i class="fas fa-star"></i>
+                {% endfor %}
             </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
+            <span>${{ dish.price }}</span>
+            <button class="btn btn-primary add-to-cart" data-id="{{ dish._id }}">Add to Cart</button>
         </div>
 
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-2.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-3.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-4.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-5.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-6.png" alt="">
-            <h3>tasty food</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
+        {% endfor %}
 
     </div>
 
@@ -561,7 +483,7 @@
             </div>
             <div class="input">
                 <span>additional food</span>
-                <input type="test" placeholder="extra with food">
+                <input type="text" placeholder="extra with food">
             </div>
         </div>
         <div class="inputBox">
@@ -624,7 +546,7 @@
             <a href="#">+358449314564</a>
             <a href="#">olisagarsandesh@gmail.com</a>
             <a href="#">mahendragautamsharma@gmail.com</a>
-            <a href="#">Kirstintie 30 C, Espoo , 02760/a>
+            <a href="#">Kirstintie 30 C, Espoo , 02760</a>
         </div>
 
         <div class="box">
@@ -642,216 +564,12 @@
 </section>
 
 <!--footer section end-->
-
-        <h3 class="sub-heading"> customer's review </h3>
-        <h1 class="heading"> what they say </h1>
-
-        <div class="swiper-container review-slider">
-
-            <div class="swiper-wrapper">
-
-                <div class="swiper-slide slide">
-                    <i class="fas fa-quote-right"></i>
-                    <div class="user">
-                        <img src="images/pic-1.png" alt="">
-                        <div class="user-info">
-                            <h3>john deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
-                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
-                        laborum aspernatur quibusdam. Ipsum, magni.</p>
-                </div>
-
-                <div class="swiper-slide slide">
-                    <i class="fas fa-quote-right"></i>
-                    <div class="user">
-                        <img src="images/pic-2.png" alt="">
-                        <div class="user-info">
-                            <h3>john deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
-                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
-                        laborum aspernatur quibusdam. Ipsum, magni.</p>
-                </div>
-
-                <div class="swiper-slide slide">
-                    <i class="fas fa-quote-right"></i>
-                    <div class="user">
-                        <img src="images/pic-3.png" alt="">
-                        <div class="user-info">
-                            <h3>john deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
-                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
-                        laborum aspernatur quibusdam. Ipsum, magni.</p>
-                </div>
-
-                <div class="swiper-slide slide">
-                    <i class="fas fa-quote-right"></i>
-                    <div class="user">
-                        <img src="images/pic-4.png" alt="">
-                        <div class="user-info">
-                            <h3>john deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
-                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
-                        laborum aspernatur quibusdam. Ipsum, magni.</p>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- review section ends -->
-
-    <!-- order section starts  -->
-
-    <section class="order" id="order">
-
-        <h3 class="sub-heading"> order now </h3>
-        <h1 class="heading"> free and fast </h1>
-
-        <form action="">
-
-            <div class="inputBox">
-                <div class="input">
-                    <span>your name</span>
-                    <input type="text" placeholder="enter your name">
-                </div>
-                <div class="input">
-                    <span>your number</span>
-                    <input type="number" placeholder="enter your number">
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>your order</span>
-                    <input type="text" placeholder="enter food name">
-                </div>
-                <div class="input">
-                    <span>additional food</span>
-                    <input type="test" placeholder="extra with food">
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>how musch</span>
-                    <input type="number" placeholder="how many orders">
-                </div>
-                <div class="input">
-                    <span>date and time</span>
-                    <input type="datetime-local">
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>your address</span>
-                    <textarea name="" placeholder="enter your address" id="" cols="30" rows="10"></textarea>
-                </div>
-                <div class="input">
-                    <span>your message</span>
-                    <textarea name="" placeholder="enter your message" id="" cols="30" rows="10"></textarea>
-                </div>
-            </div>
-
-            <input type="submit" value="order now" class="btn">
-
-        </form>
-
-    </section>
-
-    <!-- order section ends -->
-
-    <!-- footer section start -->
-
-    <section class="footer">
-
-        <div class="box-container">
-
-            <div class="box">
-                <h3>locations</h3>
-                <a href="#">Helsinki</a>
-                <a href="#">Vanta</a>
-                <a href="#">Espoo </a>
-                <a href="#">Kaunian</a>
-                <a href="#">Hamelinna</a>
-            </div>
-
-            <div class="box">
-                <h3>quick links</h3>
-                <a href="#">home</a>
-                <a href="#">dishes</a>
-                <a href="#">about</a>
-                <a href="#">menu</a>
-                <a href="#">reivew</a>
-                <a href="#">order</a>
-            </div>
-
-            <div class="box">
-                <h3>contact info</h3>
-                <a href="#">+358402457337</a>
-                <a href="#">+358449314564</a>
-                <a href="#">olisagarsandesh@gmail.com</a>
-                <a href="#">mahendragautamsharma@gmail.com</a>
-                <a href="#">Kirstintie 30 C, Espoo , 02760</a>
-            </div>
-
-            <div class="box">
-                <h3>follow us</h3>
-                <a href="#">facebook</a>
-                <a href="#">twitter</a>
-                <a href="#">instagram</a>
-                <a href="#">linkedin</a>
-            </div>
-
-        </div>
-
-        <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
-
-    </section>
-
-    <!--footer section end-->
-
-    <script src="/js/navbar.js"></script>
-    <script src="../static/js/home.js"></script>
-    <script src="/js/menu.js"></script>
-    <script src="/js/cart.js"></script>
-    <script src="/js/order.js"></script>
-    <script src="/js/animations.js"></script>
+<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/order.js') }}"></script>
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 
 
 <script>
@@ -872,13 +590,29 @@
 </script>
 
 <script>
-    document.getElementById("close-cart").addEventListener("click", () => {
-        document.getElementById("cart-panel").classList.remove("active");
+document.addEventListener("DOMContentLoaded", function() {
+    // Add to cart functionality
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const dishId = btn.getAttribute("data-id");
+            const res = await fetch("/api/cart/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({dishId, quantity: 1})
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert(data.message);
+                // Optionally update cart count dynamically
+                const cartCount = document.getElementById("cart-count");
+                cartCount.textContent = data.cartCount;
+            } else {
+                alert("Failed to add to cart");
+            }
+        });
     });
-
-    document.addEventListener("DOMContentLoaded", loadCart);
+});
 </script>
-
 </body>
 </html>
 
