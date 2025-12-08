@@ -1,4 +1,5 @@
-from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, jsonify
+from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
+    jsonify, url_for
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
@@ -474,6 +475,50 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
+
+
+@app.route("/checkout", methods=["GET", "POST"])
+def checkout():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Get cart from session
+    cart = session.get("cart", [])
+
+    if not cart:
+        flash("Your cart is empty!", "warning")
+        return redirect(url_for('view_cart'))
+
+    total = sum(item["price"] * item["quantity"] for item in cart)
+
+    db = get_database()
+    orders_col = db.orders
+
+    if request.method == "POST":
+        new_order = {
+            "user_id": session["user_id"],
+            "items": cart,
+            "total": total,
+            "status": "pending",
+            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        orders_col.insert_one(new_order)
+
+        # Clear session cart
+        session["cart"] = []
+        session.modified = True
+
+        flash("Order placed successfully!", "success")
+        return redirect(url_for("order_success"))
+
+    return render_template("checkout.html", cart=cart, total=total)
+
+
+@app.route("/order-success")
+def order_success():
+    return render_template("order_success.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
