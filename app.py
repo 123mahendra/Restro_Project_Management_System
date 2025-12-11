@@ -618,5 +618,25 @@ def delete_announcement(id):
 
     return jsonify({"success": True})
 
+
+# Multilangual
+
+def load_lang():
+    with open("static/data/languages.json", "r", encoding="utf-8") as f:
+        return json.load(f)
+
+@app.context_processor
+def inject_translations():
+    lang = session.get("lang", "en")
+    translations = load_lang()
+    return dict(t=translations.get(lang, translations["en"]))
+
+@app.route("/lang/<code>")
+def switch_lang(code):
+    if code in ["en", "fi"]:
+        session["lang"] = code
+    return redirect(request.referrer or "/")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
