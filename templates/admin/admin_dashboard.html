@@ -22,6 +22,8 @@
         <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
+        <a href="#" data-section="announcements"><span class="material-icons">campaign</span>Announcements</a>
+
     </aside>
 
     <!-- MAIN -->
@@ -399,6 +401,26 @@
             <div id="reviews" class="section-page">
                 <h2>Customer Reviews</h2>
             </div>
+
+            <!-- Announcement Section -->
+            <div id="announcements" class="section-page">
+    <h2>Announcements</h2>
+    <button id="addAnnBtn" class="add-btn">+ Add Announcement</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="announcementsTable"></tbody>
+    </table>
+</div>
+
         </section>
     </main>
 
