@@ -642,6 +642,12 @@ def switch_lang(code):
         session["lang"] = code
     return redirect(request.referrer or "/")
 
+# Review
+
+@app.route('/review')
+def review():
+    return render_template('review.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
