@@ -3,6 +3,9 @@ from flask import Blueprint, request, jsonify, current_app
 from bson import ObjectId
 from utils.db import db
 from utils.auth import admin_required, is_admin_session
+from db import get_reviews_collection
+ 
+
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -161,3 +164,32 @@ def update_order_status(id):
         return jsonify({"error":"status required"}), 400
     db.orders.update_one({"_id": ObjectId(id)}, {"$set": {"status": status}})
     return jsonify({"ok": True})
+
+
+
+# ----------------------
+# Reviews endpoints
+# ----------------------
+
+@api_bp.route("/reviews", methods=["POST"])
+def add_review():
+    payload = request.json or {}
+
+    name = payload.get("name")
+    message = payload.get("message")
+    rating = int(payload.get("rating", 5))
+
+    if not name or not message:
+        return jsonify({"error": "name and message required"}), 400
+
+    col = get_reviews_collection()
+    doc = {
+        "name": name,
+        "message": message,
+        "rating": rating,
+        "created_at": datetime.datetime.utcnow()    
+    }
+
+    res = col.insert_one(doc)
+    doc["_id"] = str(res.inserted_id)
+    return jsonify(doc), 201
