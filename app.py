@@ -11,6 +11,7 @@ from bson import ObjectId
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
+ 
 
 load_dotenv()
 
@@ -24,7 +25,7 @@ app.config["UPLOAD_FOLDER"] = "static/assets/dishes"
 # Create the folder if it doesn't exist
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
-
+ 
 
 users = [
     {
