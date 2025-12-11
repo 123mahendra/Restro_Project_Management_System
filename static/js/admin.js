@@ -491,6 +491,52 @@ window.deleteAnnouncement = function(id){
     }).then(() => loadAnnouncements());
 };
 
+const annModal = document.getElementById("announcementModal");
+const addAnnBtn = document.getElementById("addAnnBtn");
+const closeAnnModal = document.getElementById("closeAnnModal");
+
+addAnnBtn.onclick = () => {
+    // reset fields
+    document.getElementById("annTitle").value = "";
+    document.getElementById("annMessage").value = "";
+    document.getElementById("annType").value = "info";
+    document.getElementById("annActive").checked = true;
+
+    annModal.style.display = "block";
+};
+
+closeAnnModal.onclick = () => {
+    annModal.style.display = "none";
+};
+
+// close modal when clicking outside
+window.onclick = (e) => {
+    if(e.target === annModal) {
+        annModal.style.display = "none";
+    }
+};
+
+document.getElementById("saveAnnouncementBtn").onclick = () => {
+    const newAnnouncement = {
+        title: document.getElementById("annTitle").value,
+        message: document.getElementById("annMessage").value,
+        type: document.getElementById("annType").value,
+        active: document.getElementById("annActive").checked
+    };
+
+    fetch("/api/announcements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newAnnouncement)
+    })
+    .then(res => res.json())
+    .then(() => {
+        annModal.style.display = "none";
+        loadAnnouncements();  // reload table
+    });
+};
+
+
 // Load on section change
 document.body.addEventListener("click", e => {
     if (e.target.dataset.section === "announcements") loadAnnouncements();
