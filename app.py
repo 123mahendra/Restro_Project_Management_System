@@ -430,6 +430,11 @@ def view_cart():
     total = sum(item["price"] * item["quantity"] for item in cart)
     return render_template("cart.html", cart=cart, total=total)
 
+@app.route("/api/cart/count")
+def cart_count():
+    cart = session.get("cart", [])
+    return jsonify({"count": sum(item["quantity"] for item in cart)})
+
 # Update cart quantity
 @app.route('/api/cart/update', methods=['POST'])
 def update_cart():
@@ -542,8 +547,13 @@ def admin_orders():
 
 
 @app.route("/menu")
-def menu():
-    return render_template("menu.html")
+def customer_menu():
+    db = get_database()
+    dishes = list(db.dishes.find({}))
+    for d in dishes:
+        d["_id"] = str(d["_id"])
+    return render_template("menu.html", dishes=dishes)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
