@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if item %}Edit{% else %}Add{% endif %} Menu Item</title>
+<link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<h1>{% if item %}Edit{% else %}Add{% endif %} Menu Item</h1>
+
+<form method="POST">
+    <label>Name (EN)</label>
+    <input type="text" name="name_en" value="{{ item.name_en if item else '' }}" required>
+
+    <label>Name (FI)</label>
+    <input type="text" name="name_fi" value="{{ item.name_fi if item else '' }}">
+
+    <label>Description (EN)</label>
+    <textarea name="desc_en">{{ item.desc_en if item else '' }}</textarea>
+
+    <label>Description (FI)</label>
+    <textarea name="desc_fi">{{ item.desc_fi if item else '' }}</textarea>
+
+    <label>Price</label>
+    <input type="number" name="price" value="{{ item.price if item else '' }}" step="0.01" required>
+
+    <label>Category</label>
+    <input type="text" name="category" value="{{ item.category if item else 'main' }}" required>
+
+    <label>Active Days (comma separated)</label>
+    <input type="text" name="active_days" value="{{ item.active_days|join(',') if item else '' }}">
+
+    <label>Dietary JSON</label>
+    <textarea name="dietary">{{ item.dietary|tojson if item else '{}' }}</textarea>
+
+    <label>Images JSON</label>
+    <textarea name="images">{{ item.images|tojson if item else '[]' }}</textarea>
+
+    <button type="submit">Save</button>
+</form>
+
+<a href="/admin/dashboard">Back to Dashboard</a>
+</body>
+</html>

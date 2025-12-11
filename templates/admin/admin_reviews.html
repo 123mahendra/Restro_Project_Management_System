@@ -1,0 +1,24 @@
+{% extends "admin_dashboard.html" %}
+
+{% block content %}
+<h2>Customer Reviews</h2>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Name</th>
+    <th>Rating</th>
+    <th>Message</th>
+    <th>Date</th>
+  </tr>
+
+  {% for r in reviews %}
+  <tr>
+    <td>{{ r.name }}</td>
+    <td>{{ r.rating }}</td>
+    <td>{{ r.message }}</td>
+    <td>{{ r.created_at }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

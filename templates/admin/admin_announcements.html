@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container">
+  <a href="/admin/dashboard" class="btn secondary">← Back</a>
+
+  <div class="card">
+    <h2>Announcements Editor</h2>
+
+    <form id="ann-edit-form" class="form">
+      <label> Title
+        <input name="title" required />
+      </label>
+      <label> Message
+        <textarea name="content" required></textarea>
+      </label>
+      <div class="actions">
+        <button id="ann-create" class="btn primary" type="button">Create announcement</button>
+      </div>
+    </form>
+
+    <h3>Existing</h3>
+    <div id="ann-editor-list"></div>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
+{% endblock %}

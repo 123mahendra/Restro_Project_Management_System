@@ -1,0 +1,727 @@
+[33mcommit 427edc4057bccf88e146ecb6c4f0fa15e95e898a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/developing[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Mon Dec 8 19:01:33 2025 +0200
+
+    changes in index file
+
+[33mcommit 7cd901d70a9617ce2e44c732f22ee99d22362551[m
+Merge: 508ee55 ec32240
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Mon Dec 8 18:53:59 2025 +0200
+
+    solve conflict
+
+[33mcommit 508ee55c79314bc51eb6dccc6cfc2006c0105510[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Mon Dec 8 18:50:51 2025 +0200
+
+    session updated for apis
+
+[33mcommit ec32240e520666492e3dbe58e1b19b64f0dc6222[m
+Merge: 61f8deb 333edea
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Mon Dec 8 17:30:58 2025 +0200
+
+    Merge pull request #8 from 123mahendra/backend
+    
+    Backend
+
+[33mcommit 333edea2f47e2d65403a83e6c7442b1dc98a05a4[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Mon Dec 8 17:29:29 2025 +0200
+
+    Adding cart section
+
+[33mcommit af393abc6514c0ab1d127fa8f14982abaeaae7e7[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Mon Dec 8 15:38:10 2025 +0200
+
+    changes in index file
+
+[33mcommit db55091c1a58c3f8e2a5688b927baeef35ce4ed3[m
+Merge: 6a34e31 61f8deb
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Mon Dec 8 12:55:38 2025 +0200
+
+    Merge branch 'main' of https://github.com/123mahendra/Restro_Project_Management_System into backend
+
+[33mcommit 61f8debf9eddcbe7382ac01f5ba677fc1d468351[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 23:07:25 2025 +0200
+
+    added menu section in admin panel
+
+[33mcommit f28ad353f92ef91d707ade819c7189de0f5c5ff8[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 22:10:48 2025 +0200
+
+    menu section done in admin and added days wise menu
+
+[33mcommit 6a34e31359c9926044aa57e7b6550e7f25edb277[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Dec 7 20:32:42 2025 +0200
+
+    remo item function added
+
+[33mcommit 5bfbc921ffa3fba732ad1af13fcfbc7fe455de74[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Dec 7 20:32:02 2025 +0200
+
+    Update Quantity added
+
+[33mcommit dfc01a66a9582d724be206af2413c24cc26a8f61[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Dec 7 20:30:58 2025 +0200
+
+    cart item added
+
+[33mcommit b9ca99e75426c6726d990dc7cd1b8869c9bdcbed[m[33m ([m[1;31morigin/nischal[m[33m)[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 19:48:05 2025 +0200
+
+    conflict solve
+
+[33mcommit 39c387a3f563f95d192660cc2aaeea9f27f4aa92[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 19:40:15 2025 +0200
+
+    solve conflict
+
+[33mcommit 5ea9bcd1a0775e940b4e4634a9024b656979656a[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 19:36:15 2025 +0200
+
+    solve conflict
+
+[33mcommit 846fa4c1fe6089a5f07b9ca8b525f6fc1924ce6a[m
+Merge: 5f4cda7 7d6cb2c
+Author: Nischaldhungana <dhungananischal371@gmail.com>
+Date:   Sun Dec 7 23:14:27 2025 +0545
+
+    solve conflict
+
+[33mcommit 7d6cb2c547ca1e2bbe7fc85ebaf698c84483d8d9[m
+Author: Nischaldhungana <dhungananischal371@gmail.com>
+Date:   Sun Dec 7 23:11:13 2025 +0545
+
+    dishes edit section frontend and backend done and make api of edit and update
+
+[33mcommit 5f4cda76aacd8e171f967fd58010a99b43d8b966[m
+Merge: 7b400e5 a6be91f
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 19:25:13 2025 +0200
+
+    solve conflict
+
+[33mcommit a6be91fc83d27cbd49c483e8e61d7ddf32a81e82[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 19:23:34 2025 +0200
+
+    dishes view and create section added
+
+[33mcommit 7b400e550caacec48399de72cf2e06a3638f20e6[m
+Merge: 5e77357 4848d2c
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Dec 7 18:42:15 2025 +0200
+
+    Slight changes
+
+[33mcommit 5e7735708af299128c817983fbd30c67dee10029[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Dec 7 18:41:13 2025 +0200
+
+    Slight change
+
+[33mcommit 39bdb7e2c5907ef3a41cb7c2d59d8e9b833d4f25[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 14:49:52 2025 +0200
+
+    changes in html index file
+
+[33mcommit c0cefff3bcfd6cdd609c3228d61ab24765fb7ce9[m
+Merge: ed54a12 28a4894
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 14:47:20 2025 +0200
+
+    Merge branch 'developing' of https://github.com/123mahendra/Restro_Project_Management_System into developing
+
+[33mcommit ed54a12503ea5a2fe09c8d603b2caabb7121c0a9[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 13:52:55 2025 +0200
+
+    changes in admin section
+
+[33mcommit 4848d2c7cba225d874b4cfd5fdfc5b12adf38b1e[m[33m ([m[1;31morigin/guri[m[33m)[m
+Merge: d69b00e 518e2fa
+Author: Gurpreet singh <gurirai0554@gmail.com>
+Date:   Sun Dec 7 14:40:15 2025 +0200
+
+    conflict solve
+
+[33mcommit d69b00e88ed02e237845a30a46f3d3764609ae77[m
+Author: Gurpreet singh <gurirai0554@gmail.com>
+Date:   Sun Dec 7 14:38:30 2025 +0200
+
+    footer css added to index file
+
+[33mcommit 28a489481a84725590b1fc7674a07534f0a02aea[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 13:52:55 2025 +0200
+
+    changes in admin section
+
+[33mcommit 518e2fa44965ac1635f2e3b43ad0357f16d03d1d[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 13:40:23 2025 +0200
+
+    delete unwanted files
+
+[33mcommit 191727fd3ee7c90c97b10a3f411b0cdc02d7f206[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 13:38:01 2025 +0200
+
+    added user list and delete section in admin panel
+
+[33mcommit c96bfce4c570d6a623ebf2de047d2a705565d0a4[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Dec 7 11:45:03 2025 +0200
+
+    added backend for user login and register
+
+[33mcommit 535e645b0de3fb030c1e02f4877bfd407ac59a48[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 22:24:39 2025 +0200
+
+    added some css and js for error handeling while admin login
+
+[33mcommit 2ec819ccbb8ad86ab3e17921230bcddd147b0340[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 22:05:49 2025 +0200
+
+    index route added to app.py
+
+[33mcommit c2fd6ddddea90762eb7d588247b956f499fc82cf[m
+Merge: 5f0b136 f5a51e3
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 22:01:15 2025 +0200
+
+    merging developing branch to main
+
+[33mcommit 5f0b136be0a7b8d43a5fd9dd2f6d9dc6b3ceb0be[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 22:00:41 2025 +0200
+
+    added some file in gitignore
+
+[33mcommit f5a51e3d7e35b1b2bfa9d5ed9edb8fb4c7a82080[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 21:59:03 2025 +0200
+
+    changes in admin section
+
+[33mcommit df954c86b5b40f2146bc232861dcf23891c1e7fa[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 21:32:58 2025 +0200
+
+    admin section login logout backend section done
+
+[33mcommit f7ffe0bbe30a0f0eb11c6067addbf4e8c24434e7[m
+Merge: 52ed598 b6d663e
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Sat Dec 6 20:47:19 2025 +0200
+
+    Merge pull request #7 from 123mahendra/backend
+    
+    Backend
+
+[33mcommit b6d663e7111f9cef03f763a737d5b7d17f0485d9[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:44:39 2025 +0200
+
+    Adding database
+
+[33mcommit ae4b01315a49e988f8fa46f4eaabed7a9f8ef7d1[m
+Merge: 649d261 52ed598
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:35:44 2025 +0200
+
+    Removed pycache and added .gitignore
+
+[33mcommit 52ed5983320e2ec8bea01d78912a424a4a569e58[m
+Merge: bf4c92a 16c6c16
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:29:53 2025 +0200
+
+    Resolve merge conflict in templates/index.html
+
+[33mcommit bf4c92a39426747cb4377461a2cc26c5f00563a4[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:28:36 2025 +0200
+
+    ...
+
+[33mcommit 16c6c16387d966f0cdb616d7c732c9f1a86d0e22[m
+Author: Gurpreet singh <gurirai0554@gmail.com>
+Date:   Sat Dec 6 20:28:10 2025 +0200
+
+    added footer section
+
+[33mcommit 649d26146791db363b1d4fba3a89698d64adb381[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:26:19 2025 +0200
+
+    Add gitignore for pycache and pyc files
+
+[33mcommit 7fb8bcc05fe1ff012f646af10472e742f3f444c9[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 20:25:02 2025 +0200
+
+    Remove pycache and ignore bytecode
+
+[33mcommit ccd81c19bf87f9e76a9f318382a1ef031a9c606a[m
+Author: Gurpreet singh <gurirai0554@gmail.com>
+Date:   Sat Dec 6 20:16:05 2025 +0200
+
+    guri
+
+[33mcommit a71d817c02450bf8c42c7058059a334fef8b6c27[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Dec 6 19:34:36 2025 +0200
+
+    ...
+
+[33mcommit 185f71727954f0b1f5ba213508464a4a0820e0dc[m
+Merge: ae697e8 43aef3f
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 19:33:01 2025 +0200
+
+    resolve commit
+
+[33mcommit ae697e8e5681c8a410b09d3a680a821f0e047c43[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 19:31:02 2025 +0200
+
+    changes
+
+[33mcommit 43aef3f4f86d1b81c9a8fedffd44ee0a60677b42[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 19:30:12 2025 +0200
+
+    changes in admin dashboard
+
+[33mcommit d4574aaa66315d28d27a0dccc2c34bd85baa3a2e[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 18:50:24 2025 +0200
+
+    doing connection with database
+
+[33mcommit 2854dd5f81481747782638df62832b8b8d5b4b65[m
+Merge: aa24efa 33b663f
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 11:26:58 2025 +0200
+
+    Merge branch 'developing'
+
+[33mcommit 33b663fd63f78ebd4b5729e28c9ed27e0c186835[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Dec 6 11:26:33 2025 +0200
+
+    changes in admin panel
+
+[33mcommit aa24efa8fcbed0e558903019ec949c7c0ba753ae[m
+Merge: 5e66955 ec5c1c2
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Fri Dec 5 23:34:34 2025 +0200
+
+    Merge pull request #5 from 123mahendra/backend
+    
+    Backend
+
+[33mcommit ec5c1c2b538cb5ee6c3d428c03ea2c6bae67b6ca[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Fri Dec 5 23:33:49 2025 +0200
+
+    slight change in dashboard
+
+[33mcommit 7f2d6033d041338a5c11b3c2111bba3de899069b[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Fri Dec 5 00:40:43 2025 +0200
+
+    Minor changes
+
+[33mcommit a28a9f079c3d07ddd278379c5cdf43ab3cb982fd[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 23:39:04 2025 +0200
+
+    file name changes
+
+[33mcommit d3dfba6ac41d763ec987ffb01961dd676b3ffab3[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 23:38:01 2025 +0200
+
+    cart page
+
+[33mcommit 5e669558ddffb58a4ce38e058f8ddad7bdd90acd[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 23:34:11 2025 +0200
+
+    Few correction changes has been made
+
+[33mcommit 525b1326d6bc9d9f747c34df1c93e4db91e14f91[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 22:08:02 2025 +0200
+
+    Changes in file layout
+
+[33mcommit 29c10664ad95bb9daac0acfafa8adfe28680eb50[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 21:25:50 2025 +0200
+
+    Adding the admin pannel
+
+[33mcommit d3d52b81b018ccc8f680804530f49ebdcb2bb943[m
+Merge: eb49a1e 94056b8
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 20:38:44 2025 +0200
+
+    ...
+
+[33mcommit 94056b8a74b5467309c4f7bb2dc140c95d128eab[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 20:31:55 2025 +0200
+
+    Badmin pannel addded
+
+[33mcommit eb49a1e960193e392e353a573261a2658f608e2c[m
+Merge: 978f98d 2a3e175
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Thu Dec 4 17:29:41 2025 +0200
+
+    Merge branch 'main' of https://github.com/123mahendra/Restro_Project_Management_System into frontend
+
+[33mcommit 978f98dafd468af5c95e9ded68844eb724ff123b[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 30 19:53:21 2025 +0200
+
+    Adding checkout page
+
+[33mcommit 2a3e1750753518a133b66d967399a2663f6179df[m
+Merge: 3461d05 4ab3dc0
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Sun Nov 30 19:04:14 2025 +0200
+
+    Merge pull request #4 from 123mahendra/developing
+    
+    Developing
+
+[33mcommit 4ab3dc03cb0f848cb4ef932818dd094548a2cd1e[m
+Merge: 6e26373 4d8cccc
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 30 19:02:06 2025 +0200
+
+    Merge branch 'developing' of https://github.com/123mahendra/Restro_Project_Management_System into developing
+
+[33mcommit 6e26373792a518a149964e047238c6ccc7ddc4e9[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 30 18:55:46 2025 +0200
+
+    deleted unwanted files
+
+[33mcommit 4d8cccca0d2219619520f66b167505eebb7f0bea[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 30 18:55:46 2025 +0200
+
+    deleted unwanted files
+
+[33mcommit 3461d05dab5e01589c54984882604128609bc2de[m
+Merge: 6fc20ff 807fd7c
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 29 17:18:59 2025 +0200
+
+    ssome chnages
+
+[33mcommit 6fc20fff750eb292a77d4bfe8c204f6a623d7b66[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 29 17:17:39 2025 +0200
+
+    Work in progress
+
+[33mcommit e04671dc5b6d903c7997b761df100f31629cacac[m
+Merge: 807fd7c 46d213b
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 29 17:03:12 2025 +0200
+
+    Merge branch 'developing' of https://github.com/123mahendra/Restro_Project_Management_System into developing
+
+[33mcommit 807fd7ca645113ee2c4dd9898603302aaf7ff1cb[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 29 17:02:25 2025 +0200
+
+    conflict solve
+
+[33mcommit 46d213bf2219b9476a5211cc14615fbd2611211b[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 29 17:01:43 2025 +0200
+
+    merge file
+
+[33mcommit f564480c600e082e124fd9127c27feeaee8e5684[m
+Merge: 6f0c8c7 d6d8825
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 29 17:00:21 2025 +0200
+
+    merge file
+
+[33mcommit 601ad3f2cd532de356faf2084c44a662ac387ae7[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 23:01:00 2025 +0200
+
+    cart page js file added
+
+[33mcommit c2ef126f0faf4dd10bc655b5164f7749644da2e8[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 23:00:27 2025 +0200
+
+    menu page js file added
+
+[33mcommit 99e255710a75db28bb3fcdd8eb77576494c96d3c[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:59:38 2025 +0200
+
+    home page js file adde
+
+[33mcommit 8a4f6c3fb68b71b8de239ca37a7b6637a5383a1c[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:58:40 2025 +0200
+
+    Slight changes
+
+[33mcommit d6d8825784e2ec84e9ef0a89b36deca4672a3dc3[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:14:24 2025 +0200
+
+    rder  section added into index page
+
+[33mcommit 7d35b96c1c488da067babf6bab099885f328bae6[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:13:32 2025 +0200
+
+    Review section added into index page
+
+[33mcommit 0ee2e47c4b157f83ebf3f3e3adf40684ba585424[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:12:02 2025 +0200
+
+    About section added into index page
+
+[33mcommit 35a4233d0e93b74a696b18fa052648511f1fe1e9[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 22:10:02 2025 +0200
+
+    dishes added into index page
+
+[33mcommit f149fb1117b238b9f3bd9f190ba30659a82494e6[m
+Merge: e993677 a5fd73d
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Tue Nov 25 21:54:21 2025 +0200
+
+    Merge pull request #2 from 123mahendra/backend
+    
+    Backend
+
+[33mcommit a5fd73dfd602f8233fbf4afb04c3811afee19377[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 21:52:23 2025 +0200
+
+    Css of home section added
+
+[33mcommit a554d145f7caf886be38fcbaeef0df00a7e3d80e[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 21:47:28 2025 +0200
+
+    Css of about section added
+
+[33mcommit 88e8eff484ea795d6a0937205a35720c635e04e3[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Tue Nov 25 21:44:40 2025 +0200
+
+    Css of order section
+
+[33mcommit 6f0c8c7894861a06c76a3fc172bd1cc5aeff17cc[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 23 14:01:35 2025 +0200
+
+    changes file layout
+
+[33mcommit e993677128856780bde0a6c89a0910ff0ee63571[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 23 12:45:50 2025 +0200
+
+    changes in login page
+
+[33mcommit 01f9299b7932284041f48c85f724338af9d540cd[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 22 21:46:36 2025 +0200
+
+    working on login javascript
+
+[33mcommit f46f3bd35e6b41b765a46f16b35ba113507f8021[m[33m ([m[1;31morigin/my-changes-before-switching-branch[m[33m)[m
+Author: Nischaldhungana <dhungananischal371@gmail.com>
+Date:   Sun Nov 23 01:23:16 2025 +0545
+
+    Initial project upload
+
+[33mcommit 0b05a35fdbed0693de74b53ebe0b87296e4bb412[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 22 21:18:51 2025 +0200
+
+    Scripting the order page
+
+[33mcommit 671b84236c3f5078968eb8730ae2801fa35fdc77[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 22 21:10:10 2025 +0200
+
+    Product page
+
+[33mcommit 989f60e48981d27a63ecee08dde7e6aea6d17902[m[33m ([m[1;31morigin/project[m[33m)[m
+Author: Nischaldhungana <dhungananischal371@gmail.com>
+Date:   Sun Nov 9 23:06:48 2025 +0545
+
+    Working on review section
+
+[33mcommit 1c849d8851a5c952a36ea34a326e92248c02ec06[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 9 18:11:46 2025 +0200
+
+    added order link to required file
+
+[33mcommit a940c327de23be8feadfd999f13e8247d7170513[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 9 18:07:49 2025 +0200
+
+    added menu link to index file
+
+[33mcommit 0c4d1b4238e5d76aa3720e57dfd5f1dcc70d54e3[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sun Nov 9 18:05:01 2025 +0200
+
+    Dish section frontend is done and make dish section linkable from other section
+
+[33mcommit 8610d4c8f8a531ea278e1569beeedeb90afb6dc9[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:38:57 2025 +0200
+
+    Css part of order page is added
+
+[33mcommit d69a622d19ce597acdc39959359ea17922201325[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:26:26 2025 +0200
+
+    Adding css link
+
+[33mcommit 4fc7bf4c9c8c8a937217acca41162f6f55cba366[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:24:35 2025 +0200
+
+    Adding menu page into index page
+
+[33mcommit 33ea621d984751b06890b5052e201039f9da253e[m
+Merge: 1cb0c12 72d1050
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:07:35 2025 +0200
+
+    Menu section added on index page
+
+[33mcommit 72d10508618fd424a960c8741ad6837e57d5f87a[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:04:11 2025 +0200
+
+    Menu section added in index page
+
+[33mcommit 1cb0c12c914514eb355e14767146da77cfce76e4[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 17:03:18 2025 +0200
+
+    Slight changes
+
+[33mcommit 76483ea69b62ea1d2a80938117d6de73238da8a1[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sun Nov 9 16:56:07 2025 +0200
+
+    Order page created
+
+[33mcommit a0c68b1c4e457f612379c9d62d75bcc47ae06c66[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 8 20:18:15 2025 +0200
+
+    Changes in index page and menu page
+
+[33mcommit b29a41f723dd05a7bdca9a06be325f3969e77bab[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Sat Nov 8 20:11:18 2025 +0200
+
+    Menu section added to the project
+
+[33mcommit 14bf87bf31fa63c4859cb3da4e3fd273f34928a0[m
+Merge: c18239f fa2f840
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 19:34:45 2025 +0200
+
+    Merge branch 'main' of https://github.com/123mahendra/Restro_Project_Management_System
+
+[33mcommit c18239f012484fe12bb9bc99416932e1f76bdcf5[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 19:30:21 2025 +0200
+
+    Css of Search form added
+
+[33mcommit 1b9c9fad610779d20a22fd4522133ede58778288[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 19:21:56 2025 +0200
+
+    Heading Section css added
+
+[33mcommit 80c72d1eb6dfcbda9505e3b5e24e168831736070[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 19:00:31 2025 +0200
+
+    Heading Section css added
+
+[33mcommit d250b71fcc862577fe025c704e3949e75f8bbaae[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 18:49:13 2025 +0200
+
+    Home section added
+
+[33mcommit 17824932e212161041e09b8d67c30a78990c37c0[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 18:41:53 2025 +0200
+
+    Search form integrated
+
+[33mcommit ef85c281e5e6c3a99983ac06abc821e918ff2279[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 18:29:18 2025 +0200
+
+    Header section created
+
+[33mcommit fa2f840c4b43634dadcff1bd63d0b5997fb7aa47[m
+Merge: b85a356 18dc63b
+Author: Sagar Sandesh Oli <59307752+sagar-sandesh@users.noreply.github.com>
+Date:   Sat Nov 8 09:29:07 2025 +0200
+
+    Merge pull request #1 from 123mahendra/frontend
+    
+    Primary index page
+
+[33mcommit 18dc63b815c34c52ea021c3e8c785630e2fbdc02[m
+Author: Sagar Sandesh Oli <sagaroli450@gmail.com>
+Date:   Sat Nov 8 09:25:28 2025 +0200
+
+    Primary index page
+
+[33mcommit b85a356b914d08b502bc1b841e91619a07d68e6a[m[33m ([m[1;32mfeature-login[m[33m)[m
+Author: Mahendra Gautam Sharma <mahendragautam464@gmail.com>
+Date:   Wed Sep 17 12:59:39 2025 +0300
+
+    first commit
