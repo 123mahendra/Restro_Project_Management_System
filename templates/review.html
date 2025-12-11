@@ -48,20 +48,90 @@
 
 <!-- review section starts  -->
 <section class="review" id="review">
+
     <h3 class="sub-heading"> Customer's Review </h3>
     <h1 class="heading"> What They Say </h1>
 
+    <!-- Review Slider -->
     <div class="swiper-container review-slider">
-        <div class="swiper-wrapper" id="reviews-wrapper">
-            <!-- Reviews load from backend -->
+        <div class="swiper-wrapper">
+
+            {% for r in reviews %}
+            <div class="swiper-slide slide">
+                <i class="fas fa-quote-right"></i>
+                <div class="user">
+                    <img src="/static/img/default_user.png" alt="">
+                    <div class="user-info">
+                        <h3>{{ r.name }}</h3>
+                        <div class="stars">
+                            {% for i in range(r.rating) %}
+                            <i class="fas fa-star"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p>{{ r.message }}</p>
+            </div>
+            {% endfor %}
+
         </div>
     </div>
+
 </section>
+
 
 <!-- review section ends -->
  
+<!-- Submit Review Form -->
+<div class="review-form-container">
+    <h2>Leave Your Review</h2>
 
+    <form id="reviewForm">
+        <input type="text" id="name" placeholder="Your Name" required>
 
+        <select id="rating" required>
+            <option value="5">★★★★★ (5 Stars)</option>
+            <option value="4">★★★★☆ (4 Stars)</option>
+            <option value="3">★★★☆☆ (3 Stars)</option>
+            <option value="2">★★☆☆☆ (2 Stars)</option>
+            <option value="1">★☆☆☆☆ (1 Star)</option>
+        </select>
+
+        <textarea id="message" placeholder="Write your feedback..." required></textarea>
+
+        <button type="submit" class="btn">Submit Review</button>
+    </form>
+
+    <p id="reviewMessage" style="color:green; font-weight:bold;"></p>
+</div>
+
+<style>
+.review-form-container {
+    width: 60%;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ddd;
+}
+.review-form-container input,
+.review-form-container textarea,
+.review-form-container select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.review-form-container button {
+    background: #27ae60;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+</style>
 <!-- footer section start -->
 
 <section class="footer">
@@ -115,36 +185,38 @@
 
 <!-- Load real reviews dynamically -->
 <script>
-fetch("/api/reviews")
-  .then(response => response.json())
-  .then(reviews => {
-    let html = "";
-    reviews.forEach(r => {
-      html += `
-        <div class="swiper-slide slide">
-            <i class="fas fa-quote-right"></i>
-            <div class="user">
-                <img src="../assets/image/pic-1.png" alt="">
-                <div class="user-info">
-                    <h3>${r.name}</h3>
-                    <div class="stars">
-                        ${'<i class="fas fa-star"></i>'.repeat(r.rating)}
+function loadReviews() {
+    fetch("/api/reviews")
+        .then(response => response.json())
+        .then(reviews => {
+            let html = "";
+            reviews.forEach(r => {
+                html += `
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="../assets/image/pic-1.png" alt="">
+                        <div class="user-info">
+                            <h3>${r.name}</h3>
+                            <div class="stars">
+                                ${'<i class="fas fa-star"></i>'.repeat(r.rating)}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <p>${r.message}</p>
-        </div>
-      `;
-    });
+                    <p>${r.message}</p>
+                </div>`;
+            });
 
+            document.getElementById("reviews-wrapper").innerHTML = html;
 
-    document.getElementById("reviews-wrapper").innerHTML = html;
+            swiper.update();
+            swiper.updateAutoHeight();
+        });
+}
 
-     
-    swiper.update();  
-    swiper.updateAutoHeight();
-  });
+loadReviews(); // Load reviews when page opens
 </script>
+
 
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
@@ -153,6 +225,7 @@ var swiper = new Swiper(".review-slider", {
     loop: false,
     autoHeight: true,
     grabCursor: true,
+    slidesPerView: 1,
     spaceBetween: 20,
     centeredSlides: true,
     autoplay: {

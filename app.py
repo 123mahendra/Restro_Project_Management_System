@@ -11,6 +11,10 @@ from bson import ObjectId
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
+from db import get_reviews_collection
+from api_routes import api_bp
+from admin_routes import admin_bp
+ 
  
 
 load_dotenv()
@@ -25,7 +29,9 @@ app.config["UPLOAD_FOLDER"] = "static/assets/dishes"
 # Create the folder if it doesn't exist
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
- 
+  
+
+
 
 users = [
     {
@@ -554,6 +560,37 @@ def customer_menu():
     for d in dishes:
         d["_id"] = str(d["_id"])
     return render_template("menu.html", dishes=dishes)
+
+ 
+# ------------------ CUSTOMER REVIEW FORM HANDLER ------------------
+
+@app.route("/submit-review", methods=["POST"])
+def submit_review():
+    name = request.form.get("name")
+    message = request.form.get("message")
+    rating = int(request.form.get("rating", 5))
+
+    col = get_reviews_collection()
+
+    col.insert_one({
+        "name": name,
+        "message": message,
+        "rating": rating,
+        "created_at": datetime.utcnow()
+    })
+
+    return redirect("/review")
+
+
+@app.route("/review")
+def show_reviews():
+    col = get_reviews_collection()
+    reviews = list(col.find().sort("created_at", -1))
+
+    for r in reviews:
+        r["_id"] = str(r["_id"])
+
+    return render_template("review.html", reviews=reviews)
 
 
 if __name__ == "__main__":
