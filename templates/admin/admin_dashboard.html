@@ -420,6 +420,34 @@
         <tbody id="announcementsTable"></tbody>
     </table>
 </div>
+<!-- Add Announcement Modal -->
+<div id="announcementModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeAnnModal">&times;</span>
+    <h3>Add Announcement</h3>
+
+    <label>Title</label>
+    <input type="text" id="annTitle">
+
+    <label>Message</label>
+    <textarea id="annMessage"></textarea>
+
+    <label>Type</label>
+    <select id="annType">
+      <option value="info">Info</option>
+      <option value="success">Success</option>
+      <option value="warning">Warning</option>
+      <option value="error">Error</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="annActive" checked>
+      Active
+    </label>
+
+    <button id="saveAnnouncementBtn" class="save-btn">Save</button>
+  </div>
+</div>
 
         </section>
     </main>
