@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order Status</title>
+
+    <style>
+        body { font-family: Arial; padding: 20px; background: #fafafa; }
+        .order-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .pending { background: #ffe7a3; color: #a87900; }
+        .processing { background: #d2e3ff; color: #0842a1; }
+        .ready { background: #c8ffd4; color: #097d1e; }
+        .delivered { background: #d4d4d4; color: #444; }
+    </style>
+</head>
+<body>
+
+<div class="order-box">
+    <h2>Your Order Status</h2>
+
+    <p><strong>Order ID:</strong> {{ order._id }}</p>
+    <p><strong>Total:</strong> ${{ order.total }}</p>
+
+    <p><strong>Current Status:</strong></p>
+
+    <div class="status {{ order.status }}">
+        {{ order.status.capitalize() }}
+    </div>
+
+    <h3 style="margin-top:20px;">Items</h3>
+    <ul>
+        {% for item in order.items %}
+        <li>{{ item.name }} × {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+</body>
+</html>
