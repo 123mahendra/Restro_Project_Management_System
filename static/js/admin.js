@@ -454,3 +454,44 @@ document.getElementById("menuForm").addEventListener("submit", async (e) => {
         alert("Failed to add dish");
     }
 });
+
+
+// Load announcements
+function loadAnnouncements() {
+    fetch("/api/announcements")
+    .then(res => res.json())
+    .then(data => {
+        const table = document.getElementById("announcementsTable");
+        table.innerHTML = "";
+
+        data.forEach(a => {
+            table.innerHTML += `
+                <tr>
+                    <td>${a.title}</td>
+                    <td>${a.message}</td>
+                    <td>${a.type}</td>
+                    <td>${a.active ? "Yes" : "No"}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editAnnouncement('${a.id}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteAnnouncement('${a.id}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+window.editAnnouncement = function(id){
+    alert("Open modal to edit announcement " + id);
+};
+
+window.deleteAnnouncement = function(id){
+    fetch(`/api/announcements/${id}`, {
+        method: "DELETE"
+    }).then(() => loadAnnouncements());
+};
+
+// Load on section change
+document.body.addEventListener("click", e => {
+    if (e.target.dataset.section === "announcements") loadAnnouncements();
+});
