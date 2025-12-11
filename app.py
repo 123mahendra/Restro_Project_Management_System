@@ -1,3 +1,4 @@
+import mongo
 from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
     jsonify, url_for
 from flask_cors import CORS
@@ -557,6 +558,19 @@ def admin_orders():
             order["created_at"] = str(order["created_at"])
 
     return render_template("admin/admin_dashboard.html", section="orders", user=user, orders=orders)
+
+@app.route("/admin/update-order-status", methods=["POST"])
+def update_order_status():
+    data = request.json
+    order_id = data.get("order_id")
+    new_status = data.get("status")
+
+    mongo.db.orders.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"status": new_status}}
+    )
+
+    return jsonify({"success": True})
 
 
 @app.route("/menu")

@@ -19,7 +19,7 @@
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
         <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
         <a href="/admin/menu" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
-        <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
+        <a href="/admin/cart" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
         <a href="#" data-section="announcements"><span class="material-icons">campaign</span>Announcements</a>
@@ -387,7 +387,14 @@
         </ul>
       </td>
       <td>${{ o.total }}</td>
-      <td>{{ o.status }}</td>
+      <td>
+         <select class="order-status" data-id="{{ o._id }}">
+           <option value="pending"     {% if o.status == "pending" %}selected{% endif %}>Pending </option>
+           <option value="processing"  {% if o.status == "processing" %}selected{% endif %}>Processing </option>
+           <option value="ready"       {% if o.status == "ready" %}selected{% endif %}>Ready </option>
+           <option value="delivered"   {% if o.status == "delivered" %}selected{% endif %}>Delivered </option>
+         </select>
+      </td>
       <td>{{ o.created_at }}</td>
     </tr>
     {% endfor %}
