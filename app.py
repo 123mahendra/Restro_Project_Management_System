@@ -573,6 +573,17 @@ def update_order_status():
     return jsonify({"success": True})
 
 
+@app.route("/order/<order_id>")
+def view_order_status(order_id):
+    order = mongo.db.orders.find_one({"_id": ObjectId(order_id)})
+
+    if not order:
+        return "Order not found", 404
+
+    return render_template("order_status.html", order=order)
+
+
+
 @app.route("/menu")
 def customer_menu():
     db = get_database()
