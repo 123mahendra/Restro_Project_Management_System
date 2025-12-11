@@ -1,0 +1,31 @@
+{
+  "en": {
+    "home": "Home",
+    "menu": "Menu",
+    "cart": "Cart",
+    "contact": "Contact",
+    "order_now": "Order Now",
+    "checkout": "Checkout",
+    "total": "Total",
+    "add_to_cart": "Add to Cart",
+    "announcements": "Announcements",
+    "admin_dashboard": "Admin Dashboard",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+
+  "fi": {
+    "home": "Koti",
+    "menu": "Ruokalista",
+    "cart": "Ostoskori",
+    "contact": "Yhteystiedot",
+    "order_now": "Tilaa nyt",
+    "checkout": "Kassalle",
+    "total": "Yhteensä",
+    "add_to_cart": "Lisää koriin",
+    "announcements": "Ilmoitukset",
+    "admin_dashboard": "Ylläpito",
+    "save": "Tallenna",
+    "cancel": "Peruuta"
+  }
+}
