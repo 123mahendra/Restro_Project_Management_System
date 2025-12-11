@@ -218,6 +218,10 @@ def api_delete_user(user_id):
     
 # Dishes
 
+@app.route('/dishes')
+def dishes():
+    return render_template('dish.html')
+
 @app.route('/admin/dishes')
 def admin_dishes():
     user_session_id = request.cookies.get("user_session_id")
