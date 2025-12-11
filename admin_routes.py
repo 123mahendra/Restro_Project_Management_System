@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from bson import ObjectId
 from utils.auth import admin_required, is_admin_session
 from utils.db import db
+from db import get_reviews_collection
 
 admin_bp = Blueprint("admin", __name__, template_folder="templates")
 
@@ -109,3 +110,16 @@ def update_order_status(oid, status):
         {"$set": {"status": status}}
     )
     return redirect("/admin/orders")
+
+
+ 
+# Reviews Page (Admin)
+ 
+@admin_bp.route("/admin/reviews")
+@admin_required
+def admin_reviews():
+    col = get_reviews_collection()
+    reviews = list(col.find().sort("created_at", -1))
+    for r in reviews:
+        r["_id"] = str(r["_id"])
+    return render_template("admin/admin_reviews.html", reviews=reviews)
