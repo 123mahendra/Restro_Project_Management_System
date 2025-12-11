@@ -1,0 +1,41 @@
+{
+  "en": {
+    "home": "Home",
+    "dishes": "Dishes",
+    "about": "About",
+    "menu": "Menu",
+    "review": "Review",
+    "order": "Order",
+    "your_cart": "Your Cart",
+    "order_now": "Order Now",
+    "search_placeholder": "Search here...",
+    "our_dishes": "Our Dishes",
+    "popular_dishes": "Popular Dishes",
+    "today_speciality": "Today's Speciality",
+    "free_fast": "Free and Fast",
+    "your_name": "Your Name",
+    "your_number": "Your Number",
+    "your_address": "Your Address",
+    "your_message": "Your Message"
+  },
+
+  "fi": {
+    "home": "Koti",
+    "dishes": "Ruoat",
+    "about": "Tietoa",
+    "menu": "Ruokalista",
+    "review": "Arviot",
+    "order": "Tilaus",
+    "your_cart": "Ostoskori",
+    "order_now": "Tilaa nyt",
+    "search_placeholder": "Hae täältä...",
+    "our_dishes": "Ruoat",
+    "popular_dishes": "Suositut Ruoat",
+    "today_speciality": "Päivän Erikoisuus",
+    "free_fast": "Ilmainen ja nopea",
+    "your_name": "Nimesi",
+    "your_number": "Puhelinnumerosi",
+    "your_address": "Osoitteesi",
+    "your_message": "Viestisi"
+  }
+}

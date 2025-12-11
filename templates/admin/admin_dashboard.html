@@ -22,6 +22,8 @@
         <a href="#" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
+        <a href="#" data-section="announcements"><span class="material-icons">campaign</span>Announcements</a>
+
     </aside>
 
     <!-- MAIN -->
@@ -399,6 +401,54 @@
             <div id="reviews" class="section-page">
                 <h2>Customer Reviews</h2>
             </div>
+
+            <!-- Announcement Section -->
+            <div id="announcements" class="section-page">
+    <h2>Announcements</h2>
+    <button id="addAnnBtn" class="add-btn">+ Add Announcement</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="announcementsTable"></tbody>
+    </table>
+</div>
+<!-- Add Announcement Modal -->
+<div id="announcementModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeAnnModal">&times;</span>
+    <h3>Add Announcement</h3>
+
+    <label>Title</label>
+    <input type="text" id="annTitle">
+
+    <label>Message</label>
+    <textarea id="annMessage"></textarea>
+
+    <label>Type</label>
+    <select id="annType">
+      <option value="info">Info</option>
+      <option value="success">Success</option>
+      <option value="warning">Warning</option>
+      <option value="error">Error</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="annActive" checked>
+      Active
+    </label>
+
+    <button id="saveAnnouncementBtn" class="save-btn">Save</button>
+  </div>
+</div>
+
         </section>
     </main>
 

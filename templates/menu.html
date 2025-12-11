@@ -143,12 +143,12 @@
     <a href="/" class="logo"><i class="fas fa-utensils"></i> resto.</a>
 
     <nav class="navbar">
-        <a href="/">home</a>
-        <a href="/dishes">dishes</a>
-        <a href="#">about</a>
-        <a class="active" href="/menu">menu</a>
-        <a href="/review">review</a>
-        <a href="/order">order</a>
+        <a class="active" href="#">{{ t['home'] }}</a>
+        <a href="/dishes">{{ t['dishes'] }}</a>
+        <a href="#">{{ t['about'] }}</a>
+        <a href="/menu">{{ t['menu'] }}</a>
+        <a href="/review">{{ t['review'] }}</a>
+        <a href="{{ url_for('order') }}">{{ t['order'] }}</a>
     </nav>
 
     <div class="icons">
@@ -159,8 +159,8 @@
 </header>
 
 <section class="menu" id="menu">
-    <h3 class="sub-heading"> our menu </h3>
-    <h1 class="heading"> today's speciality </h1>
+    <h3 class="sub-heading">{{ t['our menu'] }} </h3>
+    <h1 class="heading">{{ t[' today''s speciality'] }} </h1>
 
     <div class="box-container">
 
@@ -175,7 +175,7 @@
 
             <button class="btn add-to-cart"
                     data-id="{{ dish._id }}">
-                Add to Cart
+                 Add to Cart
             </button>
         </div>
         {% endfor %}

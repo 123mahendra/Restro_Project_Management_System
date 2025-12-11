@@ -454,3 +454,90 @@ document.getElementById("menuForm").addEventListener("submit", async (e) => {
         alert("Failed to add dish");
     }
 });
+
+
+// Load announcements
+function loadAnnouncements() {
+    fetch("/api/announcements")
+    .then(res => res.json())
+    .then(data => {
+        const table = document.getElementById("announcementsTable");
+        table.innerHTML = "";
+
+        data.forEach(a => {
+            table.innerHTML += `
+                <tr>
+                    <td>${a.title}</td>
+                    <td>${a.message}</td>
+                    <td>${a.type}</td>
+                    <td>${a.active ? "Yes" : "No"}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editAnnouncement('${a.id}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteAnnouncement('${a.id}')">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+window.editAnnouncement = function(id){
+    alert("Open modal to edit announcement " + id);
+};
+
+window.deleteAnnouncement = function(id){
+    fetch(`/api/announcements/${id}`, {
+        method: "DELETE"
+    }).then(() => loadAnnouncements());
+};
+
+const annModal = document.getElementById("announcementModal");
+const addAnnBtn = document.getElementById("addAnnBtn");
+const closeAnnModal = document.getElementById("closeAnnModal");
+
+addAnnBtn.onclick = () => {
+    // reset fields
+    document.getElementById("annTitle").value = "";
+    document.getElementById("annMessage").value = "";
+    document.getElementById("annType").value = "info";
+    document.getElementById("annActive").checked = true;
+
+    annModal.style.display = "block";
+};
+
+closeAnnModal.onclick = () => {
+    annModal.style.display = "none";
+};
+
+// close modal when clicking outside
+window.onclick = (e) => {
+    if(e.target === annModal) {
+        annModal.style.display = "none";
+    }
+};
+
+document.getElementById("saveAnnouncementBtn").onclick = () => {
+    const newAnnouncement = {
+        title: document.getElementById("annTitle").value,
+        message: document.getElementById("annMessage").value,
+        type: document.getElementById("annType").value,
+        active: document.getElementById("annActive").checked
+    };
+
+    fetch("/api/announcements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newAnnouncement)
+    })
+    .then(res => res.json())
+    .then(() => {
+        annModal.style.display = "none";
+        loadAnnouncements();  // reload table
+    });
+};
+
+
+// Load on section change
+document.body.addEventListener("click", e => {
+    if (e.target.dataset.section === "announcements") loadAnnouncements();
+});

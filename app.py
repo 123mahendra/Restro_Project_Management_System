@@ -3,6 +3,7 @@ from flask import Flask, Blueprint, render_template, request, redirect, make_res
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
+import json
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -39,6 +40,17 @@ users = [
 ]
 
 sessions = {}
+
+ANNOUNCEMENT_FILE = "static/data/announcements.json"
+
+def load_announcements():
+    with open(ANNOUNCEMENT_FILE, "r") as f:
+        return json.load(f)
+
+def save_announcements(data):
+    with open(ANNOUNCEMENT_FILE, "w") as f:
+        json.dump(data, f, indent=4)
+
 
 # Default home route
 
@@ -554,6 +566,77 @@ def customer_menu():
     for d in dishes:
         d["_id"] = str(d["_id"])
     return render_template("menu.html", dishes=dishes)
+
+# GET all announcements
+@app.route("/api/announcements", methods=["GET"])
+def get_announcements():
+    return jsonify(load_announcements())
+
+
+# ADD new announcement
+@app.route("/api/announcements", methods=["POST"])
+def create_announcement():
+    data = request.get_json()
+    announcements = load_announcements()
+
+    new_id = str(uuid.uuid4())
+
+    new_announcement = {
+        "id": new_id,
+        "title": data["title"],
+        "message": data["message"],
+        "type": data.get("type", "info"),
+        "active": data.get("active", True)
+    }
+
+    announcements.append(new_announcement)
+    save_announcements(announcements)
+
+    return jsonify({"success": True, "announcement": new_announcement})
+
+
+# UPDATE announcement
+@app.route("/api/announcements/<id>", methods=["PUT"])
+def update_announcement(id):
+    data = request.get_json()
+    announcements = load_announcements()
+
+    for ann in announcements:
+        if ann["id"] == id:
+            ann.update(data)
+            save_announcements(announcements)
+            return jsonify({"success": True})
+
+    return jsonify({"success": False, "msg": "Not found"}), 404
+
+
+# DELETE
+@app.route("/api/announcements/<id>", methods=["DELETE"])
+def delete_announcement(id):
+    announcements = load_announcements()
+    announcements = [a for a in announcements if a["id"] != id]
+    save_announcements(announcements)
+
+    return jsonify({"success": True})
+
+
+# Multilangual
+
+def load_lang():
+    with open("static/data/languages.json", "r", encoding="utf-8") as f:
+        return json.load(f)
+
+@app.context_processor
+def inject_translations():
+    lang = session.get("lang", "en")
+    translations = load_lang()
+    return dict(t=translations.get(lang, translations["en"]))
+
+@app.route("/lang/<code>")
+def switch_lang(code):
+    if code in ["en", "fi"]:
+        session["lang"] = code
+    return redirect(request.referrer or "/")
 
 
 if __name__ == "__main__":

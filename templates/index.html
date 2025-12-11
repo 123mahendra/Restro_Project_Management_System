@@ -19,12 +19,12 @@
  <a href="#" class="logo"><i class="fas fa-utensils"></i>resto.</a>
 
     <nav class="navbar">
-        <a class="active" href="#">home</a>
-        <a href="/dishes">dishes</a>
-        <a href="#">about</a>
-        <a href="/menu">menu</a>
-        <a href="review.html">review</a>
-        <a href="{{ url_for('order')}}">order</a>
+        <a class="active" href="#">{{ t['home'] }}</a>
+        <a href="/dishes">{{ t['dishes'] }}</a>
+        <a href="#">{{ t['about'] }}</a>
+        <a href="/menu">{{ t['menu'] }}</a>
+        <a href="/review">{{ t['review'] }}</a>
+        <a href="{{ url_for('order') }}">{{ t['order'] }}</a>
     </nav>
 
     <div class="icons">
@@ -34,6 +34,26 @@
         <a href="/cart" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
         <a href="/login" class="fas fa-user"></a>
     </div>
+
+     <div class="lang-switch">
+    <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
+</div>
+
+<style>
+.lang-switch {
+    margin-left: 20px;
+    font-weight: bold;
+}
+.lang-switch a {
+    color: #333;
+    text-decoration: none;
+    padding: 0 5px;
+}
+.lang-switch a:hover {
+    color: #ff3838;
+}
+</style>
+
 </header>
 
 <!-- Header Section ends-->
@@ -45,9 +65,42 @@
     <i class="fas fa-times" id="close"></i>
 </form>
 
+
 <!-- home section starts  -->
 
 <section class="home" id="home">
+    <!-- Announcement Banner -->
+
+ <div id="announcementBanner"></div>
+
+<script>
+fetch("/api/announcements")
+.then(res => res.json())
+.then(data => {
+    const active = data.filter(a => a.active);
+    if(active.length > 0){
+        const a = active[0];
+        document.getElementById("announcementBanner").innerHTML = `
+            <div class="banner ${a.type}">
+                <strong>${a.title}</strong> – ${a.message}
+            </div>
+        `;
+    }
+});
+</script>
+
+<style>
+.banner {
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.banner.info { background: #2196f3; }
+.banner.success { background: #4caf50; }
+.banner.warning { background: #ffc107; color:black; }
+.banner.error { background: #f44336; }
+</style>
 
     <div class="swiper-container home-slider">
 
@@ -103,8 +156,9 @@
 
 <section class="dishes" id="dishes">
 
-    <h3 class="sub-heading"> our dishes </h3>
-    <h1 class="heading"> popular dishes </h1>
+    <h3 class="sub-heading">{{ t['our_dishes'] }}</h3>
+    <h1 class="heading">{{ t['popular_dishes'] }}</h1>
+
 
     <div class="box-container" id="dishes-container">
 
@@ -158,10 +212,10 @@
 
 <section class="menu" id="menu">
 
-    <h3 class="sub-heading"> our menu </h3>
-    <h1 class="heading"> today's speciality </h1>
+    <h3 class="sub-heading"> {{ t['menu'] }} </h3>
+    <h1 class="heading"> {{ t['today_speciality'] }}</h1>
     <div class="day-selector" style="display: none;">
-    <label for="menu-day">Select Day:</label>
+    <label for="menu-day">{{ t['Select Day:'] }}</label>
     <select id="menu-day">
         <option value="monday">Monday</option>
         <option value="tuesday">Tuesday</option>
@@ -361,7 +415,7 @@
             <a href="#">+358449314564</a>
             <a href="#">olisagarsandesh@gmail.com</a>
             <a href="#">mahendra.sharma@metropolia.fi</a>
-            <a href="#">Kirstintie 30 C, Espoo , 02760/a>
+            <a href="#">Kirstintie 30 C, Espoo , 02760/</a>
         </div>
 
         <div class="box">
