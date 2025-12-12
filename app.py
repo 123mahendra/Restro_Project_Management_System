@@ -608,7 +608,6 @@ def customer_menu():
         d["_id"] = str(d["_id"])
     return render_template("menu.html", dishes=dishes)
 
-<<<<<<< HEAD
 # GET all announcements
 @app.route("/api/announcements", methods=["GET"])
 def get_announcements():
@@ -679,8 +678,6 @@ def switch_lang(code):
     if code in ["en", "fi"]:
         session["lang"] = code
     return redirect(request.referrer or "/")
-=======
->>>>>>> d506b625690c43b84ecf6d413958a788b145392f
  
 # ------------------ CUSTOMER REVIEW FORM HANDLER ------------------
 
