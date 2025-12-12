@@ -1,3 +1,4 @@
+import mongo
 from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
     jsonify, url_for
 from flask_cors import CORS
@@ -716,4 +717,4 @@ def review():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

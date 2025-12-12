@@ -1,5 +1,11 @@
 "# Restro_Project_Management_System" 
 
+## Group Member
+  Mahendra Gautam Sharma
+  Sagar Sandesh Oli
+  Nischal Dhungana
+  Gurprit Singh
+
 1. Project Overview
 
 Our group created the Restro Project Management System, a web-based restaurant platform that allows customers to browse dishes, place their food orders, and interact with the restaurant digitally. The project also includes a dedicated admin panel, where restaurant staff can manage menu items, view customer orders, and update order statuses.
