@@ -4,6 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
 import json
+from flask_pymongo import PyMongo
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -403,6 +404,17 @@ def delete_menu_dish(id):
     return jsonify({"success": True})
 
 
+# View cart
+@app.route('/cart')
+def view_cart():
+    if "user_id" not in session:
+        flash("Login required to view cart", "error")
+        return redirect("/login")
+
+    cart = session.get("cart", [])
+    total = sum(item["price"] * item["quantity"] for item in cart)
+    return render_template("cart.html", cart=cart, total=total)
+
 
 # Add item to cart
 @app.route('/api/cart/add', methods=['POST'])
@@ -443,16 +455,6 @@ def add_to_cart():
     session.modified = True
     return jsonify({"success": True, "message": "Dish added to cart"})
 
-# View cart
-@app.route('/cart')
-def view_cart():
-    if "user_id" not in session:
-        flash("Login required to view cart", "error")
-        return redirect("/login")
-
-    cart = session.get("cart", [])
-    total = sum(item["price"] * item["quantity"] for item in cart)
-    return render_template("cart.html", cart=cart, total=total)
 
 @app.route("/api/cart/count")
 def cart_count():
@@ -504,7 +506,7 @@ def remove_cart_item():
 def order():
     return render_template("order.html")
 
-@app.route('/checkout', methods=['POST'])
+@app.route("/checkout", methods=["POST"])
 def checkout():
     user_id = session.get("user_id")
 
@@ -587,6 +589,26 @@ def update_order_status():
 
     return jsonify({"success": True})
 
+@app.route("/admin/orders/update/<order_id>", methods=["POST"])
+def update_order_status_form(order_id):
+    new_status = request.form.get("status")
+    if not new_status:
+        flash("No status selected", "error")
+        return redirect("/admin/orders")
+
+    # Convert order_id string to ObjectId
+    from bson import ObjectId
+    result = mongo.db.orders.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"status": new_status}}
+    )
+
+    if result.modified_count:
+        flash("Order status updated", "success")
+    else:
+        flash("Failed to update order", "error")
+
+    return redirect("/admin/orders")
 
 @app.route("/order/<order_id>")
 def view_order_status(order_id):
