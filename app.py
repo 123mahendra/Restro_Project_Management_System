@@ -1,11 +1,10 @@
-
+import mongo
 from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
     jsonify, url_for
 from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
 import json
-from flask_pymongo import PyMongo
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -25,9 +24,7 @@ load_dotenv()
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = "your-secret-key"
 CORS(app)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/restro"
 
-mongo = PyMongo(app)
 # Folder where dish images will be stored
 app.config["UPLOAD_FOLDER"] = "static/assets/dishes"
 
@@ -407,17 +404,6 @@ def delete_menu_dish(id):
     return jsonify({"success": True})
 
 
-# View cart
-@app.route('/cart')
-def view_cart():
-    if "user_id" not in session:
-        flash("Login required to view cart", "error")
-        return redirect("/login")
-
-    cart = session.get("cart", [])
-    total = sum(item["price"] * item["quantity"] for item in cart)
-    return render_template("cart.html", cart=cart, total=total)
-
 
 # Add item to cart
 @app.route('/api/cart/add', methods=['POST'])
@@ -458,6 +444,16 @@ def add_to_cart():
     session.modified = True
     return jsonify({"success": True, "message": "Dish added to cart"})
 
+# View cart
+@app.route('/cart')
+def view_cart():
+    if "user_id" not in session:
+        flash("Login required to view cart", "error")
+        return redirect("/login")
+
+    cart = session.get("cart", [])
+    total = sum(item["price"] * item["quantity"] for item in cart)
+    return render_template("cart.html", cart=cart, total=total)
 
 @app.route("/api/cart/count")
 def cart_count():
@@ -509,44 +505,46 @@ def remove_cart_item():
 def order():
     return render_template("order.html")
 
-@app.route("/checkout", methods=["POST"])
+@app.route('/checkout', methods=['POST'])
 def checkout():
     user_id = session.get("user_id")
-    cart = mongo.db.cart.find({"user_id": user_id})
 
-    items = []
-    total = 0
+    if not user_id:
+        flash("You must be logged in to checkout.")
+        return redirect(url_for("login"))
 
-    for c in cart:
-        items.append({
-            "dish_id": c["dish_id"],
-            "name": c["name"],
-            "price": c["price"],
-            "quantity": c["quantity"]
-        })
-        total += c["price"] * c["quantity"]
+    # Get database
+    db = get_database()
+    orders_col = db.orders
 
-    order = {
+    # Get cart from session
+    cart = session.get("cart", [])
+
+    if not cart:
+        flash("Your cart is empty.")
+        return redirect(url_for("view_cart"))
+
+    # Calculate total
+    total = sum(float(item["price"]) * int(item["quantity"]) for item in cart)
+
+    # Create order
+    order_data = {
         "user_id": user_id,
-        "items": items,
+        "items": cart,
         "total": total,
         "status": "pending",
-        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M")
+        "created_at": datetime.now()
     }
 
-    inserted = mongo.db.orders.insert_one(order)
+    # Insert order into orders collection
+    orders_col.insert_one(order_data)
 
-    # Empty cart after order
-    mongo.db.cart.delete_many({"user_id": user_id})
+    # Clear cart from session
+    session["cart"] = []
+    session.modified = True
 
-    # Redirect to order tracking page
-    return redirect(f"/order/{inserted.inserted_id}")
-
-@app.route("/my-orders")
-def my_orders():
-    user_id = session.get("user_id")
-    orders = list(mongo.db.orders.find({"user_id": user_id}))
-    return render_template("my_orders.html", orders=orders)
+    flash("Order placed successfully!")
+    return redirect(url_for("home"))
 
 
 
@@ -565,20 +563,17 @@ def admin_orders():
     db = get_database()
     orders_collection = db.orders
 
-    # Fetch all orders sorted by newest
-    orders = list(orders_collection.find().sort("created_at", -1))
+    # Fetch all orders
+    orders = list(orders_collection.find().sort("created_at", -1))  # latest first
     for order in orders:
-        order["_id_str"] = str(order["_id"])
+        order["_id"] = str(order["_id"])
+        # Check type before formatting
         if isinstance(order["created_at"], datetime):
             order["created_at"] = order["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            order["created_at"] = str(order["created_at"])
 
-    return render_template(
-        "admin/admin_dashboard.html",
-        section="orders",
-        user=user,
-        orders=orders
-    )
-
+    return render_template("admin/admin_dashboard.html", section="orders", user=user, orders=orders)
 
 @app.route("/admin/update-order-status", methods=["POST"])
 def update_order_status():
@@ -593,26 +588,6 @@ def update_order_status():
 
     return jsonify({"success": True})
 
-@app.route("/admin/orders/update/<order_id>", methods=["POST"])
-def update_order_status_form(order_id):
-    new_status = request.form.get("status")
-    if not new_status:
-        flash("No status selected", "error")
-        return redirect("/admin/orders")
-
-    # Convert order_id string to ObjectId
-    from bson import ObjectId
-    result = mongo.db.orders.update_one(
-        {"_id": ObjectId(order_id)},
-        {"$set": {"status": new_status}}
-    )
-
-    if result.modified_count:
-        flash("Order status updated", "success")
-    else:
-        flash("Failed to update order", "error")
-
-    return redirect("/admin/orders")
 
 @app.route("/order/<order_id>")
 def view_order_status(order_id):
