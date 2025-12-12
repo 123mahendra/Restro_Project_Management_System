@@ -13,8 +13,6 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 from db import get_reviews_collection
-from api_routes import api_bp
-from admin_routes import admin_bp
  
  
 

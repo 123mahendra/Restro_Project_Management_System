@@ -7,13 +7,13 @@ from pymongo import MongoClient
 #     return db
 
 def get_database():
-    CONNECTION_STRING = (
-        "mongodb+srv://gautammahendra464_db_user:oJTw3jAwSrRwrrDp"
-        "@mahendra464.s7mwp9j.mongodb.net/restro_project?retryWrites=true&w=majority"
-    )
+
+    CONNECTION_STRING = "mongodb+srv://gautammahendra464_db_user:9qc10okzfJFLcclF@cluster0.b1cdawv.mongodb.net/"
 
     client = MongoClient(CONNECTION_STRING)
-    return client["restro_project"]
+    
+    db = client["restro_project"]
+    return db
 
 def create_user(user_data):
     db = get_database()
