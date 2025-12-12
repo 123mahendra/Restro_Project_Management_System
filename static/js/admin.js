@@ -541,3 +541,22 @@ document.getElementById("saveAnnouncementBtn").onclick = () => {
 document.body.addEventListener("click", e => {
     if (e.target.dataset.section === "announcements") loadAnnouncements();
 });
+
+document.addEventListener("change", function (e) {
+    if (e.target.classList.contains("order-status")) {
+        const orderId = e.target.getAttribute("data-id");
+        const newStatus = e.target.value;
+
+        fetch("/admin/update-order-status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order_id: orderId, status: newStatus })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Status updated successfully");
+            }
+        });
+    }
+});

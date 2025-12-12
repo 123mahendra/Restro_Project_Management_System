@@ -565,17 +565,20 @@ def admin_orders():
     db = get_database()
     orders_collection = db.orders
 
-    # Fetch all orders
-    orders = list(orders_collection.find().sort("created_at", -1))  # latest first
+    # Fetch all orders sorted by newest
+    orders = list(orders_collection.find().sort("created_at", -1))
     for order in orders:
-        order["_id"] = str(order["_id"])
-        # Check type before formatting
+        order["_id_str"] = str(order["_id"])
         if isinstance(order["created_at"], datetime):
             order["created_at"] = order["created_at"].strftime("%Y-%m-%d %H:%M:%S")
-        else:
-            order["created_at"] = str(order["created_at"])
 
-    return render_template("admin/admin_dashboard.html", section="orders", user=user, orders=orders)
+    return render_template(
+        "admin/admin_dashboard.html",
+        section="orders",
+        user=user,
+        orders=orders
+    )
+
 
 @app.route("/admin/update-order-status", methods=["POST"])
 def update_order_status():
@@ -630,7 +633,6 @@ def customer_menu():
         d["_id"] = str(d["_id"])
     return render_template("menu.html", dishes=dishes)
 
-<<<<<<< HEAD
 # GET all announcements
 @app.route("/api/announcements", methods=["GET"])
 def get_announcements():
@@ -701,8 +703,6 @@ def switch_lang(code):
     if code in ["en", "fi"]:
         session["lang"] = code
     return redirect(request.referrer or "/")
-=======
->>>>>>> d506b625690c43b84ecf6d413958a788b145392f
  
 # ------------------ CUSTOMER REVIEW FORM HANDLER ------------------
 

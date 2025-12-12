@@ -19,7 +19,7 @@
         <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
         <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
         <a href="/admin/menu" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
-        <a href="/admin/cart" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
+        <a href="/admin/orders" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
         <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
         <a href="#" data-section="announcements"><span class="material-icons">campaign</span>Announcements</a>
@@ -460,6 +460,24 @@
     </main>
 
     <script src="../../static/js/admin.js"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const current = document.body.dataset.section;
+    document.querySelectorAll(".section-page").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(current)?.classList.add("active");
+
+    // highlight sidebar
+    document.querySelectorAll("aside a").forEach(a => a.classList.remove("active"));
+    document.querySelector(`aside a[data-section="${current}"]`)?.classList.add("active");
+
+    // update page title
+    document.getElementById("section-title").textContent =
+        current.charAt(0).toUpperCase() + current.slice(1);
+});
+</script>
+
 </body>
 
 </html>
