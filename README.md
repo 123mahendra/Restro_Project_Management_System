@@ -1,8 +1,8 @@
-🍽️ Restro Project Management System
+# 🍽️ Restro Project Management System
 
 A modern, responsive, and user-friendly restaurant management and food ordering platform built to enhance customer experience and streamline restaurant operations.
 
-👥 Group Members
+# 👥 Group Members
 
 Mahendra Gautam Sharma
 
@@ -12,14 +12,14 @@ Nischal Dhungana
 
 Gurprit Singh
 
-📌 Project Overview
+# 📌 Project Overview
 
 The Restro Project Management System is a full-featured restaurant web application that allows customers to browse dishes, place orders online, and submit reviews.
 It also includes a powerful Admin Panel, where restaurant staff can manage the menu, process customer orders, and monitor feedback.
 
 The project enhances traditional manual order-taking by introducing a digital workflow that is efficient, fast, and easy to use.
 
-🛠️ Technologies Used
+# 🛠️ Technologies Used
 Frontend
 
 HTML
@@ -42,7 +42,7 @@ Flask session-based authentication
 
 RESTful API architecture
 
-💡 Application Idea
+# 💡 Application Idea
 
 The goal of this system is to modernize restaurant operations by providing:
 
@@ -72,7 +72,7 @@ Access to customer reviews and feedback
 
 By combining an appealing UI with an efficient backend, the system ensures a seamless experience for both customers and staff.
 
-🎯 Target Audience
+# 🎯 Target Audience
 
 This system is designed for:
 
@@ -82,7 +82,7 @@ Restaurant staff who manage menus and customer orders
 
 General website visitors who want to explore the restaurant’s offerings
 
-🎯 Purpose of the Project
+# 🎯 Purpose of the Project
 
 Make the food ordering process quicker and more convenient
 
@@ -94,7 +94,7 @@ Help restaurant staff manage orders and menu items efficiently
 
 Collect customer reviews for continuous improvement
 
-🚀 Key Features
+# 🚀 Key Features
 🛍️ Customer-Side Features
 
 Home page showcasing special dishes
@@ -115,7 +115,7 @@ Language switch option (EN | FI)
 
 Fully responsive for mobile and desktop
 
-🛠️ Admin-Side Features
+# 🛠️ Admin-Side Features
 
 Secure admin login
 
@@ -123,8 +123,5 @@ Admin dashboard showing all customer orders
 
 Menu management (Add / Edit / Delete dishes)
 
-Real-time order updates
-
 Order status modification
 
-Review management page
