@@ -1,8 +1,23 @@
 from pymongo import MongoClient
 
+# def get_database():
+#     client = MongoClient("mongodb://localhost:27017/")
+#     # client = MongoClient("mongodb+srv://gautammahendra464_db_user:eJHf5YAugjm8yNu4@mahendra464.s7mwp9j.mongodb.net/?appName=mahendra464")
+#     db = client["restro_project"]
+#     return db
+
 def get_database():
-    client = MongoClient("mongodb://localhost:27017/")
-    # client = MongoClient("mongodb+srv://gautammahendra464_db_user:eJHf5YAugjm8yNu4@mahendra464.s7mwp9j.mongodb.net/?appName=mahendra464")
+
+    CONNECTION_STRING = "mongodb+srv://gautammahendra464_db_user:9qc10okzfJFLcclF@cluster0.b1cdawv.mongodb.net/"
+
+    client = MongoClient(
+    CONNECTION_STRING,
+    tls=True,
+    tlsAllowInvalidCertificates=False
+)
+
+    client = MongoClient(CONNECTION_STRING)
+    
     db = client["restro_project"]
     return db
 

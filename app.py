@@ -4,7 +4,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
 import json
-from flask_pymongo import PyMongo
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -14,8 +13,6 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 from db import get_reviews_collection
-from api_routes import api_bp
-from admin_routes import admin_bp
  
  
 
@@ -598,7 +595,8 @@ def update_order_status_form(order_id):
 
     # Convert order_id string to ObjectId
     from bson import ObjectId
-    result = mongo.db.orders.update_one(
+    db = get_database()
+    result = db.orders.update_one(
         {"_id": ObjectId(order_id)},
         {"$set": {"status": new_status}}
     )
