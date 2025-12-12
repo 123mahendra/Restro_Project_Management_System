@@ -1,24 +1,6 @@
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-document.querySelectorAll(".add-to-cart").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const item = {
-            name: btn.dataset.name,
-            price: btn.dataset.price
-        };
-
-        cart.push(item);
-        localStorage.setItem("cart", JSON.stringify(cart));
-
-        alert(`${item.name} added to cart!`);
-    });
-});
-
+// Load menu for a given day
 async function loadMenu(day) {
     try {
-
-        // const today = new Date();
-        // const day = today.toLocaleDateString('en-US', { weekday: 'long' });
         const response = await fetch(`/api/menu/${day}`);
         const menuItems = await response.json();
 
@@ -42,16 +24,58 @@ async function loadMenu(day) {
                         </div>
                         <h3>${item.dish_name}</h3>
                         <p>${item.description ?? "Delicious and tasty."}</p>
-                        <a href="#" class="btn">add to cart</a>
+                        <a href="#" class="btn add-to-cart" data-id="${item.dish_id}">add to cart</a>
                         <span class="price">£${item.price}</span>
                     </div>
                 </div>
             `;
         });
 
+        // Attach event listeners AFTER HTML is inserted
+        attachAddToCartEvents();
+
     } catch (err) {
         console.error("Failed to load menu:", err);
     }
+}
+
+// Add to cart functionality
+function attachAddToCartEvents() {
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const dishId = btn.getAttribute("data-id");
+
+            const res = await fetch("/api/cart/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ dishId, quantity: 1 })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                updateCartCount();
+                showToast("Added to cart!");
+            } else {
+                showToast("Failed: " + data.message);
+            }
+        });
+    });
+}
+
+// Update cart count
+async function updateCartCount() {
+    const res = await fetch("/api/cart/count");
+    const data = await res.json();
+
+    document.getElementById("cart-count").innerText = data.count;
+}
+
+// Simple toast popup
+function showToast(message) {
+    alert(message);
 }
 
 // Load today's menu on page load
@@ -59,45 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
     const today = days[new Date().getDay()];
 
-    document.getElementById("menu-day").value = today;
-    loadMenu(today);
-});
-
-// Change menu when dropdown changes
-document.getElementById("menu-day").addEventListener("change", (event) => {
-    loadMenu(event.target.value);
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    document.querySelectorAll(".add-to-cart").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const dishId = btn.dataset.id;
-
-            const res = await fetch("/api/cart/add", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ dishId, quantity: 1 })
-            });
-
-            const data = await res.json();
-
-            alert(data.message);
-
-            if (data.success) {
-                updateCartCount();
-            }
+    const daySelect = document.getElementById("menu-day");
+    if (daySelect) {
+        daySelect.value = today;
+        daySelect.addEventListener("change", (event) => {
+            loadMenu(event.target.value);
         });
-    });
-
-    function updateCartCount() {
-        fetch("/api/cart/count")
-            .then(res => res.json())
-            .then(data => {
-                const badge = document.getElementById("cart-count");
-                badge.textContent = data.count;
-            });
     }
 
-    updateCartCount();
+    loadMenu(today);
 });

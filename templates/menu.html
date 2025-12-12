@@ -1,141 +1,12 @@
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Restaurant Website </title>-->
-
-<!--    <link rel="stylesheet" href="../static/css/style.css">-->
-<!--</head>-->
-<!--<body>-->
-
-<!--&lt;!&ndash; header section starts      &ndash;&gt;-->
-<!--<header>-->
-<!-- <a href="index.html" class="logo"><i class="fas fa-utensils"></i>resto.</a>-->
-
-<!--    <nav class="navbar">-->
-<!--        <a href="/">home</a>-->
-<!--        <a href="/dishes">dishes</a>-->
-<!--        <a href="#">about</a>-->
-<!--        <a class="active" href="/menu">menu</a>-->
-<!--        <a href="review.html">review</a>-->
-<!--        <a href="order.html">order</a>-->
-<!--    </nav>-->
-
-<!--    <div class="icons">-->
-<!--        <i class="fas fa-bars" id="menu-bars"></i>-->
-<!--        <i class="fas fa-search" id="search-icon"></i>-->
-<!--        <a href="#" class="fas fa-heart"></a>-->
-<!--        <a href="#" class="fas fa-shopping-cart"></a>-->
-<!--        <a href="login.html" class="fas fa-user"></a>-->
-<!--    </div>-->
-<!--</header>-->
-
-<!--&lt;!&ndash; Header Section ends&ndash;&gt;-->
-
-<!--&lt;!&ndash; search form &ndash;&gt;-->
-<!--<form action="" id="search-form">-->
-<!--    <input type="search" placeholder="search here..." name="" id="search-box">-->
-<!--    <label for="search-box" class="fas fa-search"></label>-->
-<!--    <i class="fas fa-times" id="close"></i>-->
-<!--</form>-->
-
-<!--&lt;!&ndash; menu section starts  &ndash;&gt;-->
-
-<!--<section class="menu" id="menu">-->
-
-<!--    <h3 class="sub-heading"> our menu </h3>-->
-<!--    <h1 class="heading"> today's speciality </h1>-->
-
-<!--    <div class="day-selector">-->
-<!--    <label for="menu-day">Select Day:</label>-->
-<!--    <select id="menu-day">-->
-<!--        <option value="monday">Monday</option>-->
-<!--        <option value="tuesday">Tuesday</option>-->
-<!--        <option value="wednesday">Wednesday</option>-->
-<!--        <option value="thursday">Thursday</option>-->
-<!--        <option value="friday">Friday</option>-->
-<!--        <option value="saturday">Saturday</option>-->
-<!--        <option value="sunday">Sunday</option>-->
-<!--    </select>-->
-<!--</div>-->
-
-<!--    <div class="box-container" id="menu-container">-->
-
-
-<!--    </div>-->
-
-<!--</section>-->
-
-<!--&lt;!&ndash; menu section ends &ndash;&gt;-->
-
-<!--&lt;!&ndash; footer section start &ndash;&gt;-->
-
-<!--<section class="footer">-->
-
-<!--    <div class="box-container">-->
-
-<!--        <div class="box">-->
-<!--            <h3>locations</h3>-->
-<!--            <a href="#">Helsinki</a>-->
-<!--            <a href="#">Vanta</a>-->
-<!--            <a href="#">Espoo </a>-->
-<!--            <a href="#">Kaunian</a>-->
-<!--            <a href="#">Hamelinna</a>-->
-<!--        </div>-->
-
-<!--        <div class="box">-->
-<!--            <h3>quick links</h3>-->
-<!--            <a href="#">home</a>-->
-<!--            <a href="#">dishes</a>-->
-<!--            <a href="#">about</a>-->
-<!--            <a href="#">menu</a>-->
-<!--            <a href="#">reivew</a>-->
-<!--            <a href="#">order</a>-->
-<!--        </div>-->
-
-<!--        <div class="box">-->
-<!--            <h3>contact info</h3>-->
-<!--            <a href="#">+358402457337</a>-->
-<!--            <a href="#">+358449314564</a>-->
-<!--            <a href="#">olisagarsandesh@gmail.com</a>-->
-<!--            <a href="#">mahendragautamsharma@gmail.com</a>-->
-<!--            <a href="#">Kirstintie 30 C, Espoo , 02760/a>-->
-<!--        </div>-->
-
-<!--        <div class="box">-->
-<!--            <h3>follow us</h3>-->
-<!--            <a href="#">facebook</a>-->
-<!--            <a href="#">twitter</a>-->
-<!--            <a href="#">instagram</a>-->
-<!--            <a href="#">linkedin</a>-->
-<!--        </div>-->
-
-<!--    </div>-->
-
-<!--    <div class="credit"> copyright @ 2025 by <span> Backlol team</span> </div>-->
-
-<!--</section>-->
-
-<!--&lt;!&ndash;footer section end&ndash;&gt;-->
-<!--<script src="{{ url_for('static', filename='js/menu.js') }}"></script>-->
-
-<!--</body>-->
-
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>{{ t['menu'] }}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
 
@@ -148,48 +19,43 @@
         <a href="/menu" class="active">{{ t['menu'] }}</a>
         <a href="/review">{{ t['review'] }}</a>
         <a href="{{ url_for('order') }}">{{ t['order'] }}</a>
-        <a href="#">contact</a>
     </nav>
 
     <div class="icons">
-         <!-- <i class="fas fa-bars" id="menu-bars"></i>
-       <i class="fas fa-search" id="search-icon"></i>
-       <a href="#" class="fas fa-heart"></a>
-       <a href="#" class="fas fa-shopping-cart"></a> -->
-       <a href="login.html" class="fas fa-user"></a>
         <a href="/cart" class="fas fa-shopping-cart">
             <span id="cart-count" class="cart-badge">0</span>
         </a>
+        <a href="/login" class="fas fa-user"></a>
+    </div>
+
+    <div class="lang-switch">
+        <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
     </div>
 </header>
 
 <section class="menu" id="menu">
-    <h3 class="sub-heading">{{ t['our menu'] }} </h3>
-    <h1 class="heading">{{ t[' today''s speciality'] }} </h1>
+    <h3 class="sub-heading">{{ t['our_menu'] }}</h3>
+    <h1 class="heading">{{ t['todays_speciality'] }}</h1>
 
-    <div class="box-container">
-
-        {% for dish in dishes %}
-        <div class="box">
-            <img src="{{ url_for('static', filename='assets/dishes/' ~ dish.image) }}" alt="Dish Image">
-
-            <h3>{{ dish.name }}</h3>
-            <p>{{ dish.description }}</p>
-
-            <span class="price">€ {{ dish.price }}</span>
-
-            <button class="btn add-to-cart"
-                    data-id="{{ dish._id }}">
-                 Add to Cart
-            </button>
-        </div>
-        {% endfor %}
-
+    <!-- Day selector for dynamic menu -->
+    <div class="day-selector">
+        <label for="menu-day">{{ t['select_day'] }}</label>
+        <select id="menu-day">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+        </select>
     </div>
+
+    <!-- Dynamic dish containers -->
+    <div class="box-container" id="menu-container"></div>
 </section>
 
 <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 
 </body>
 </html>
-

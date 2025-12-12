@@ -44,3 +44,53 @@ async function checkoutCart() {
 }
 
 document.addEventListener('DOMContentLoaded', loadCart);
+
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const item = {
+            name: btn.dataset.name,
+            price: btn.dataset.price
+        };
+
+        cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        alert(`${item.name} added to cart!`);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const dishId = btn.dataset.id;
+
+            const res = await fetch("/api/cart/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ dishId, quantity: 1 })
+            });
+
+            const data = await res.json();
+
+            alert(data.message);
+
+            if (data.success) {
+                updateCartCount();
+            }
+        });
+    });
+
+    function updateCartCount() {
+        fetch("/api/cart/count")
+            .then(res => res.json())
+            .then(data => {
+                const badge = document.getElementById("cart-count");
+                badge.textContent = data.count;
+            });
+    }
+
+    updateCartCount();
+});
