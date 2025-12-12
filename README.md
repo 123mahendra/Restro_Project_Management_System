@@ -20,27 +20,21 @@ It also includes a powerful Admin Panel, where restaurant staff can manage the m
 The project enhances traditional manual order-taking by introducing a digital workflow that is efficient, fast, and easy to use.
 
 # 🛠️ Technologies Used
-Frontend
+### Frontend
 
-HTML
+- HTML
 
-CSS
+- CSS
 
-JavaScript
+- JavaScript
 
-Backend
+### Backend
 
-Python (Flask Framework)
+- Python (Flask Framework)
 
-Database
+- Database
 
-MongoDB (MongoEngine ORM)
-
-Other
-
-Flask session-based authentication
-
-RESTful API architecture
+- MongoDB (MongoEngine ORM)
 
 # 💡 Application Idea
 
@@ -48,27 +42,27 @@ The goal of this system is to modernize restaurant operations by providing:
 
 ## For Customers
 
-A simple and attractive platform to explore dishes
+- A simple and attractive platform to explore dishes
 
-Menu details including price, images, and ratings
+- Menu details including price, images, and ratings
 
-User account creation and login
+- User account creation and login
 
-Fast and easy online ordering
+- Fast and easy online ordering
 
-Review and feedback submission
+- Review and feedback submission
 
 ## For Admin/Restaurant Staff
 
-Dedicated admin dashboard
+- Dedicated admin dashboard
 
-Ability to add, edit, or remove menu items
+- Ability to add, edit, or remove menu items
 
-Real-time view of customer orders
+- Real-time view of customer orders
 
-Order status management (Pending → Preparing → Completed)
+- Order status management (Pending → Preparing → Completed)
 
-Access to customer reviews and feedback
+- Access to customer reviews and feedback
 
 By combining an appealing UI with an efficient backend, the system ensures a seamless experience for both customers and staff.
 
@@ -76,52 +70,52 @@ By combining an appealing UI with an efficient backend, the system ensures a sea
 
 This system is designed for:
 
-Customers looking to browse dishes and place online orders
+- Customers looking to browse dishes and place online orders
 
-Restaurant staff who manage menus and customer orders
+- Restaurant staff who manage menus and customer orders
 
-General website visitors who want to explore the restaurant’s offerings
+- General website visitors who want to explore the restaurant’s offerings
 
 # 🎯 Purpose of the Project
 
-Make the food ordering process quicker and more convenient
+- Make the food ordering process quicker and more convenient
 
-Provide online access to dishes and menu details
+- Provide online access to dishes and menu details
 
-Offer transparent information with images and pricing
+- Offer transparent information with images and pricing
 
-Help restaurant staff manage orders and menu items efficiently
+- Help restaurant staff manage orders and menu items efficiently
 
-Collect customer reviews for continuous improvement
+- Collect customer reviews for continuous improvement
 
 # 🚀 Key Features
 🛍️ Customer-Side Features
 
-Home page showcasing special dishes
+- Home page showcasing special dishes
 
-Complete dish listing with images, prices, and ratings
+- Complete dish listing with images, prices, and ratings
 
-Customer login and registration
+- Customer login and registration
 
-“Add to Cart” and “Order Now” functionality
+- “Add to Cart” and “Order Now” functionality
 
-Order form (name, phone, address, date/time)
+- Order form (name, phone, address, date/time)
 
-Orders automatically appear in admin dashboard
+- Orders automatically appear in admin dashboard
 
-Review submission page
+- Review submission page
 
-Language switch option (EN | FI)
+- Language switch option (EN | FI)
 
-Fully responsive for mobile and desktop
+- Fully responsive for mobile and desktop
 
 # 🛠️ Admin-Side Features
 
-Secure admin login
+- Secure admin login
 
-Admin dashboard showing all customer orders
+- Admin dashboard showing all customer orders
 
-Menu management (Add / Edit / Delete dishes)
+- Menu management (Add / Edit / Delete dishes)
 
-Order status modification
+- Order status modification
 
