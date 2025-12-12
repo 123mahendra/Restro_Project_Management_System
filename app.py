@@ -597,7 +597,8 @@ def update_order_status_form(order_id):
 
     # Convert order_id string to ObjectId
     from bson import ObjectId
-    result = mongo.db.orders.update_one(
+    db = get_database()
+    result = db.orders.update_one(
         {"_id": ObjectId(order_id)},
         {"$set": {"status": new_status}}
     )
