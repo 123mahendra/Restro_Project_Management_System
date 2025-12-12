@@ -10,6 +10,12 @@ def get_database():
 
     CONNECTION_STRING = "mongodb+srv://gautammahendra464_db_user:9qc10okzfJFLcclF@cluster0.b1cdawv.mongodb.net/"
 
+    client = MongoClient(
+    CONNECTION_STRING,
+    tls=True,
+    tlsAllowInvalidCertificates=False
+)
+
     client = MongoClient(CONNECTION_STRING)
     
     db = client["restro_project"]
