@@ -46,7 +46,7 @@ RESTful API architecture
 
 The goal of this system is to modernize restaurant operations by providing:
 
-For Customers
+## For Customers
 
 A simple and attractive platform to explore dishes
 
@@ -58,7 +58,7 @@ Fast and easy online ordering
 
 Review and feedback submission
 
-For Admin/Restaurant Staff
+## For Admin/Restaurant Staff
 
 Dedicated admin dashboard
 
