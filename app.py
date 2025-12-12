@@ -584,6 +584,26 @@ def update_order_status():
 
     return jsonify({"success": True})
 
+@app.route("/admin/orders/update/<order_id>", methods=["POST"])
+def update_order_status_form(order_id):
+    new_status = request.form.get("status")
+    if not new_status:
+        flash("No status selected", "error")
+        return redirect("/admin/orders")
+
+    # Convert order_id string to ObjectId
+    from bson import ObjectId
+    result = mongo.db.orders.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {"status": new_status}}
+    )
+
+    if result.modified_count:
+        flash("Order status updated", "success")
+    else:
+        flash("Failed to update order", "error")
+
+    return redirect("/admin/orders")
 
 @app.route("/order/<order_id>")
 def view_order_status(order_id):

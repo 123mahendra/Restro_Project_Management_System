@@ -7,19 +7,19 @@
   <div id="orders-admin-list">
     {% for o in orders %}
       <div class="order-card">
-        <h3>Order {{ o._id_str }}</h3>
+        <h3>Order {{ o._id }}</h3>
         <div><b>Created:</b> {{ o.created_at }}</div>
         <div><b>User:</b> {{ o.user_id }}</div>
         <div><b>Total:</b> €{{ "%.2f"|format(o.total) }}</div>
         <div><b>Items:</b>
           <ul>
             {% for it in o.items %}
-              <li>{{ it.name }} × {{ it.qty }} — €{{ "%.2f"|format(it.price) }}</li>
+              <li>{{ it.name }} × {{ it.quantity }} — €{{ "%.2f"|format(it.price) }}</li>
             {% endfor %}
           </ul>
         </div>
         <div class="order-actions">
-          <form method="post" action="/admin/orders/update/{{ o._id_str }}">
+          <form method="post" action="/admin/orders/update/{{ o._id }}">
             <select name="status">
               <option value="pending" {% if o.status=='pending' %}selected{% endif %}>Pending</option>
               <option value="preparing" {% if o.status=='preparing' %}selected{% endif %}>Preparing</option>
