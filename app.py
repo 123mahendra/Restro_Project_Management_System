@@ -1,4 +1,3 @@
-import mongo
 from flask import Flask, Blueprint, render_template, request, redirect, make_response, get_flashed_messages, flash, \
     jsonify, url_for
 from flask_cors import CORS
@@ -580,8 +579,8 @@ def update_order_status():
     data = request.json
     order_id = data.get("order_id")
     new_status = data.get("status")
-
-    mongo.db.orders.update_one(
+    db = get_database()
+    db.orders.update_one(
         {"_id": ObjectId(order_id)},
         {"$set": {"status": new_status}}
     )
@@ -591,7 +590,8 @@ def update_order_status():
 
 @app.route("/order/<order_id>")
 def view_order_status(order_id):
-    order = mongo.db.orders.find_one({"_id": ObjectId(order_id)})
+    db = get_database()
+    order = db.orders.find_one({"_id": ObjectId(order_id)})
 
     if not order:
         return "Order not found", 404
