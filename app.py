@@ -428,7 +428,8 @@ def add_to_cart():
         "dish_id": str(dish["_id"]),
         "name": dish["name"],
         "price": dish["price"],
-        "quantity": quantity
+        "quantity": quantity,
+        "image": dish.get("image", "default.png")
     })
     session.modified = True
     return jsonify({"success": True, "message": "Dish added to cart"})
@@ -454,10 +455,14 @@ def cart_count():
 def update_cart():
     if "user_id" not in session:
         return jsonify({"success": False, "message": "Login required"}), 401
+    if request.is_json:
+      data = request.get_json()
+      dish_id = data.get("dishId")
+      quantity = int(data.get("quantity", 1))
 
-    data = request.get_json()
-    dish_id = data.get("dishId")
-    quantity = int(data.get("quantity", 1))
+    else:
+       dish_id = request.form.get("dishId")
+       quantity = int(request.form.get("quantity", 1))
 
     cart = session.get("cart", [])
     for item in cart:
@@ -489,6 +494,7 @@ def remove_cart_item():
 @app.route("/order")
 def order():
     return render_template("order.html")
+
 @app.route('/checkout', methods=['POST'])
 def checkout():
     user_id = session.get("user_id")
