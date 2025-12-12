@@ -4,7 +4,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import uuid
 import json
-from flask_pymongo import PyMongo
 from db import create_user,get_database
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
