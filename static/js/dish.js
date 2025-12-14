@@ -20,7 +20,7 @@ async function loadDishes() {
             `;
         });
 
-        attachCartEvents();  // <--- IMPORTANT
+        attachCartEvents(); 
 
     } catch (error) {
         console.error("Error loading dishes:", error);
