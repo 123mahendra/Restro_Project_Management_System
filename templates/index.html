@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,460 +12,487 @@
     <link rel="stylesheet" href="../static/css/style.css">
 
 </head>
+
 <body>
 
-<!-- header section starts      -->
-<header>
- <a href="/" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+    <!-- header section starts      -->
+    <header>
+        <a href="/" class="logo"><i class="fas fa-utensils"></i>resto.</a>
 
-    <nav class="navbar">
-        <a class="active" href="#">{{ t['home'] }}</a>
-        <a href="/dishes">{{ t['dishes'] }}</a>
-        <a href="/menu">{{ t['menu'] }}</a>
-        <a href="/review">{{ t['review'] }}</a>
-        <a href="{{ url_for('order') }}">{{ t['order'] }}</a>
-        <a href="#">contact</a>
-    </nav>
+        <nav class="navbar">
+            <a class="active" href="#">{{ t['home'] }}</a>
+            <a href="/dishes">{{ t['dishes'] }}</a>
+            <a href="/menu">{{ t['menu'] }}</a>
+            <a href="/review">{{ t['review'] }}</a>
+            <a href="/order">{{ t['order'] }}</a>
+            <a href="/contact">contact</a>
+        </nav>
 
-    <div class="icons">
-        <!-- <i class="fas fa-bars" id="menu-bars"></i> -->
-        <!-- <i class="fas fa-search" id="search-icon"></i> -->
-        <!-- <a href="#" class="fas fa-heart"></a> -->
-        <a href="/cart" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count" class="cart-badge">0</span></a>
-        <a href="/login" class="fas fa-user"></a>
-    </div>
+        <div class="icons">
+            <!-- <i class="fas fa-bars" id="menu-bars"></i> -->
+            <!-- <i class="fas fa-search" id="search-icon"></i> -->
+            <!-- <a href="#" class="fas fa-heart"></a> -->
+            <a href="/cart" class="fas fa-shopping-cart" id="open-cart"><span id="cart-count"
+                    class="cart-badge">0</span></a>
+            <a href="/login" class="fas fa-user"></a>
+        </div>
 
-     <div class="lang-switch">
-    <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
-</div>
+        <div class="lang-switch">
+            <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
+        </div>
 
-<style>
-.lang-switch {
-    margin-left: 20px;
-    font-weight: bold;
-}
-.lang-switch a {
-    color: #333;
-    text-decoration: none;
-    padding: 0 5px;
-}
-.lang-switch a:hover {
-    color: #ff3838;
-}
-</style>
+        <style>
+            .lang-switch {
+                margin-left: 20px;
+                font-weight: bold;
+            }
 
-</header>
+            .lang-switch a {
+                color: #333;
+                text-decoration: none;
+                padding: 0 5px;
+            }
 
-<!-- Header Section ends-->
+            .lang-switch a:hover {
+                color: #ff3838;
+            }
+        </style>
 
-<!-- search form -->
-<form action="" id="search-form">
-    <input type="search" placeholder="search here..." name="" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form>
+    </header>
+
+    <!-- Header Section ends-->
+
+    <!-- search form -->
+    <form action="" id="search-form">
+        <input type="search" placeholder="search here..." name="" id="search-box">
+        <label for="search-box" class="fas fa-search"></label>
+        <i class="fas fa-times" id="close"></i>
+    </form>
 
 
-<!-- home section starts  -->
+    <!-- home section starts  -->
 
-<section class="home" id="home">
-    <!-- Announcement Banner -->
+    <section class="home" id="home">
+        <!-- Announcement Banner -->
 
- <div id="announcementBanner"></div>
+        <div id="announcementBanner"></div>
 
-<script>
-fetch("/api/announcements")
-.then(res => res.json())
-.then(data => {
-    const active = data.filter(a => a.active);
-    if(active.length > 0){
-        const a = active[0];
-        document.getElementById("announcementBanner").innerHTML = `
+        <script>
+            fetch("/api/announcements")
+                .then(res => res.json())
+                .then(data => {
+                    const active = data.filter(a => a.active);
+                    if (active.length > 0) {
+                        const a = active[0];
+                        document.getElementById("announcementBanner").innerHTML = `
             <div class="banner ${a.type}">
                 <strong>${a.title}</strong> – ${a.message}
             </div>
         `;
-    }
-});
-</script>
-
-<style>
-.banner {
-    padding: 10px 20px;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-}
-.banner.info { background: #2196f3; }
-.banner.success { background: #4caf50; }
-.banner.warning { background: #ffc107; color:black; }
-.banner.error { background: #f44336; }
-</style>
-
-    <div class="swiper-container home-slider">
-
-        <div class="swiper-wrapper wrapper">
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>spicy noodles</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn">order now</a>
-                </div>
-                <div class="image">
-                    <img src="{{url_for('static',filename='assets/image/home-img-1.png')}}" alt="">
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>fried chicken</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn">order now</a>
-                </div>
-                <div class="image">
-                    <img src="{{ url_for('static', filename='assets/image/home-img-2.png') }}" alt="">
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>hot pizza</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn">order now</a>
-                </div>
-                <div class="image">
-                   <img src="{{ url_for('static', filename='assets/image/home-img-3.png') }}" alt="">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="swiper-pagination"></div>
-
-    </div>
-
-</section>
-
-<!-- home section ends -->
-
-<!-- dishes section starts  -->
-
-<section class="dishes" id="dishes">
-
-    <h3 class="sub-heading">{{ t['our_dishes'] }}</h3>
-    <h1 class="heading">{{ t['popular_dishes'] }}</h1>
-
-
-    <div class="box-container" id="dishes-container">
-
-    </div>
-
-</section>
-
-<!-- dishes section ends -->
-
-<!-- about section starts  -->
-
-<section class="about" id="about">
-
-    <h3 class="sub-heading"> about us </h3>
-    <h1 class="heading"> why choose us? </h1>
-
-    <div class="row">
-
-        <div class="image">
-            <img src="images/about-img.png" alt="">
-        </div>
-
-        <div class="content">
-            <h3>best food in the country</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, sequi corrupti corporis quaerat voluptatem ipsam neque labore modi autem, saepe numquam quod reprehenderit rem? Tempora aut soluta odio corporis nihil!</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, nemo. Sit porro illo eos cumque deleniti iste alias, eum natus.</p>
-            <div class="icons-container">
-                <div class="icons">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>free delivery</span>
-                </div>
-                <div class="icons">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>easy payments</span>
-                </div>
-                <div class="icons">
-                    <i class="fas fa-headset"></i>
-                    <span>24/7 service</span>
-                </div>
-            </div>
-            <a href="#" class="btn">learn more</a>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- about section ends -->
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h3 class="sub-heading"> {{ t['menu'] }} </h3>
-    <h1 class="heading"> {{ t['today_speciality'] }}</h1>
-    <div class="day-selector" style="display: none;">
-    <label for="menu-day">{{ t['Select Day:'] }}</label>
-    <select id="menu-day">
-        <option value="monday">Monday</option>
-        <option value="tuesday">Tuesday</option>
-        <option value="wednesday">Wednesday</option>
-        <option value="thursday">Thursday</option>
-        <option value="friday">Friday</option>
-        <option value="saturday">Saturday</option>
-        <option value="sunday">Sunday</option>
-    </select>
-</div>
-    <div class="box-container" id="menu-container">
-
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
-
-<!-- review section starts  -->
-
-<section class="review" id="review">
-
-    <h3 class="sub-heading"> customer's review </h3>
-    <h1 class="heading"> what they say </h1>
-
-    <div class="swiper-container review-slider">
-
-        <div class="swiper-wrapper">
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-1.png" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis laborum aspernatur quibusdam. Ipsum, magni.</p>
-            </div>
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-2.png" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis laborum aspernatur quibusdam. Ipsum, magni.</p>
-            </div>
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-3.png" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis laborum aspernatur quibusdam. Ipsum, magni.</p>
-            </div>
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-4.png" alt="">
-                    <div class="user-info">
-                        <h3>john deo</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis laborum aspernatur quibusdam. Ipsum, magni.</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- review section ends -->
-
-<!-- order section starts  -->
-
-<section class="order" id="order">
-
-    <h3 class="sub-heading"> order now </h3>
-    <h1 class="heading"> free and fast </h1>
-
-    <form action="">
-
-        <div class="inputBox">
-            <div class="input">
-                <span>your name</span>
-                <input type="text" placeholder="enter your name">
-            </div>
-            <div class="input">
-                <span>your number</span>
-                <input type="number" placeholder="enter your number">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>your order</span>
-                <input type="text" placeholder="enter food name">
-            </div>
-            <div class="input">
-                <span>additional food</span>
-                <input type="text" placeholder="extra with food">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>how musch</span>
-                <input type="number" placeholder="how many orders">
-            </div>
-            <div class="input">
-                <span>date and time</span>
-                <input type="datetime-local">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>your address</span>
-                <textarea name="" placeholder="enter your address" id="" cols="30" rows="10"></textarea>
-            </div>
-            <div class="input">
-                <span>your message</span>
-                <textarea name="" placeholder="enter your message" id="" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-
-        <input type="submit" value="order now" class="btn">
-
-    </form>
-
-</section>
-
-<!-- order section ends -->
-
-<!-- footer section start -->
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>locations</h3>
-            <a href="#">Helsinki</a>
-            <a href="#">Vanta</a>
-            <a href="#">Espoo </a>
-            <a href="#">Kaunian</a>
-            <a href="#">Hamelinna</a>
-        </div>
-
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="#">home</a>
-            <a href="#">dishes</a>
-            <a href="#">about</a>
-            <a href="#">menu</a>
-            <a href="#">reivew</a>
-            <a href="#">order</a>
-        </div>
-
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="#">+358402457337</a>
-            <a href="#">+358449314564</a>
-            <a href="#">olisagarsandesh@gmail.com</a>
-            <a href="#">mahendra.sharma@gmail.com</a>
-            <a href="#">dhungananischal371@gmail.com</a>
-            <a href="#">Kirstintie 30 C, Espoo , 02760/a>
-        </div>
-
-        <div class="box">
-            <h3>follow us</h3>
-            <a href="#">facebook</a>
-            <a href="#">twitter</a>
-            <a href="#">instagram</a>
-            <a href="#">linkedin</a>
-        </div>
-
-    </div>
-
-    <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
-
-</section>
-
-<!--footer section end-->
-<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
-<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
-<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
-<script src="{{ url_for('static', filename='js/order.js') }}"></script>
-<script src="{{ url_for('static', filename='js/dish.js') }}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Add to cart functionality
-    document.querySelectorAll(".add-to-cart").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const dishId = btn.getAttribute("data-id");
-            const res = await fetch("/api/cart/add", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({dishId, quantity: 1})
-            });
-            const data = await res.json();
-            if (data.success) {
-                alert(data.message);
-                // Optionally update cart count dynamically
-                const cartCount = document.getElementById("cart-count");
-                cartCount.textContent = data.cartCount;
-            } else {
-                alert("Failed to add to cart");
+                    }
+                });
+        </script>
+
+        <style>
+            .banner {
+                padding: 10px 20px;
+                color: white;
+                font-weight: bold;
+                text-align: center;
             }
+
+            .banner.info {
+                background: #2196f3;
+            }
+
+            .banner.success {
+                background: #4caf50;
+            }
+
+            .banner.warning {
+                background: #ffc107;
+                color: black;
+            }
+
+            .banner.error {
+                background: #f44336;
+            }
+        </style>
+
+        <div class="swiper-container home-slider">
+
+            <div class="swiper-wrapper wrapper">
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>our special dish</span>
+                        <h3>spicy noodles</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
+                        <a href="#" class="btn">order now</a>
+                    </div>
+                    <div class="image">
+                        <img src="{{url_for('static',filename='assets/image/home-img-1.png')}}" alt="">
+                    </div>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>our special dish</span>
+                        <h3>fried chicken</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
+                        <a href="#" class="btn">order now</a>
+                    </div>
+                    <div class="image">
+                        <img src="{{ url_for('static', filename='assets/image/home-img-2.png') }}" alt="">
+                    </div>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>our special dish</span>
+                        <h3>hot pizza</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
+                        <a href="#" class="btn">order now</a>
+                    </div>
+                    <div class="image">
+                        <img src="{{ url_for('static', filename='assets/image/home-img-3.png') }}" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+        </div>
+
+    </section>
+
+    <!-- home section ends -->
+
+    <!-- dishes section starts  -->
+
+    <section class="dishes" id="dishes">
+
+        <h3 class="sub-heading">{{ t['our_dishes'] }}</h3>
+        <h1 class="heading">{{ t['popular_dishes'] }}</h1>
+
+
+        <div class="box-container" id="dishes-container">
+
+        </div>
+
+    </section>
+
+    <!-- dishes section ends -->
+
+    <!-- about section starts  -->
+
+    <section class="about" id="about">
+
+        <h3 class="sub-heading"> about us </h3>
+        <h1 class="heading"> why choose us? </h1>
+
+        <div class="row">
+
+            <div class="image">
+                <img src="images/about-img.png" alt="">
+            </div>
+
+            <div class="content">
+                <h3>best food in the country</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, sequi corrupti corporis quaerat
+                    voluptatem ipsam neque labore modi autem, saepe numquam quod reprehenderit rem? Tempora aut soluta
+                    odio corporis nihil!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, nemo. Sit porro illo eos cumque
+                    deleniti iste alias, eum natus.</p>
+                <div class="icons-container">
+                    <div class="icons">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>free delivery</span>
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>easy payments</span>
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 service</span>
+                    </div>
+                </div>
+                <a href="#" class="btn">learn more</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- about section ends -->
+
+    <!-- menu section starts  -->
+
+    <section class="menu" id="menu">
+
+        <h3 class="sub-heading"> {{ t['menu'] }} </h3>
+        <h1 class="heading"> {{ t['today_speciality'] }}</h1>
+        <div class="day-selector" style="display: none;">
+            <label for="menu-day">{{ t['Select Day:'] }}</label>
+            <select id="menu-day">
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+            </select>
+        </div>
+        <div class="box-container" id="menu-container">
+
+
+        </div>
+
+    </section>
+
+    <!-- menu section ends -->
+
+    <!-- review section starts  -->
+
+    <section class="review" id="review">
+
+        <h3 class="sub-heading"> customer's review </h3>
+        <h1 class="heading"> what they say </h1>
+
+        <div class="swiper-container review-slider">
+
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="images/pic-1.png" alt="">
+                        <div class="user-info">
+                            <h3>john deo</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
+                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
+                        laborum aspernatur quibusdam. Ipsum, magni.</p>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="images/pic-2.png" alt="">
+                        <div class="user-info">
+                            <h3>john deo</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
+                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
+                        laborum aspernatur quibusdam. Ipsum, magni.</p>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="images/pic-3.png" alt="">
+                        <div class="user-info">
+                            <h3>john deo</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
+                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
+                        laborum aspernatur quibusdam. Ipsum, magni.</p>
+                </div>
+
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="images/pic-4.png" alt="">
+                        <div class="user-info">
+                            <h3>john deo</h3>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit fugiat consequuntur repellendus
+                        aperiam deserunt nihil, corporis fugit voluptatibus voluptate totam neque illo placeat eius quis
+                        laborum aspernatur quibusdam. Ipsum, magni.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- review section ends -->
+
+    <!-- order section starts  -->
+
+    <section class="order" id="order">
+
+        <h3 class="sub-heading"> order now </h3>
+        <h1 class="heading"> free and fast </h1>
+
+        <form action="">
+
+            <div class="inputBox">
+                <div class="input">
+                    <span>your name</span>
+                    <input type="text" placeholder="enter your name">
+                </div>
+                <div class="input">
+                    <span>your number</span>
+                    <input type="number" placeholder="enter your number">
+                </div>
+            </div>
+            <div class="inputBox">
+                <div class="input">
+                    <span>your order</span>
+                    <input type="text" placeholder="enter food name">
+                </div>
+                <div class="input">
+                    <span>additional food</span>
+                    <input type="text" placeholder="extra with food">
+                </div>
+            </div>
+            <div class="inputBox">
+                <div class="input">
+                    <span>how musch</span>
+                    <input type="number" placeholder="how many orders">
+                </div>
+                <div class="input">
+                    <span>date and time</span>
+                    <input type="datetime-local">
+                </div>
+            </div>
+            <div class="inputBox">
+                <div class="input">
+                    <span>your address</span>
+                    <textarea name="" placeholder="enter your address" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="input">
+                    <span>your message</span>
+                    <textarea name="" placeholder="enter your message" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+
+            <input type="submit" value="order now" class="btn">
+
+        </form>
+
+    </section>
+
+    <!-- order section ends -->
+
+    <!-- footer section start -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>locations</h3>
+                <a href="#">Helsinki</a>
+                <a href="#">Vanta</a>
+                <a href="#">Espoo </a>
+                <a href="#">Kaunian</a>
+                <a href="#">Hamelinna</a>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="#">home</a>
+                <a href="#">dishes</a>
+                <a href="#">about</a>
+                <a href="#">menu</a>
+                <a href="#">reivew</a>
+                <a href="#">order</a>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#">+358402457337</a>
+                <a href="#">+358449314564</a>
+                <a href="#">olisagarsandesh@gmail.com</a>
+                <a href="#">mahendra.sharma@gmail.com</a>
+                <a href="#">dhungananischal371@gmail.com</a>
+                <a href="#">Kirstintie 30 C, Espoo , 02760/a>
+            </div>
+
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="#">facebook</a>
+                <a href="#">twitter</a>
+                <a href="#">instagram</a>
+                <a href="#">linkedin</a>
+            </div>
+
+        </div>
+
+        <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
+
+    </section>
+
+    <!--footer section end-->
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/order.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dish.js') }}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add to cart functionality
+            document.querySelectorAll(".add-to-cart").forEach(btn => {
+                btn.addEventListener("click", async () => {
+                    const dishId = btn.getAttribute("data-id");
+                    const res = await fetch("/api/cart/add", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ dishId, quantity: 1 })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        alert(data.message);
+                        // Optionally update cart count dynamically
+                        const cartCount = document.getElementById("cart-count");
+                        cartCount.textContent = data.cartCount;
+                    } else {
+                        alert("Failed to add to cart");
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 </body>
+
 </html>
-
-

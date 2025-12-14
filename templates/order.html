@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Website </title>
-
+ <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
@@ -21,7 +22,7 @@
         <a href="/menu">menu</a>
         <a href="/review">review</a>
         <a class="active" href="/order">order</a>
-        <a href="#">contact</a>
+        <a href="/contact">contact</a>
     </nav>
 
     <div class="icons">
@@ -33,14 +34,35 @@
         </a>
         <a href="/login" class="fas fa-user"></a>
     </div>
+
+    <div class="lang-switch">
+            <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
+        </div>
+
+        <style>
+            .lang-switch {
+                margin-left: 20px;
+                font-weight: bold;
+            }
+
+            .lang-switch a {
+                color: #333;
+                text-decoration: none;
+                padding: 0 5px;
+            }
+
+            .lang-switch a:hover {
+                color: #ff3838;
+            }
+        </style>
 </header>
 
 <!-- Header Section ends-->
 
 <section class="order" id="order">
 
-    <h3 class="sub-heading">{{ t['order now'] }} </h3>
-    <h1 class="heading"> {{ t['free and fast'] }}  </h1>
+    <h3 class="sub-heading">{{ t['order_now'] }} </h3>
+    <h1 class="heading"> {{ t['free_fast'] }}  </h1>
 
     <form action="">
 

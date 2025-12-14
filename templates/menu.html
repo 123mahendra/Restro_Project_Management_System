@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,54 +9,74 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
 
-<header>
-    <a href="/" class="logo"><i class="fas fa-utensils"></i> resto.</a>
+    <header>
+        <a href="/" class="logo"><i class="fas fa-utensils"></i> resto.</a>
 
-    <nav class="navbar">
-        <a href="/">{{ t['home'] }}</a>
-        <a href="/dishes">{{ t['dishes'] }}</a>
-        <a href="/menu" class="active">{{ t['menu'] }}</a>
-        <a href="/review">{{ t['review'] }}</a>
-        <a href="{{ url_for('order') }}">{{ t['order'] }}</a>
-    </nav>
+        <nav class="navbar">
+            <a href="/">{{ t['home'] }}</a>
+            <a href="/dishes">{{ t['dishes'] }}</a>
+            <a href="/menu" class="active">{{ t['menu'] }}</a>
+            <a href="/review">{{ t['review'] }}</a>
+            <a href="/order">{{ t['order'] }}</a>
+            <a href="/contact">contact</a>
+        </nav>
 
-    <div class="icons">
-        <a href="/cart" class="fas fa-shopping-cart">
-            <span id="cart-count" class="cart-badge">0</span>
-        </a>
-        <a href="/login" class="fas fa-user"></a>
-    </div>
+        <div class="icons">
+            <a href="/cart" class="fas fa-shopping-cart">
+                <span id="cart-count" class="cart-badge">0</span>
+            </a>
+            <a href="/login" class="fas fa-user"></a>
+        </div>
 
-    <div class="lang-switch">
-        <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
-    </div>
-</header>
+        <div class="lang-switch">
+            <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
+        </div>
 
-<section class="menu" id="menu">
-    <h3 class="sub-heading">{{ t['our_menu'] }}</h3>
-    <h1 class="heading">{{ t['todays_speciality'] }}</h1>
+        <style>
+            .lang-switch {
+                margin-left: 20px;
+                font-weight: bold;
+            }
 
-    <!-- Day selector for dynamic menu -->
-    <div class="day-selector">
-        <label for="menu-day">{{ t['select_day'] }}</label>
-        <select id="menu-day">
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
-            <option value="saturday">Saturday</option>
-            <option value="sunday">Sunday</option>
-        </select>
-    </div>
+            .lang-switch a {
+                color: #333;
+                text-decoration: none;
+                padding: 0 5px;
+            }
 
-    <!-- Dynamic dish containers -->
-    <div class="box-container" id="menu-container"></div>
-</section>
+            .lang-switch a:hover {
+                color: #ff3838;
+            }
+        </style>
+    </header>
 
-<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+    <section class="menu" id="menu">
+        <h3 class="sub-heading">our menu</h3>
+        <h1 class="heading">todays speciality</h1>
+
+        <!-- Day selector for dynamic menu -->
+        <div class="day-selector">
+            <label for="menu-day">{{ t['select_day'] }}</label>
+            <select id="menu-day">
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+            </select>
+        </div>
+
+        <!-- Dynamic dish containers -->
+        <div class="box-container" id="menu-container"></div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
 
 </body>
+
 </html>
