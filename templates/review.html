@@ -244,6 +244,7 @@ loadReviews(); // Load reviews when page opens
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <script>
+    document.getElementById("name").value = user.first_name +' '+user.last_name
 var swiper = new Swiper(".review-slider", {
     loop: false,
     autoHeight: true,

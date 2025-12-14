@@ -733,7 +733,11 @@ def show_reviews():
 
 @app.route('/review')
 def review():
-    return render_template('review.html')
+    if "user_id" in session:
+        user = {"first_name": session.get("user_first_name"),"last_name": session.get("user_last_name")}
+    else:
+        user = {}
+    return render_template('review.html', user=user)
 
 # Contact
 
