@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,35 +10,31 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
-
-
 </head>
+
 <body>
 
-<!-- header section starts      -->
-<header>
- <a href="/" class="logo"><i class="fas fa-utensils"></i>resto.</a>
+    <!-- header section starts      -->
+    <header>
+        <a href="/" class="logo"><i class="fas fa-utensils"></i>resto.</a>
 
-    <nav class="navbar">
-        <a href="/">home</a>
-        <a href="/dishes">dishes</a>
-        <a href="/menu">menu</a>
-        <a class="active" href="/review">review</a>
-        <a href="/order">order</a>
-        <a href="contact">contact</a>
-    </nav>
+        <nav class="navbar">
+            <a href="/">home</a>
+            <a href="/dishes">dishes</a>
+            <a href="/menu">menu</a>
+            <a class="active" href="/review">review</a>
+            <a href="/order">order</a>
+            <a href="contact">contact</a>
+        </nav>
 
-    <div class="icons">
-        <!-- <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
-        <a href="#" class="fas fa-heart"></a> -->
-        <a href="/cart" class="fas fa-shopping-cart">
-            <span id="cart-count" class="cart-badge">0</span>
-        </a>
-        <a href="/login" class="fas fa-user"></a>
-    </div>
+        <div class="icons">
+            <a href="/cart" class="fas fa-shopping-cart">
+                <span id="cart-count" class="cart-badge">0</span>
+            </a>
+            <a href="/login" class="fas fa-user"></a>
+        </div>
 
-    <div class="lang-switch">
+        <div class="lang-switch">
             <a href="/lang/en">EN</a> | <a href="/lang/fi">FI</a>
         </div>
 
@@ -58,167 +54,166 @@
                 color: #ff3838;
             }
         </style>
-</header>
+    </header>
 
-<!-- Header Section ends-->
+    <!-- Header Section ends-->
 
-<!-- search form -->
-<!-- <form action="" id="search-form">
-    <input type="search" placeholder="search here..." name="" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form> -->
+    <!-- review section starts  -->
+    <section class="review" id="review">
 
-<!-- review section starts  -->
-<section class="review" id="review">
+        <h3 class="sub-heading"> Customer's Review </h3>
+        <h1 class="heading"> What They Say </h1>
 
-    <h3 class="sub-heading"> Customer's Review </h3>
-    <h1 class="heading"> What They Say </h1>
+        <!-- Review Slider -->
+        <div class="swiper-container review-slider">
+            <div class="swiper-wrapper">
 
-    <!-- Review Slider -->
-    <div class="swiper-container review-slider">
-        <div class="swiper-wrapper">
-
-            {% for r in reviews %}
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="/static/img/default_user.png" alt="">
-                    <div class="user-info">
-                        <h3>{{ r.name }}</h3>
-                        <div class="stars">
-                            {% for i in range(r.rating) %}
-                            <i class="fas fa-star"></i>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <p>{{ r.message }}</p>
-            </div>
-            {% endfor %}
-
-        </div>
-    </div>
-
-</section>
-
-
-<!-- review section ends -->
- 
-<!-- Submit Review Form -->
-<div class="review-form-container">
-    <h2>Leave Your Review</h2>
-
-    <form id="reviewForm">
-        <input type="text" id="name" placeholder="Your Name" required>
-
-        <select id="rating" required>
-            <option value="5">★★★★★ (5 Stars)</option>
-            <option value="4">★★★★☆ (4 Stars)</option>
-            <option value="3">★★★☆☆ (3 Stars)</option>
-            <option value="2">★★☆☆☆ (2 Stars)</option>
-            <option value="1">★☆☆☆☆ (1 Star)</option>
-        </select>
-
-        <textarea id="message" placeholder="Write your feedback..." required></textarea>
-
-        <button type="submit" class="btn">Submit Review</button>
-    </form>
-
-    <p id="reviewMessage" style="color:green; font-weight:bold;"></p>
-</div>
-
-<style>
-.review-form-container {
-    width: 60%;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ddd;
-}
-.review-form-container input,
-.review-form-container textarea,
-.review-form-container select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-.review-form-container button {
-    background: #27ae60;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-</style>
-<!-- footer section start -->
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>locations</h3>
-            <a href="#">Helsinki</a>
-            <a href="#">Vanta</a>
-            <a href="#">Espoo </a>
-            <a href="#">Kaunian</a>
-            <a href="#">Hamelinna</a>
-        </div>
-
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="#">home</a>
-            <a href="#">dishes</a>
-            <a href="#">about</a>
-            <a href="#">menu</a>
-            <a href="#">reivew</a>
-            <a href="#">order</a>
-        </div>
-
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="#">+358402457337</a>
-            <a href="#">+358449314564</a>
-            <a href="#">olisagarsandesh@gmail.com</a>
-            <a href="#">mahendragautamsharma@gmail.com</a>
-            <a href="#">dhungananischal371@gmail.com</a>
-            <a href="#">Kirstintie 30 C, Espoo , 02760/a>
-        </div>
-
-        <div class="box">
-            <h3>follow us</h3>
-            <a href="#">facebook</a>
-            <a href="#">twitter</a>
-            <a href="#">instagram</a>
-            <a href="#">linkedin</a>
-        </div>
-
-    </div>
-
-    <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
-
-</section>
-
-<!--footer section end-->
-
-<!-- Load real reviews dynamically -->
-<script>
-function loadReviews() {
-    fetch("/api/reviews")
-        .then(response => response.json())
-        .then(reviews => {
-            let html = "";
-            reviews.forEach(r => {
-                html += `
+                {% for r in reviews %}
                 <div class="swiper-slide slide">
                     <i class="fas fa-quote-right"></i>
                     <div class="user">
-                        <img src="../assets/image/pic-1.png" alt="">
+                        <img src="/static/assets/image.png" alt="">
+                        <div class="user-info">
+                            <h3>{{ r.name }}</h3>
+                            <div class="stars">
+                                {% for i in range(r.rating) %}
+                                <i class="fas fa-star"></i>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p>{{ r.message }}</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- review section ends -->
+
+    <!-- Submit Review Form -->
+    <div class="review-form-container">
+        <h2>Leave Your Review</h2>
+
+        <form id="reviewForm">
+            {% if user %}
+            <input type="text" id="name" name="name" value="{{ user.first_name }} {{ user.last_name }}" readonly>
+            {% else %}
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            {% endif %}
+
+            <select id="rating" required>
+                <option value="5">★★★★★ (5 Stars)</option>
+                <option value="4">★★★★☆ (4 Stars)</option>
+                <option value="3">★★★☆☆ (3 Stars)</option>
+                <option value="2">★★☆☆☆ (2 Stars)</option>
+                <option value="1">★☆☆☆☆ (1 Star)</option>
+            </select>
+
+            <textarea id="message" placeholder="Write your feedback..." required></textarea>
+
+            <button type="submit" class="btn">Submit Review</button>
+        </form>
+
+        <p id="reviewMessage" style="color:green; font-weight:bold;"></p>
+    </div>
+
+    <style>
+        .review-form-container {
+            width: 60%;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ddd;
+        }
+
+        .review-form-container input,
+        .review-form-container textarea,
+        .review-form-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .review-form-container button {
+            background: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+    <!-- footer section start -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>locations</h3>
+                <a href="#">Helsinki</a>
+                <a href="#">Vanta</a>
+                <a href="#">Espoo </a>
+                <a href="#">Kaunian</a>
+                <a href="#">Hamelinna</a>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="#">home</a>
+                <a href="#">dishes</a>
+                <a href="#">about</a>
+                <a href="#">menu</a>
+                <a href="#">reivew</a>
+                <a href="#">order</a>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#">+358402457337</a>
+                <a href="#">+358449314564</a>
+                <a href="#">olisagarsandesh@gmail.com</a>
+                <a href="#">mahendragautamsharma@gmail.com</a>
+                <a href="#">dhungananischal371@gmail.com</a>
+                <a href="#">Kirstintie 30 C, Espoo , 02760/a>
+            </div>
+
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="#">facebook</a>
+                <a href="#">twitter</a>
+                <a href="#">instagram</a>
+                <a href="#">linkedin</a>
+            </div>
+
+        </div>
+
+        <div class="credit"> copyright @ 2025 by <span> Metropolia Student</span> </div>
+
+    </section>
+
+    <!--footer section end-->
+
+    <!-- Load real reviews dynamically -->
+    <!-- <script>
+        function loadReviews() {
+            fetch("/api/reviews")
+                .then(response => response.json())
+                .then(reviews => {
+                    let html = "";
+                    reviews.forEach(r => {
+                        html += `
+                <div class="swiper-slide slide">
+                    <i class="fas fa-quote-right"></i>
+                    <div class="user">
+                        <img src="/static/assets/image.png" alt="">
                         <div class="user-info">
                             <h3>${r.name}</h3>
                             <div class="stars">
@@ -228,36 +223,69 @@ function loadReviews() {
                     </div>
                     <p>${r.message}</p>
                 </div>`;
-            });
+                    });
 
-            document.getElementById("reviews-wrapper").innerHTML = html;
+                    document.getElementById("reviews-wrapper").innerHTML = html;
 
-            swiper.update();
-            swiper.updateAutoHeight();
+                    swiper.update();
+                    swiper.updateAutoHeight();
+                });
+        }
+
+        loadReviews(); 
+    </script> -->
+
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".review-slider", {
+            loop: false,
+            autoHeight: true,
+            grabCursor: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            centeredSlides: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
         });
-}
+    </script>
 
-loadReviews(); // Load reviews when page opens
-</script>
+    <script>
+        document.getElementById("reviewForm").addEventListener("submit", function (e) {
+            e.preventDefault();
 
+            const data = {
+                user_id: "{{ session.get('user_id') if user else '' }}",
+                rating: document.getElementById("rating").value,
+                message: document.getElementById("message").value
+            };
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            fetch("/api/review", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(response => {
+                    alert(response.message);
+                    // Redirect to index page
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    }
+                })
+                .catch(err => {
+                    document.getElementById("reviewMessage").innerText = "Something went wrong!";
+                    document.getElementById("reviewMessage").style.color = "red";
+                    console.error(err);
+                });
+        });
 
-<script>
-    document.getElementById("name").value = user.first_name +' '+user.last_name
-var swiper = new Swiper(".review-slider", {
-    loop: false,
-    autoHeight: true,
-    grabCursor: true,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    centeredSlides: true,
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-});
-</script>
+    </script>
+
 
 </body>
+
 </html>

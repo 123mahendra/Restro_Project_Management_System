@@ -16,13 +16,15 @@
     <aside class="sidebar" id="sidebar">
         <span class="close-sidebar" id="close-sidebar">✕</span>
         <h2>Admin Panel</h2>
-        <a href="#" class="active" data-section="dashboard"><span class="material-icons">dashboard</span>Dashboard</a>
+        <a href="/admin" class="active" data-section="dashboard"><span
+                class="material-icons">dashboard</span>Dashboard</a>
         <a href="/admin/dishes" data-section="dishes"><span class="material-icons">local_dining</span>Dishes</a>
         <a href="/admin/menu" data-section="menu"><span class="material-icons">menu_book</span>Menu</a>
         <a href="/admin/orders" data-section="orders"><span class="material-icons">shopping_cart</span>Orders</a>
         <a href="/admin/users" data-section="users"><span class="material-icons">people</span>Users</a>
-        <a href="#" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
-        <a href="#" data-section="announcements"><span class="material-icons">campaign</span>Announcements</a>
+        <a href="/admin/reviews" data-section="reviews"><span class="material-icons">comment</span>Reviews</a>
+        <a href="/admin/announcements" data-section="announcements"><span
+                class="material-icons">campaign</span>Announcements</a>
 
     </aside>
 
@@ -47,21 +49,21 @@
                 <div class="dashboard-cards">
                     <div class="card">
                         <div class="card-title">Total Orders</div>
-                        <div class="card-value">10</div>
+                        <div class="card-value">{{total_orders}}</div>
                         <div class="positive">+12% from last month</div>
                     </div>
 
 
                     <div class="card">
                         <div class="card-title">Revenue</div>
-                        <div class="card-value">€12</div>
+                        <div class="card-value">€{{grand_total}}</div>
                         <div class="positive">+28% from last month</div>
                     </div>
 
 
                     <div class="card">
                         <div class="card-title">Customers</div>
-                        <div class="card-value">20</div>
+                        <div class="card-value">{{total_users}}</div>
                         <div class="positive">+5% from last month</div>
                     </div>
 
@@ -107,7 +109,7 @@
             <div id="dish-modal" class="modal">
                 <div class="modal-content">
                     <h3>Add New Dish</h3>
-<br>
+                    <br>
                     <form id="dish-form">
 
                         <label>Dish Name</label>
@@ -135,7 +137,7 @@
             <div class="modal" id="editDishModal">
                 <div class="modal-content">
                     <h2>Edit Dish</h2>
-<br>
+                    <br>
                     <form id="editDishForm">
                         <input type="hidden" id="editDishId">
 
@@ -363,98 +365,112 @@
             <div id="orders" class="section-page">
                 <div class="order-info">
                     <h3>Orders</h3>
-                     <table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Order ID</th>
-      <th>User ID</th>
-      <th>Items</th>
-      <th>Total</th>
-      <th>Status</th>
-      <th>Created At</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for o in orders %}
-    <tr>
-      <td>{{ o._id }}</td>
-      <td>{{ o.user_id }}</td>
-      <td>
-        <ul>
-          {% for item in o['items'] %}
-          <li>{{ item.name }} x {{ item.quantity }} (${{ item.price }})</li>
-          {% endfor %}
-        </ul>
-      </td>
-      <td>${{ o.total }}</td>
-      <td>
-         <select class="order-status" data-id="{{ o._id }}">
-           <option value="pending"     {% if o.status == "pending" %}selected{% endif %}>Pending </option>
-           <option value="processing"  {% if o.status == "processing" %}selected{% endif %}>Processing </option>
-           <option value="ready"       {% if o.status == "ready" %}selected{% endif %}>Ready </option>
-           <option value="delivered"   {% if o.status == "delivered" %}selected{% endif %}>Delivered </option>
-         </select>
-      </td>
-      <td>{{ o.created_at }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User ID</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for o in orders %}
+                            <tr>
+                                <td>{{ o._id }}</td>
+                                <td>{{ o.user_id }}</td>
+                                <td>
+                                    <ul>
+                                        {% for item in o['items'] %}
+                                        <li>{{ item.name }} x {{ item.quantity }} (€{{ item.price }})</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>€{{ o.total }}</td>
+                                <td>
+                                    <select class="order-status" data-id="{{ o._id }}">
+                                        <option value="pending" {% if o.status=="pending" %}selected{% endif %}>Pending
+                                        </option>
+                                        <option value="processing" {% if o.status=="processing" %}selected{% endif %}>
+                                            Processing </option>
+                                        <option value="ready" {% if o.status=="ready" %}selected{% endif %}>Ready
+                                        </option>
+                                        <option value="delivered" {% if o.status=="delivered" %}selected{% endif %}>
+                                            Delivered </option>
+                                    </select>
+                                </td>
+                                <td>{{ o.created_at }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
 
             <!-- Reviews Section -->
             <div id="reviews" class="section-page">
-                <h2>Customer Reviews</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>User Name</th>
+                            <th>Rating</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviewTable"></tbody>
+                </table>
             </div>
 
             <!-- Announcement Section -->
             <div id="announcements" class="section-page">
-    <h2>Announcements</h2>
-    <button id="addAnnBtn" class="add-btn">+ Add Announcement</button>
+                <h2>Announcements</h2>
+                <button id="addAnnBtn" class="add-btn">+ Add Announcement</button>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Message</th>
-                <th>Type</th>
-                <th>Active</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="announcementsTable"></tbody>
-    </table>
-</div>
-<!-- Add Announcement Modal -->
-<div id="announcementModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeAnnModal">&times;</span>
-    <h3>Add Announcement</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Message</th>
+                            <th>Type</th>
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="announcementsTable"></tbody>
+                </table>
+            </div>
+            <!-- Add Announcement Modal -->
+            <div id="announcementModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="closeAnnModal">&times;</span>
+                    <h3>Add Announcement</h3>
 
-    <label>Title</label>
-    <input type="text" id="annTitle">
+                    <label>Title</label>
+                    <input type="text" id="annTitle">
 
-    <label>Message</label>
-    <textarea id="annMessage"></textarea>
+                    <label>Message</label>
+                    <textarea id="annMessage"></textarea>
 
-    <label>Type</label>
-    <select id="annType">
-      <option value="info">Info</option>
-      <option value="success">Success</option>
-      <option value="warning">Warning</option>
-      <option value="error">Error</option>
-    </select>
+                    <label>Type</label>
+                    <select id="annType">
+                        <option value="info">Info</option>
+                        <option value="success">Success</option>
+                        <option value="warning">Warning</option>
+                        <option value="error">Error</option>
+                    </select>
 
-    <label>
-      <input type="checkbox" id="annActive" checked>
-      Active
-    </label>
+                    <label>
+                        <input type="checkbox" id="annActive" checked>
+                        Active
+                    </label>
 
-    <button id="saveAnnouncementBtn" class="save-btn">Save</button>
-  </div>
-</div>
+                    <button id="saveAnnouncementBtn" class="save-btn">Save</button>
+                </div>
+            </div>
 
         </section>
     </main>
@@ -462,21 +478,21 @@
     <script src="../../static/js/admin.js"></script>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const current = document.body.dataset.section;
-    document.querySelectorAll(".section-page").forEach(sec => sec.classList.remove("active"));
-    document.getElementById(current)?.classList.add("active");
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const current = document.body.dataset.section;
+            document.querySelectorAll(".section-page").forEach(sec => sec.classList.remove("active"));
+            document.getElementById(current)?.classList.add("active");
 
-    // highlight sidebar
-    document.querySelectorAll("aside a").forEach(a => a.classList.remove("active"));
-    document.querySelector(`aside a[data-section="${current}"]`)?.classList.add("active");
+            // highlight sidebar
+            document.querySelectorAll("aside a").forEach(a => a.classList.remove("active"));
+            document.querySelector(`aside a[data-section="${current}"]`)?.classList.add("active");
 
-    // update page title
-    document.getElementById("section-title").textContent =
-        current.charAt(0).toUpperCase() + current.slice(1);
-});
-</script>
+            // update page title
+            document.getElementById("section-title").textContent =
+                current.charAt(0).toUpperCase() + current.slice(1);
+        });
+    </script>
 
 </body>
 

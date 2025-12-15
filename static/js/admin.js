@@ -560,3 +560,43 @@ document.addEventListener("change", function (e) {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const reviewTable = document.getElementById("reviewTable");
+
+    // Fetch reviews from API
+    fetch("/api/reviews")
+        .then(response => response.json())
+        .then(reviews => {
+            reviewTable.innerHTML = "";
+            reviews.forEach((r, index) => {
+                const tr = document.createElement("tr");
+
+                // Serial Number
+                const tdSN = document.createElement("td");
+                tdSN.textContent = index + 1;
+                tr.appendChild(tdSN);
+
+                // User Name
+                const tdName = document.createElement("td");
+                tdName.textContent = r.name || "Anonymous";
+                tr.appendChild(tdName);
+
+                // Rating
+                const tdRating = document.createElement("td");
+                tdRating.innerHTML = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+                tr.appendChild(tdRating);
+
+                // Message
+                const tdMessage = document.createElement("td");
+                tdMessage.textContent = r.message;
+                tr.appendChild(tdMessage);
+
+                reviewTable.appendChild(tr);
+            });
+        })
+        .catch(err => {
+            console.error("Error loading reviews:", err);
+            reviewTable.innerHTML = "<tr><td colspan='4'>Failed to load reviews.</td></tr>";
+        });
+});

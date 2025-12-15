@@ -12,7 +12,7 @@ from bson import ObjectId
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-from db import get_reviews_collection
+from db import get_reviews_collection, get_users_collection
  
  
 
@@ -178,7 +178,20 @@ def admin_dashboard():
         return redirect("/admin")
 
     user = sessions[user_session_id]
-    return render_template("admin/admin_dashboard.html", user=user)
+
+    db = get_database()
+    user_list = db.users
+    total_users = user_list.count_documents({})
+
+    order_list = db.orders
+    total_orders = order_list.count_documents({})
+
+    grand_total = 0
+    for order in order_list.find():
+        grand_total += order.get("total",0)
+
+
+    return render_template("admin/admin_dashboard.html",section="dashboard", user=user, total_users=total_users,total_orders=total_orders, grand_total=grand_total)
 
 
 @app.route('/admin/logout')
@@ -360,6 +373,18 @@ def admin_menu():
     user_session_id = request.cookies.get("user_session_id")
     user = sessions.get(user_session_id)
     return render_template("admin/admin_dashboard.html", section="menu", user=user)
+
+@app.route('/admin/reviews')
+def admin_reviews():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions.get(user_session_id)
+    return render_template("admin/admin_dashboard.html", section="reviews", user=user)
+
+@app.route('/admin/announcements')
+def admin_announcements():
+    user_session_id = request.cookies.get("user_session_id")
+    user = sessions.get(user_session_id)
+    return render_template("admin/admin_dashboard.html", section="announcements", user=user)
 
 @app.route("/api/menu", methods=["POST"])
 def add_menu_dish():
@@ -701,23 +726,6 @@ def switch_lang(code):
  
 # ------------------ CUSTOMER REVIEW FORM HANDLER ------------------
 
-@app.route("/submit-review", methods=["POST"])
-def submit_review():
-    name = request.form.get("name")
-    message = request.form.get("message")
-    rating = int(request.form.get("rating", 5))
-
-    col = get_reviews_collection()
-
-    col.insert_one({
-        "name": name,
-        "message": message,
-        "rating": rating,
-        "created_at": datetime.utcnow()
-    })
-
-    return redirect("/review")
-
 
 @app.route("/review")
 def show_reviews():
@@ -727,17 +735,62 @@ def show_reviews():
     for r in reviews:
         r["_id"] = str(r["_id"])
 
-    return render_template("review.html", reviews=reviews)
+    user = None
 
-# Review
-
-@app.route('/review')
-def review():
     if "user_id" in session:
         user = {"first_name": session.get("user_first_name"),"last_name": session.get("user_last_name")}
-    else:
-        user = {}
-    return render_template('review.html', user=user)
+    
+    return render_template("review.html", reviews=reviews, user=user)
+
+@app.route("/api/reviews", methods=["GET"])
+def get_reviews():
+    col = get_reviews_collection()
+    users_col = get_users_collection()
+    
+    reviews = list(col.find().sort("created_at", -1))  
+    
+    for r in reviews:
+        r["_id"] = str(r["_id"])
+        user_id = r.get("user_id")
+        user_name = "Anonymous"
+
+        if user_id:
+            user = users_col.find_one({"_id": ObjectId(user_id)})
+            if user:
+                user_name = f"{user.get('first_name','')} {user.get('last_name','')}".strip()
+
+        r["name"] = user_name
+    
+    return jsonify(reviews)
+
+@app.route("/api/review", methods=["POST"])
+def post_review():
+    if "user_id" not in session:
+        return jsonify({"message": "You must be logged in to submit a review"}), 401
+
+    data = request.get_json()
+    rating = int(data.get("rating"))
+    message = data.get("message").strip()
+
+    # Optional: validate rating
+    if rating < 1 or rating > 5:
+        return jsonify({"message": "Invalid rating"}), 400
+
+    review = {
+        "user_id": session["user_id"],
+        "rating": rating,
+        "message": message,
+        "created_at": datetime.utcnow()
+    }
+
+    col = get_reviews_collection()
+    col.insert_one(review)
+
+    # Return success message and redirect URL
+    return jsonify({
+        "message": "Thank you for your review!",
+        "redirect": "/"
+    }), 201
 
 # Contact
 

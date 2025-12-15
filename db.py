@@ -31,3 +31,7 @@ def get_reviews_collection():
     db = get_database()
     return db["reviews"]
 
+def get_users_collection():
+    db = get_database()
+    return db["users"]
+
