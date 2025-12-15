@@ -190,8 +190,16 @@ def admin_dashboard():
     for order in order_list.find():
         grand_total += order.get("total",0)
 
+    reviews_col = db.reviews
 
-    return render_template("admin/admin_dashboard.html",section="dashboard", user=user, total_users=total_users,total_orders=total_orders, grand_total=grand_total)
+    ratings = [r["rating"] for r in reviews_col.find({}, {"rating": 1})]
+
+    if ratings:
+        average_rating = int(sum(ratings) / len(ratings))
+    else:
+        average_rating = 0
+
+    return render_template("admin/admin_dashboard.html",section="dashboard", user=user, total_users=total_users,total_orders=total_orders, grand_total=grand_total, average_rating=average_rating)
 
 
 @app.route('/admin/logout')

@@ -129,3 +129,11 @@ Review management page
 
 # Link
 [Project Link](https://restro-project-management-system-2.onrender.com/)
+
+## Admin Access
+
+For testing the admin dashboard, use:
+
+| Role  | Email            | Password     |
+|------ |------------------|--------------|
+| Admin | admin@admin.com  | admin@admin  |
